@@ -26,7 +26,7 @@ Now it is up to Peach, Daisy, Luigi and Baby Luigi to find out what happened and
 As the Observatory fell apart, the group can only take a look at the situation in the Mushroom Kingdom at the end of World 1 where they reach a telescope. It turns out that Mario has thrown the entire Mushroom Kingdom into chaos. Toads find themselves grown in trees while their energy is sucked out of them (cf.: Mario & Luigi: Partners in Time). Bowser's former minions aren't better off either. Several species have been forced to eat Super Crowns or Super Bells. Others were banished or exterminated completely. Only Boos were partially left alone. Furthermore, Shadow Marios and Shroobs can be sighted ...
 
 
-***Spoiler warning! Only read the following part of the story if you finished the game already or do not plan to play it at all!!!***
+***Spoiler warning! Only read the following part of the story if you belong to the team, finished the game already or do not plan to play it at all!!!***
 <details>
 <summary>Expand</summary>
 
