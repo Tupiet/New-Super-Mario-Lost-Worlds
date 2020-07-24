@@ -1,11 +1,14 @@
-# NSMBWer
-## Source Code Public Release
-
 ### Introduction
 
-This fork of the NewerSMBW repo is a slightly modified version which runs most of the sprite mods whilst
-keeping the original game's map system intact and working. Among the notable changes, this version of
-Kamek is based on CodeWarrior and supports Python 3. More details below.
+This is a fork of NSMBWer, a slightly modified version of NewerSMBW, which had most of the sprite mods
+whilst keeping the original game's map system intact and working. A notable change made in NSMBWer is
+the usage of CodeWarrior and Python 3 for Kamek.
+
+This repo contains further modifications of the game and will hopefully contain the code of an entire
+new New Super Mario Bros. Wii Mod with custom 3D maps, over 150 new levels, new backgrounds, new tilesets,
+new sprites and new music in its' final stage.
+
+
 
 ### Licensing
 
@@ -24,15 +27,6 @@ Copyright (c) 2010-2013 Treeki, Tempus, megazig
 - Python libraries: PyYAML, pyelftools
 
 ### What's Here
-
-#### NSMBWer Super Mario Bros. Wii
-A build is inside this folder, including the SpriteTex files, an XML and the related folders. If you
-want to create a mod, starting with this is suggested. Keep in mind this build doesn't include the
-custom music or tilesets from Newer.
-
-It also includes an edited 01-01 and 01-06 that removes old unused sprite settings from Nintendo set
-on the Rolling Hills that, now would crash NSMBWer. They are different flags for the Rolling Hill recolors
-that don't exist in base Newer.
 
 #### Kamek
 
