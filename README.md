@@ -94,7 +94,7 @@ Supported mods:
 
 #### Other Stuff
 Other Stuff includes, well, other stuff:
-* Riivolution XML (files load from the NSMBwer folder)
+* Riivolution XML (files load from the NSMBWer folder)
 * ISO Builder XML (for patching main.dol)
 * ObjectPatch (modified Object files for use as a template, some retail levels will still crash due to Nintendo leaving unused nybbles set)
 * ReggiePatch (a Reggie patch based on the NewerSMBW one)
