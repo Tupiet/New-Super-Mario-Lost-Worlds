@@ -32,7 +32,7 @@ As the Observatory fell apart, the group can only take a look at the situation i
 
 ##### Important preceding information
 
-The game will have 8 "Normal Worlds", 4 "Bonus Worlds" and 8 "Special" versions of the normal worlds (cf.: Super Mario 3D Land).
+The game will have 8 "Normal Worlds", 4 "Bonus Worlds" and 8 "Special" versions of the Normal Worlds (cf.: Super Mario 3D Land).
 
 After Mario is defeated, King Boo will come out of his body. He maligioucly laughs a few seconds and returns into Marios body. He then flees from the stage and the level ends. This doesn't end the game though: King Boo flees to a place out of reach for the players. If all 4 Bonus Worlds are found and completed the 8 Secret Worlds will be unlocked. If none or not all of the Bonus Worlds are found so far an notice about their existence and importance for the game is to be given. Once every Bonus World is as well as the fight against Mario in the Normal Worlds is completed, an notice about the Secret Worlds is to be given and the first Secret World will be unlocked.
 
