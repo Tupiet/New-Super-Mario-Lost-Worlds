@@ -34,15 +34,15 @@ As the Observatory fell apart, the group can only take a look at the situation i
 
 The game will have 8 "Normal Worlds", 4 "Bonus Worlds" and 8 "Special" versions of the Normal Worlds (cf.: Super Mario 3D Land).
 
-After Mario is defeated, King Boo will come out of his body. He maligioucly laughs a few seconds and returns into Marios body. He then flees from the stage and the level ends. This doesn't end the game though: King Boo flees to a place out of reach for the players. If all 4 Bonus Worlds are found and completed the 8 Secret Worlds will be unlocked. If none or not all of the Bonus Worlds are found so far an notice about their existence and importance for the game is to be given. Once every Bonus World is as well as the fight against Mario in the Normal Worlds is completed, an notice about the Secret Worlds is to be given and the first Secret World will be unlocked.
+After Mario is defeated, King Boo will come out of his body. He maligioucly laughs a few seconds and returns into Marios body. He then flees from the stage and the level ends. This doesn't end the game though: King Boo flees to a place out of reach for the players. If all 4 Bonus Worlds are found and completed the 8 Secret Worlds will be unlocked. If none or not all of the Bonus Worlds are found so far, an notice about their existence and importance for the game is to be given. Once every Bonus World as well as the fight against Mario in the Normal Worlds is completed, an notice about the Secret Worlds is to be given and the first Secret World will be unlocked.
 
 In the 8 Normal Worlds only the normal storyline is told. Therefore Mario is shown up to here as the enemy, who is responsible for everything. 
 
 The 4 Bonus Worlds are to be hidden in the 8 Normal Worlds (examples: Library in a mountain on Yoshi's Island behind a waterfall; behind a mountain, where the camera will turn 180° when one enters the world, so that one can look behind it; 2 bonus worlds still have to be placed). In the Bonus Worlds the Bonus World storyline is to be told.
 
-The 8 Special Worlds on the other hand tell about the future plans of King Boo and the Shroobs. Once unlocked, it will be possible to switch between the Normal and Special World by pressing B on the wiimote while on the map. The Bonus Worlds won't be accessible from the Special Worlds as there won't be "Special Bonus Worlds".
+The 8 Special Worlds on the other hand tell about the future plans of King Boo and the Shroobs. Once unlocked, it will be possible to switch between the Normal and Special Worlds by pressing B on the wiimote while on the map. The Bonus Worlds won't be accessible from the Special Worlds as there won't be "Special Bonus Worlds".
 
-When switching between the Normal Worlds and Special Worlds, textures and background objects should change. Also the Special Worlds have to be unlocked one after another just as in the Normal Worlds. The levels of the Special Worlds will be slightly more difficult versions of the respective levels of the Normal Worlds. Additionally the so called hardmode is activated: less time and each hit means immediate death.
+When switching between the Normal Worlds and Special Worlds, textures and background objects should change. Also the Special Worlds have to be unlocked one after another just as the Normal Worlds. The levels of the Special Worlds will be slightly more difficult versions of the respective levels of the Normal Worlds. Additionally the so called hardmode is activated: less time and each hit means immediate death.
 
 ##### Story told in the Bonus Worlds:
 
@@ -60,7 +60,7 @@ King Boo has captured Bowsette. She is a relative of Bowser, who, unlike Bowser,
 
 King Boo believes that with her knowledge, he will become able to regain possession of the Dark Moon and expand his power even further.
 
-Bowsette refuses to cooperate at all because she has learned that Bowser has been killed by King Boo, a former ally. But the question is how long she will be able to hold out. Once King Boo has possession of the Darkmoon, all hope is lost.
+Bowsette refuses to cooperate because she has learned that Bowser has been killed by King Boo, a former ally. But the question is how long she will be able to hold out. Once King Boo has possession of the Darkmoon, all hope is lost.
 
 
 
