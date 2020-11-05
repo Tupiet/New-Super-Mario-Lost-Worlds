@@ -31,11 +31,6 @@ hooks:
     addr_pal: 0x809CB118
     data: '2C1C0003'
 
-  # - name: DisableTerrainShading
-    # type: patch
-    # addr_pal: 0x8008E6F8
-    # data: '38600000'
-
   # - name: TitleReplayLevels
     # type: patch
     # addr_pal: 0x802F4CD0
@@ -153,12 +148,6 @@ hooks:
     branch_type: b
     target_func: 'fix38WithJumpCoin'
 
-  # - name: 1-1 BG Fix
-    # type: patch
-    # addr_ntsc: 0x80117F6C
-    # addr_pal: 0x801180AC
-    # data: '38000003'
-    
   - name: PipeFix_NodeCalc
     type: patch
     addr_ntsc: 0x800508F8
@@ -209,6 +198,11 @@ hooks:
   - name: EN_BIGPILEFix
     type: patch
     addr_pal: 0x8001F93C
+    data: '48000014'
+
+  - name: RegionFreeSaves
+    type: patch
+    addr_pal: 0x800CF8B8
     data: '48000014'
 
   - name: RockyWrenchFix

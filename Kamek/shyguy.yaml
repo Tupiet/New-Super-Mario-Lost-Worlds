@@ -1,8 +1,8 @@
 ---
-# Replaces DUMMY_DOOR_CHILD
+# Replaced DUMMY_DOOR_CHILD
 
 source_files: [../src/shyguy.cpp]
-hooks:
+hooks: 
   - name: ShyGuyBuild
     type: add_func_pointer
     src_addr_pal: 0x80958C88

@@ -1,0 +1,96 @@
+---
+#Replaces Actor 555 AC_WATER_BUBBLE_CANNON (Sprite 328)
+
+
+source_files: [../src/boomeranghax.cpp, ../src/boomeranghax.S]
+hooks:
+  - name: BoomerangHaxBuild
+    type: add_func_pointer
+    src_addr_pal: 0x8097FE80
+    target_func: 'daBoomerangHax_c::build(void)'
+
+  - name: GABON_ROCK_replace
+    type: add_func_pointer
+    src_addr_pal: 0x8095C740
+    target_func: 'daGabonRock_c::getsettings(void)'
+    
+  - name: ExpandGDisplayStruct
+    type: patch
+    addr_pal: 0x80157828
+    data: '386005AC' #Original: 386005A4
+
+  - name: GDisplay_doWait
+    type: add_func_pointer
+    src_addr_pal: 0x80327A58
+    target_func: 'dGameDisplay_c::doWaitCheck(void)'
+
+  - name: GlobalCoin
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80159AE8
+    target_func: 'dGameDisplay_c::doGlobalCoin(void)'
+
+  - name: GDisplay_cleanClouds
+    type: add_func_pointer
+    src_addr_pal: 0x80327A40
+    target_func: 'dGameDisplay_c::cleanClouds(void)'
+
+  - name: BOMB_PLAYERCOLLISION_replace
+    type: add_func_pointer
+    src_addr_pal: 0x80ADDC90
+    target_func: 'daEnBomhei_c::newPlayerCollision(ActivePhysics *, ActivePhysics *)'
+
+  - name: BOMB_SPRITECOLLISION_replace
+    type: add_func_pointer
+    src_addr_pal: 0x80ADDC8C
+    target_func: 'daEnBomhei_c::newSpriteCollision(ActivePhysics *, ActivePhysics *)'
+
+  #Frog-related
+
+  - name: FrogFootsteps
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8004D61C
+    target_func: 'FrogFootsteps'
+
+  - name: FrogSwimBegin
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801303AC
+    target_func: 'FrogSwimBegin'
+
+  - name: FrogSwimHip0a
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80130708
+    target_func: 'FrogSwimHip0a'
+
+  - name: FrogSwimHip0b
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801307AC
+    target_func: 'FrogSwimHip0b'
+
+  - name: FrogSwimHip1
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80130D68
+    target_func: 'FrogSwimHip1'
+
+  - name: FrogSwimHip2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801315CC
+    target_func: 'FrogSwimHip2'
+
+  - name: FrogSwimHip3a
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801319D4
+    target_func: 'FrogSwimHip3a'
+
+  - name: FrogSwimHip3b
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80131A7C
+    target_func: 'FrogSwimHip3b'

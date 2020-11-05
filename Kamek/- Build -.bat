@@ -10,25 +10,25 @@ pause
 exit
 
 :mapfile
-python tools/mapfile_tool.py
+py -3 tools/mapfile_tool.py
 if %errorlevel%==0 goto kamek
 pause
 exit
 
 :kamek
-python tools/kamek.py NewerProjectKP.yaml --no-rels --use-mw --gcc-type=powerpc-eabi --gcc-path=tools\devkitPPC\bin --gcc-append-exe --mw-path=tools --fast-hack
+py -3 tools/kamek.py NewerProjectKP.yaml --no-rels --use-mw --gcc-type=powerpc-eabi --gcc-path=tools\devkitPPC\bin --gcc-append-exe --mw-path=tools --fast-hack
 if %errorlevel%==0 goto rename
 pause
 exit
 
 :rename
-python tools/renameNewer.py
-if %errorlevel%==0 goto end
+py -3 tools/renameNewer.py
+if %errorlevel%==0 goto move
 pause
 exit
 
 :move
-move "%~dp0\Build\*" C:\Dolphin\NSMBWer\NewerRes >nul
+move "%~dp0\Build\*" "%NSMBWer%\DATA\files\NewerRes" >nul
 if %errorlevel%==0 goto end
 pause
 exit

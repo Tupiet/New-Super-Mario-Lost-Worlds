@@ -258,6 +258,11 @@ public:
 		struct {
 			// ALL Newer additions should go here
 			// This array has been verified as safe to replace
+			u8 addToLevelNum;
+			u8 secret_worlds_available[10];
+			u8 SIHammer;
+			char additional[51];
+		/*
 			char newerWorldName[32]; // 0x6FC
 			GXColor fsTextColours[2]; // 0x71C
 			GXColor fsHintColours[2]; // 0x724
@@ -268,6 +273,7 @@ public:
 			u8 newerWorldID; // 0x739
 			u8 titleScreenWorld; // 0x73A
 			u8 titleScreenLevel; // 0x73B
+		*/
 			// Pretty much full up here...
 		};
 	};
@@ -2362,7 +2368,6 @@ class dPlayerInput_c {
 		void setTransientForcedButtons(u32 buttons); // 8005E960
 		void forceShakingOn(); // 8005E980
 
-	private:
 		int playerID;
 		u16 heldButtons, nowPressed;
 		u16 lastHeldButtons, lastNowPressed;
@@ -2743,7 +2748,21 @@ public:
 	~daEnBlockMain_c();
 };
 
+class BlkItemSpawn : public daEnBlockMain_c {
+	float x;
+	float y;
+	u32 field_8;
+	u8 playerID;
+	u8 _D;
+	u8 _E;
+	u8 _F;
+	u32 itemType;
+	u8 flag;
+	u8 field_15;
+	u8 valueForItemDA4;
 
+	int doStupidOSReport();
+};
 
 class daKameckDemo : public dEn_c {
 
@@ -3861,6 +3880,18 @@ class dStockItemShadow_c : public dBase_c {
 	int values[8];
 	nw4r::lyt::TextBox *hammerValue, *hammerX;
 	nw4r::lyt::Picture *hammerButtonBase;
+	nw4r::lyt::TextBox *boomerValue, *boomerX;
+	nw4r::lyt::Picture *boomerButtonBase;
+	nw4r::lyt::TextBox *spikeValue, *spikeX;
+	nw4r::lyt::Picture *spikeButtonBase;
+	nw4r::lyt::TextBox *bombValue, *bombX;
+	nw4r::lyt::Picture *bombButtonBase;
+	nw4r::lyt::TextBox *frogValue, *frogX;
+	nw4r::lyt::Picture *frogButtonBase;
+	nw4r::lyt::TextBox *thunderValue, *thunderX;
+	nw4r::lyt::Picture *thunderButtonBase;
+	nw4r::lyt::TextBox *cloudValue, *cloudX;
+	nw4r::lyt::Picture *cloudButtonBase;
 };
 
 class dStockItem_c : public dBase_c {

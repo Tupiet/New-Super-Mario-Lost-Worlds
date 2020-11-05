@@ -2,7 +2,7 @@
 #include <game.h>
 #include <g3dhax.h>
 #include <sfx.h>
-
+#include <profile.h>
 
 const char* SGarcNameList [] = {
 	"shyguy",
@@ -13,20 +13,20 @@ const char* SGarcNameList [] = {
 // Shy Guy Settings
 // 
 // Nybble 5: Shy Guy Types
-//		0 - Walker 	
-//		1 - Pacing Walker
-//		2 - Sleeper
-//		3 - Jumper
-// 		4 - Judo Master 
+// 		0 - Walker
+// 		1 - Pacing Walker
+// 		2 - Sleeper
+// 		3 - Jumper
+// 		4 - Judo Master
 // 		5 - Spike Thrower
 // 		6 - Ballooneer Horizontal
 // 		7 - Ballooneer Vertical
-// 		8 - Ballooneer Circular 
-//		9 - Walking Giant
+// 		8 - Ballooneer Circular
+// 		9 - Walking Giant
 // 		10 - Pacing Giant
 //
 // Nybble 9: Distance Moved
-//		# - Distance for Pacing Walker, Pacing Giants, and Ballooneers 
+// 		# - Distance for Pacing Walker, Pacing Giants, and Ballooneers
 //
 // If I add items in the balloons....
 // I_kinoko, I_fireflower, I_propeller_model, I_iceflower, I_star, I_penguin - model names
@@ -84,7 +84,7 @@ class daShyGuy : public dEn_c {
 	ActivePhysics Knuckles;
 	ActivePhysics balloonPhysics;
 
-	static daShyGuy *build();
+	public: static dActor_c *build();
 
 	void bindAnimChr_and_setUpdateRate(const char* name, int unk, float unk2, float rate);
 	void updateModelMatrices();
@@ -139,10 +139,18 @@ class daShyGuy : public dEn_c {
 	int type;
 };
 
-daShyGuy *daShyGuy::build() {
+
+const SpriteData ShyGuySpriteData = {ProfileId::ShyGuy, 0x5, -0x31, 0, 0x10, 0x10, 0x40, 0x40, 0x40, 0, 0, 0};
+// #      -ID- ----  -X Offs- -Y Offs-  -RectX1- -RectY1- -RectX2- -RectY2-  -1C- -1E- -20- -22-  Flag ----
+Profile ShyGuyProfile(&daShyGuy::build, SpriteId::ShyGuy, ShyGuySpriteData, ProfileId::DUMMY_DOOR_CHILD, ProfileId::ShyGuy, "ShyGuy", SGarcNameList);
+
+
+dActor_c *daShyGuy::build() {
 	void *buffer = AllocFromGameHeap1(sizeof(daShyGuy));
 	return new(buffer) daShyGuy;
 }
+
+
 
 ///////////////////////
 // Externs and States

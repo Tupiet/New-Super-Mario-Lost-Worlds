@@ -1,0 +1,222 @@
+---
+source_files: [../src/0.cpp, ../src/0.S]
+hooks:
+
+ # - name: ExceptionRecovery
+ #   type: patch
+ #   addr_pal: 0x80000304
+ #   data: '7C7043A6 7C7A02A6 38630004 7C7A03A6 7C7042A6 60000000 4C000064'
+ #  #data:
+
+#  - name: EceptionReport
+#    type: patch
+#    addr_pal: 0x80000300
+#    data: '8015F870 801AF710 801CA7C0 801CAAD0 801CAC60 801CAB40 802B8E00 802B90B0 80377F48 8042A72C 802E1ACC 45550000 3FE08000 63FF1804 48000000 7C9043A6 7C9A02A6 38840004 7C9A03A6 7C9042A6 4182FFE0 3C608000 60631870 819F0000 7D8903A6 4E800421 4C000064 43726173 68206174 3A202573'
+
+  #- name: debug50000000000
+  #  type: branch_insn
+  #  branch_type: b
+  #  src_addr_pal: 0x8000300
+  #  target_func: 'loc_0x0'
+
+  - name: crashReport   #DSI Interrupt
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80000300
+    target_func: 'reportCrashAdress'
+
+  - name: crashReport   #Program Interrupt
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80000700
+    target_func: 'reportCrashAdress'
+
+  - name: crashReport   #Trace Interrupt
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80000d00
+    target_func: 'reportCrashAdress'
+
+
+
+  - name: Test
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800E2030
+    target_func: 'Test(void)'
+
+  - name: patchReturn
+    type: patch
+    data: "4E800020"
+    addr_pal: 0x800E2034
+
+  - name: addSpecialToLevelNum
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800f9724
+    target_func: 'AddToLevelNum(int)'
+
+  - name: patchReturn2
+    type: patch
+    data: "4E800020"
+    addr_pal: 0x800f9728
+
+
+
+#  - name: rewrite
+#    type: branch_insn
+#    branch_type: b
+#    src_addr_pal: 0x800F9C58
+#    target_func: 'rewrite(char *)'
+
+
+
+  - name: wmLoop
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8092c284
+    target_func: 'wmtest(void)'
+
+  - name: patchReturn3
+    type: patch
+    data: "4E800020"
+    addr_pal: 0x8092c288
+
+
+
+  - name: SetLevelIdentifierRewrite
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x8090cf1c
+    target_func: 'SetLevelIdentifier(unsigned char, unsigned char, unsigned char *, unsigned char *)'
+
+
+
+
+
+
+  - name: SetConditionInWorldDataForWorldAndLevel1
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800fbd14
+    target_func: 'SetConditionInWorldDataForWorldAndLevel(int, int, int, unsigned int)'
+
+  - name: SetConditionInWorldDataForWorldAndLevel2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800fbcc4
+    target_func: 'SetConditionInWorldDataForWorldAndLevel(int, int, int, unsigned int)'
+
+  - name: SetConditionInWorldDataForWorldAndLevel3
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800fbbe4
+    target_func: 'SetConditionInWorldDataForWorldAndLevel(int, int, int, unsigned int)'
+
+  - name: SetConditionInWorldDataForWorldAndLevel4
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800fbc50
+    target_func: 'SetConditionInWorldDataForWorldAndLevel(int, int, int, unsigned int)'
+
+#800fbd14
+#800fbcc4
+#800fbbe4
+#800fbc50
+
+
+
+#  - name: CheckIfConditionIsCompletedForWorldAndLevel
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x800ce4b0
+#    target_func: 'CheckIfConditionIsCompletedForWorldAndLevel(int, int, int, unsigned int)'
+
+#  - name: patchReturn4
+#    type: patch
+#    data: "4E800020"
+#    addr_pal: 0x800ce4b4
+
+
+
+
+
+
+#800ce4b0
+
+
+
+
+
+
+
+
+
+  - name: SetSpecificStarCoinToCollected1
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80925320
+    target_func: 'SetSpecificStarCoinToCollected(int, int, int, unsigned int)'
+
+
+
+  - name: CheckIfWeHaveASpecificStarCoin1
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80010e80
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+  - name: CheckIfWeHaveASpecificStarCoin2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800ce2b8
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+  - name: CheckIfWeHaveASpecificStarCoin3
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80157ef8
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+  - name: CheckIfWeHaveASpecificStarCoin4
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80159cc8
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+  - name: CheckIfWeHaveASpecificStarCoin5
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80774e58
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+  - name: CheckIfWeHaveASpecificStarCoin6
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80792f9c
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+  - name: CheckIfWeHaveASpecificStarCoin7
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80aaa0d8
+    target_func: 'CheckIfWeHaveASpecificStarCoin(int, int, int, int)'
+
+
+
+#0x80010e80
+#0x800ce2b8
+#0x80157ef8
+#0x80159cc8
+#0x80774e58
+#0x80792f9c
+#0x80aaa0d8
+
+
+
+  - name: dStockItemOnCreate
+    type: add_func_pointer
+    src_addr_pal: 0x8094fce8
+    target_func: 'dStockItemCreate(int)'
+
+

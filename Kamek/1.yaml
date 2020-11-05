@@ -1,0 +1,13 @@
+---
+source_files: [../src/wm/player.cpp]
+hooks:
+  - name: BuildWMPlayer # WM_PLAYER
+    type: add_func_pointer
+    src_addr_pal: 0x80988DDC
+    target_func: 'daWMPlayer_c::build(void)'
+
+#  - name: StockItemFix #wrong -> 8 items instead of 14 here
+#    type: patch
+#    addr_ntsc: 0x80101110
+#    addr_pal: 0x80101220
+#    data: '4E800020'

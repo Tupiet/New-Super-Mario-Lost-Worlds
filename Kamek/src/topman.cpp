@@ -33,7 +33,7 @@ class daTopman : public dEn_c {
 	char backFire;
 	int directionStore;
 
-	static daTopman *build();
+	public: static dActor_c *build();
 
 	void bindAnimChr_and_setUpdateRate(const char* name, int unk, float unk2, float rate);
 	void updateModelMatrices();
@@ -66,7 +66,10 @@ class daTopman : public dEn_c {
 	DECLARE_STATE(Die);
 };
 
-daTopman *daTopman::build() {
+const SpriteData TopmanSpriteData = { ProfileId::Topman, 8, -8 , 0 , 0, 0x100, 0x100, 0, 0, 0, 0, 0 };
+Profile TopmanProfile(&daTopman::build, SpriteId::Topman, TopmanSpriteData, ProfileId::TARZAN_ROPE, ProfileId::Topman, "Topman", TMarcNameList);
+
+dActor_c *daTopman::build() {
 	void *buffer = AllocFromGameHeap1(sizeof(daTopman));
 	return new(buffer) daTopman;
 }
