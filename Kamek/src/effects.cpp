@@ -1005,7 +1005,11 @@ const char* effects_name_list [] = {
 	"Wm_jr_electricstart",
 	"Wm_jr_electricglow",
 	"Wm_jr_electricspark",
-	"Wm_jr_electricline"
+	"Wm_jr_electricline",
+	"rk_karehayama",
+	"rk_karehayama0",
+	"rk_karehayama0S",
+	"rk_karehayamaS"
 };
 
 extern "C" bool SpawnEffect(const char*, int, Vec*, S16Vec*, Vec*);

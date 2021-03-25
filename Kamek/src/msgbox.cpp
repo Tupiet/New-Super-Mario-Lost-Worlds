@@ -1,6 +1,6 @@
 #include <common.h>
 #include <game.h>
-#include <sfx.h>
+#include "sfx.h"
 #include "msgbox.h"
 
 // Replaces: EN_LIFT_ROTATION_HALF (Sprite 107; Profile ID 481 @ 80AF96F8)
@@ -69,7 +69,7 @@ int dMsgBoxManager_c::onDraw() {
 	if (visible) {
 		layout.scheduleForDrawing();
 	}
-	
+
 	return true;
 }
 
@@ -91,7 +91,6 @@ CREATE_STATE_E(dMsgBoxManager_c, LoadRes);
 void dMsgBoxManager_c::executeState_LoadRes() {
 	if (msgDataLoader.load("/NewerRes/Messages.bin")) {
 		state.setState(&StateID_Wait);
-	} else {
 	}
 }
 
@@ -107,7 +106,7 @@ void dMsgBoxManager_c::executeState_Wait() {
 // Show Box
 void dMsgBoxManager_c::showMessage(int id, bool canCancel, int delay) {
 	if (!this) {
-		OSReport("ADD A MESSAGE BOX MANAGER YOU MORON\n");
+		OSReport("Message Block: No message block manager found.\n");
 		return;
 	}
 
@@ -209,8 +208,6 @@ void dMsgBoxManager_c::endState_BoxDisappearWait() {
 		StageC4::instance->_1D = 0; // disable no-pause
 }
 
-
-
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/
@@ -218,9 +215,12 @@ void dMsgBoxManager_c::endState_BoxDisappearWait() {
 
 
 class daEnMsgBlock_c : public daEnBlockMain_c {
-public:
+	public:
 	TileRenderer tile;
 	Physics::Info physicsInfo;
+	u16 msg;
+	u8 eventID;
+	bool eventTriggered;
 
 	int onCreate();
 	int onDelete();
@@ -228,6 +228,7 @@ public:
 
 	void calledWhenUpMoveExecutes();
 	void calledWhenDownMoveExecutes();
+	bool wasEventTriggered();
 
 	void blockWasHit(bool isDown);
 
@@ -242,6 +243,13 @@ CREATE_STATE(daEnMsgBlock_c, Wait);
 
 
 int daEnMsgBlock_c::onCreate() {
+	// read settings
+	this->eventID = ((this->settings >> 16) & 0xFF);
+	this->msg = this->settings & 0xFFFF;
+	this->eventTriggered = false;
+
+	OSReport("Linking message %d to event %d\n", this->msg, this->eventID);
+
 	blockInit(pos.y);
 
 	physicsInfo.x1 = -8;
@@ -284,6 +292,9 @@ int daEnMsgBlock_c::onDelete() {
 
 
 int daEnMsgBlock_c::onExecute() {
+	// check if event was triggered
+	this->wasEventTriggered();
+
 	acState.execute();
 	physics.update();
 	blockUpdate();
@@ -307,16 +318,18 @@ daEnMsgBlock_c *daEnMsgBlock_c::build() {
 
 
 void daEnMsgBlock_c::blockWasHit(bool isDown) {
-	pos.y = initialY;
+	this->pos.y = initialY;
 
-	if (dMsgBoxManager_c::instance)
-		dMsgBoxManager_c::instance->showMessage(settings);
-	else
+	if (dMsgBoxManager_c::instance) {
+		dMsgBoxManager_c::instance->showMessage(this->msg);
+	} else {
+		OSReport("No MsgBoxManager found! Deleting this message block\n");
 		Delete(false);
+	}
 
 	physics.setup(this, &physicsInfo, 3, currentLayerID);
 	physics.addToList();
-	
+
 	doStateChange(&StateID_Wait);
 }
 
@@ -332,6 +345,27 @@ void daEnMsgBlock_c::calledWhenDownMoveExecutes() {
 		blockWasHit(true);
 }
 
+bool daEnMsgBlock_c::wasEventTriggered() {
+	// check if event was triggered
+	bool eventActive = dFlagMgr_c::instance->flags & (((u64)1 << (this->eventID - 1)) | spriteFlagMask) == 1;
+	if (eventActive && !this->eventTriggered) {
+		OSReport("MsgBlock: Triggered msg %d by event %d\n", this->msg, this->eventID);
+
+		// act as if it was hit
+		this->blockWasHit(true);
+		this->eventTriggered = true;
+
+		return true;
+	}
+
+	if (this->eventTriggered && !eventActive) {
+		// enable the event triggeredness again
+		OSReport("MsgBlock: Re-enabling!");
+		this->eventTriggered = false;
+	}
+
+	return false;
+}
 
 
 void daEnMsgBlock_c::beginState_Wait() {
@@ -356,5 +390,3 @@ void daEnMsgBlock_c::executeState_Wait() {
 		isGroundPound = true;
 	}
 }
-
-

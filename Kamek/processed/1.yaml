@@ -1,0 +1,12 @@
+hooks:
+- name: BuildWMPlayer
+  src_addr_jpn: 2157479620
+  src_addr_jpn2: 2157479636
+  src_addr_ntsc: 2157481436
+  src_addr_ntsc2: 2157481452
+  src_addr_pal: 2157481436
+  src_addr_pal2: 2157481452
+  target_func: daWMPlayer_c::build(void)
+  type: add_func_pointer
+source_files:
+- ../src/wm/player.cpp

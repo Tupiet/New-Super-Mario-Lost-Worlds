@@ -1,0 +1,50 @@
+---
+# copied from NSMASR by CLF78
+source_files: [../src/tilesetfixer.cpp, ../src/flower.S]
+hooks:
+  - name: DisableTerrainShading
+    type: patch
+    addr_pal: 0x8008E6F8
+    data: '38600000'
+
+  - name: DisableTilesetSlots
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80081718
+    target_func: 'TilesetFixerHack(void *, void *, int, int)'
+
+  - name: DisableTilesetSlots2
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x800817C4
+    target_func: 'TilesetFixerHack(void *, void *, int, int)'
+
+  - name: FlowerHack1
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80077FC4
+    target_func: 'FlowerCheck'
+
+  - name: FlowerHack2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x808762D8
+    target_func: 'FlowerBuild1'
+
+  - name: FlowerHack3
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80876364
+    target_func: 'FlowerBuild2'
+
+  - name: FlowerHack4
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x808763C8
+    target_func: 'FlowerBuild3'
+
+  - name: FlowerHack5
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80876568
+    target_func: 'FlowerBuild4'

@@ -1,0 +1,98 @@
+---
+source_files: [../src/UpsideDown.S, ../src/UpsideDownEvent.cpp]
+
+hooks:
+  - name: FirstHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80070ef4
+    target_func: 'FirstHook'
+
+#  - name: SecondHook
+#    type: branch_insn
+#    branch_type: b
+#    src_addr_pal: 0x800e453c
+#    target_func: 'SecondHook'
+
+  - name: ThirdHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80057104
+    target_func: 'ThirdHook'
+
+  - name: FourthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8012771c
+    target_func: 'FourthHook'
+
+  - name: FifthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8005714c
+    target_func: 'FifthHook'
+
+  - name: SixthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8004c5bc
+    target_func: 'SixthHook'
+
+  - name: SeventhHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8006cde0
+    target_func: 'SeventhHook'
+
+  - name: EighthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x801c0d1c
+    target_func: 'EighthHook'
+
+  - name: NinthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800b07ec
+    target_func: 'NinthHook'
+
+  - name: TenthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80128254
+    target_func: 'TenthHook'
+
+  - name: EleventhHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80926770
+    target_func: 'EleventhHook'
+
+  - name: TwelvethHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8006f7b4
+    target_func: 'TwelvethHook'
+
+  - name: ThirteenthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80064f50
+    target_func: 'ThirteenthHook'
+
+  - name: FourteenthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80070CC0
+    target_func: 'FourteenthHook'
+
+  - name: FifteenthHook
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80054678
+    target_func: 'FifteenthHook'
+
+  # - name: GoInFuckingHellHook
+  #   type: patch
+  #   addr_pal: 0x80057A18
+  #   data: '2C000000' #Orig: 54000109

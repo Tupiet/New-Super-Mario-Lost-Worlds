@@ -1,0 +1,29 @@
+hooks:
+- addr_jpn: 2148880348
+  addr_jpn2: 2148880348
+  addr_ntsc: 2148880844
+  addr_ntsc2: 2148880844
+  addr_pal: 2148881164
+  addr_pal2: 2148881164
+  data: 280000FF
+  name: 2CastleFix
+  type: patch
+- addr_jpn: 2148629884
+  addr_jpn2: 2148629884
+  addr_ntsc: 2148630380
+  addr_ntsc2: 2148630380
+  addr_pal: 2148630700
+  addr_pal2: 2148630700
+  data: '38000003'
+  name: 1-1 BG Fix
+  type: patch
+- addr_jpn: 2148251516
+  addr_jpn2: 2148251516
+  addr_ntsc: 2148251644
+  addr_ntsc2: 2148251644
+  addr_pal: 2148251724
+  addr_pal2: 2148251724
+  data: 4800003C
+  name: HomeStageFix
+  type: patch
+source_files: []

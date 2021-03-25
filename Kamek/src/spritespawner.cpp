@@ -1,8 +1,9 @@
 #include <game.h>
+#include <profile.h>
 
 class dSpriteSpawner_c : public dStageActor_c {
 	public:
-		static dSpriteSpawner_c *build();
+		static dActor_c *build();
 
 		u64 classicEventOverride;
 		Actors profileID;
@@ -14,9 +15,13 @@ class dSpriteSpawner_c : public dStageActor_c {
 		int onExecute();
 };
 
-/*****************************************************************************/
-// Glue Code
-dSpriteSpawner_c *dSpriteSpawner_c::build() {
+
+const char *SpriteSpawnerFileList[] = {0};
+const SpriteData SpriteSpawnerSpriteData = { ProfileId::SpriteSpawner, 8, -8 , 0 , 0, 0x100, 0x100, 0, 0, 0, 0, 0 };
+Profile SpriteSpawnerProfile(&dSpriteSpawner_c::build, SpriteId::SpriteSpawner, SpriteSpawnerSpriteData, ProfileId::EN_BOYON, ProfileId::SpriteSpawner, "SpriteSpawner", SpriteSpawnerFileList);
+
+
+dActor_c *dSpriteSpawner_c::build() {
 	void *buffer = AllocFromGameHeap1(sizeof(dSpriteSpawner_c));
 	dSpriteSpawner_c *c = new(buffer) dSpriteSpawner_c;
 	return c;
@@ -66,15 +71,11 @@ int dSpriteSpawner_c::onExecute() {
 	if (respawn) {
 		if (childID) {
 			dStageActor_c *ac = (dStageActor_c*)fBase_c::search(childID);
-
 			if (!ac) {
 				dStageActor_c *newAc = dStageActor_c::create(profileID, childSettings, &pos, 0, 0);
 				childID = newAc->id;
 			}
 		}
 	}
-
 	return true;
-
 }
-

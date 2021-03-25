@@ -6,7 +6,7 @@
 
 extern "C" void *StageScreen;
 
-const char* MGarcNameList [] = {
+const char* MegaGoombaFileList [] = {
 	"kuriboBig",
 	"kuriboBoss",
 	NULL	
@@ -55,7 +55,7 @@ class daMegaGoomba_c : public dEn_c {
 	
 	void dieFall_Begin();
 	void dieFall_Execute();
-	static daMegaGoomba_c *build();
+	static dActor_c *build();
 
 	void setupBodyModel();
 	void setupCollision();
@@ -105,8 +105,10 @@ class daMegaGoomba_c : public dEn_c {
 	DECLARE_STATE(Turn);
 };
 
+const SpriteData MegaGoombaSpriteData = { ProfileId::MegaGoomba, 8, -8 , 0 , 0, 0x100, 0x100, 0, 0, 0, 0, 0 };
+Profile MegaGoombaProfile(&daMegaGoomba_c::build, SpriteId::MegaGoomba, MegaGoombaSpriteData, ProfileId::MegaGoomba, ProfileId::MegaGoomba, "MegaGoomba", MegaGoombaFileList);
 
-daMegaGoomba_c *daMegaGoomba_c::build() {
+dActor_c *daMegaGoomba_c::build() {
 	void *buffer = AllocFromGameHeap1(sizeof(daMegaGoomba_c));
 	return new(buffer) daMegaGoomba_c;
 }
@@ -366,8 +368,8 @@ void daMegaGoomba_c::dieFall_Execute() {
 void daMegaGoomba_c::setupBodyModel() {
 	allocator.link(-1, GameHeaps[0], 0, 0x20);
 
-	this->resFile.data = getResource("kuriboBoss", "g3d/kuriboBoss.brres");
-	nw4r::g3d::ResMdl mdl = this->resFile.GetResMdl("kuriboBig");
+	nw4r::g3d::ResFile rf(getResource("kuriboBoss", "g3d/kuriboBoss.brres"));
+	nw4r::g3d::ResMdl mdl = rf.GetResMdl("kuriboBig");
 	bodyModel.setup(mdl, &allocator, 0x224, 1, 0);
 	SetupTextures_Enemy(&bodyModel, 0);
 

@@ -45,6 +45,13 @@ hooks:
     src_addr_pal: 0x807EF26C
     target_func: 'TEX_RollingHills'
 
+# The below was added by Nin0
+#  - name: TEX_Poisonwater
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x800ebe74
+#    target_func: 'TEX_Poisonwater'
+
 # The below was added by Tempus
   - name: TEX_Goomba
     type: branch_insn

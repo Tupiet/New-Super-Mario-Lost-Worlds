@@ -1,0 +1,13 @@
+hooks:
+- branch_type: b
+  name: AirshipClouds
+  src_addr_jpn: 2157827836
+  src_addr_jpn2: 2157827868
+  src_addr_ntsc: 2157829660
+  src_addr_ntsc2: 2157829692
+  src_addr_pal: 2157829628
+  src_addr_pal2: 2157829660
+  target_func: AirshipClouds
+  type: branch_insn
+source_files:
+- ../src/cloud.S

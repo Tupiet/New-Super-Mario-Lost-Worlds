@@ -53,3 +53,4 @@ class dMsgBoxManager_c : public dStageActor_c {
 		};
 };
 #endif /* MSGBOX_H */
+

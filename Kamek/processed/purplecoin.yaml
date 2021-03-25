@@ -1,0 +1,3 @@
+hooks: []
+source_files:
+- ../src/purplecoin.cpp

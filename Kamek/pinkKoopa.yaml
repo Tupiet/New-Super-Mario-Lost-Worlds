@@ -1,0 +1,14 @@
+---
+source_files: [../src/pinkKoopa.S]
+hooks:
+  - name: leftRightThrow
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80a856bc
+    target_func: 'checkKoopaSettingsLR'
+
+  - name: upDownThrow
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80a8545c
+    target_func: 'checkKoopaSettingsUD'

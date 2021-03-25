@@ -1,0 +1,7 @@
+source_files: [../src/cloud.S]          # Cloud Area Mod (sprite 234). Set nybble 10 to 1 to enable Airship Clouds.
+hooks:                                  # Airship clouds only work for cloud types 0, 4 and 7, and they will span the entire zone regardless of the location's width (they will be at the location's height though). Enjoy!
+  - name: AirshipClouds                 # by CLF78
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x809DDDFC
+    target_func: 'AirshipClouds'

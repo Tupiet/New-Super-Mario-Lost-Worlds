@@ -1,0 +1,23 @@
+hooks:
+- branch_type: bl
+  name: leftRightThrow
+  src_addr_jpn: 2158514108
+  src_addr_jpn2: 2158514140
+  src_addr_ntsc: 2158515932
+  src_addr_ntsc2: 2158515964
+  src_addr_pal: 2158515900
+  src_addr_pal2: 2158515932
+  target_func: checkKoopaSettingsLR
+  type: branch_insn
+- branch_type: bl
+  name: upDownThrow
+  src_addr_jpn: 2158513500
+  src_addr_jpn2: 2158513532
+  src_addr_ntsc: 2158515324
+  src_addr_ntsc2: 2158515356
+  src_addr_pal: 2158515292
+  src_addr_pal2: 2158515324
+  target_func: checkKoopaSettingsUD
+  type: branch_insn
+source_files:
+- ../src/pinkKoopa.S

@@ -1,0 +1,6 @@
+---
+source_files: []
+hooks:
+  - name: makePlayerNotInvisible
+    type: nop_insn
+    area_pal: 0x8005088c

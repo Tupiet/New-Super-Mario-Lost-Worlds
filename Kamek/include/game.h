@@ -97,9 +97,9 @@ class GMgr8 {
 		virtual ~GMgr8();
 
 		int _4;
-		float _8, _C;
+		float checkpointEntranceXPos, checkpointEntranceYPos;
 		u32 _10, _14;
-		u8 _18, _19, _1A, _1B, _1C;
+		u8 checkpointWorldID, checkpointLevelID, _1A, checkpointEntranceID, _1C;
 		u32 _20, _24, _28, _2C, _30;
 };
 
@@ -258,6 +258,12 @@ public:
 		struct {
 			// ALL Newer additions should go here
 			// This array has been verified as safe to replace
+			u8 addToLevelNum;
+			u8 collected;
+			u8 secret_worlds_available[10];
+			u8 SIHammer;
+			char additional[50];
+		/*
 			char newerWorldName[32]; // 0x6FC
 			GXColor fsTextColours[2]; // 0x71C
 			GXColor fsHintColours[2]; // 0x724
@@ -268,6 +274,7 @@ public:
 			u8 newerWorldID; // 0x739
 			u8 titleScreenWorld; // 0x73A
 			u8 titleScreenLevel; // 0x73B
+		*/
 			// Pretty much full up here...
 		};
 	};
@@ -2041,19 +2048,19 @@ public:
 	u32 id;
 	u32 settings;
 	u16 name;
-	u8 _A;
-	u8 _B;
-	u8 _C;
-	u8 _D;
+	u8 wasCreated;
+	u8 wasDestroyed;
+	u8 wasCreatedInstantly;
+	u8 wasCreationDelayed;
 	u8 base_type;
-	u8 _F;
+	u8 currentProcessID; // &1 = connect, &2 = create, &4 = execute, &8 = delete, &16 = draw
 	TreeNode link_connect;
 	OrderedLinkListEntry link_execute;
 	OrderedLinkListEntry link_draw;
 	LinkListEntry link_IDlookup;
-	u32 _50;
-	u32 _54;
-	u32 _58;
+	void *unusedStruct;  // Checked by dtor and afterDelete, but never used
+	void *unusedStruct2; // Checked by beforeDelete, but never used
+	u32 unk;
 	u32 heap;
 
 	fBase_c();
@@ -2095,6 +2102,9 @@ public:
 	static fBase_c *search(u32 id);
 	static fBase_c *searchByBaseType(int type, fBase_c *previous);
 };
+
+
+
 
 class dBase_c : public fBase_c {
 public:
@@ -2197,8 +2207,14 @@ public:
 	u8 _34A, _34B;
 	u8 *spriteByteStorage;
 	u16 *spriteShortStorage;
-	u16 spriteFlagNum;
-	u64 spriteFlagMask;
+	union {
+		u16 spriteFlagNum;
+		struct {
+			u8 eventId2; // nybble 1-2
+			u8 eventId1; // nybble 3-4
+		};
+	};
+	u64 spriteFlagMask;		//if nybble 1-2 are != 0, nybble 3-4 get ignored and nybble 1-2 are used instead; spriteFlagMask = (u64)1 << (eventId1 - 1)
 	u32 _360;
 	u16 spriteSomeFlag;
 	u8 _366, _367;
@@ -2237,7 +2253,7 @@ public:
 	virtual void eatIn(); // copies Actor.scale into StageActor.somethingRelatedToScale
 	virtual void disableEatIn(); // params unknown. nullsub
 	virtual void _vf88(); // params unknown. nullsub
-	virtual bool _vf8C(void *other); // dAcPy_c/daPlBase_c? return (1) is probably bool. seems related to EatOut. uses vfA4
+	virtual bool spitOut(void *other); // dAcPy_c/daPlBase_c? return (1) is probably bool. seems related to EatOut. uses vfA4
 	virtual bool _vf90(dStageActor_c *other); // does something with scores
 	virtual void _vf94(void *other); // dAcPy_c/daPlBase_c? modifies This's position
 	virtual void removeMyActivePhysics();
@@ -2362,7 +2378,6 @@ class dPlayerInput_c {
 		void setTransientForcedButtons(u32 buttons); // 8005E960
 		void forceShakingOn(); // 8005E980
 
-	private:
 		int playerID;
 		u16 heldButtons, nowPressed;
 		u16 lastHeldButtons, lastNowPressed;
@@ -2396,6 +2411,8 @@ class daPlBase_c : public dStageActor_c {
 		u8 _1460;
 		dStateWrapper_c<daPlBase_c> states2;
 
+		void useDemoControl(daPlBase_c *playerOrYoshi);
+
 		void justFaceSpecificDirection(int direction);
 		void moveInDirection(float *targetX, float *speed);
 		bool isReadyForDemoControlAction();
@@ -2410,13 +2427,7 @@ class daPlBase_c : public dStageActor_c {
 		static daPlBase_c *findByID(int id);
 };
 
-class dAcPy_c : public daPlBase_c {
-	public:
-		// Can't be assed to build full headers right now
-		void *getYoshi(); // 80139A90
 
-		static dAcPy_c *findByID(int id);
-};
 
 daPlBase_c *GetPlayerOrYoshi(int id);
 
@@ -2515,7 +2526,7 @@ public:
 
 	void eatIn();
 	void disableEatIn();
-	bool _vf8C(void *other); // AcPy/PlBase?
+	bool spitOut(void *other); // AcPy/PlBase?
 	void _vfAC();
 	void _vfCC(Vec2 *p, float f);
 	void _vfD0(Vec2 *p, float f);
@@ -2685,8 +2696,8 @@ public:
 	u8 _67D, _67E, _67F, _680;
 	u32 _684;
 	u8 _688, isGroundPound, anotherFlag, _68B, _68C, _68D, _68E, _68F;
-	u32 _690;
-	u8 _694;
+	u32 in_coin_depends_on_nyb10;
+	u8 playerID;
 
 	// Regular methods
 	void blockInit(float initialY);
@@ -2743,7 +2754,21 @@ public:
 	~daEnBlockMain_c();
 };
 
+class BlkItemSpawn : public daEnBlockMain_c {
+	float x;
+	float y;
+	u32 field_8;
+	u8 playerID;
+	u8 _D;
+	u8 _E;
+	u8 _F;
+	u32 itemType;
+	u8 flag;
+	u8 field_15;
+	u8 valueForItemDA4;
 
+	int doStupidOSReport();
+};
 
 class daKameckDemo : public dEn_c {
 
@@ -3758,6 +3783,691 @@ class MessageClass {
 		dScript::Res_c *msgRes;
 };
 
+class dAcPy_c : public daPlBase_c {
+	public:
+		u32 characterID;
+		u32 field_14D8;
+		u32 previousPowerup_maybe;
+		u32 powerupAlt;
+		u8 _14E4;
+		u8 _14E5;
+		u8 _14E6;
+		u8 _14E7;
+		u8 _14E8;
+		u8 _14E9;
+		u8 _14EA;
+		u8 _14EB;
+		u8 _14EC;
+		u8 _14ED;
+		u8 _14EE;
+		u8 _14EF;
+		u8 _14F0;
+		u8 _14F1;
+		u8 _14F2;
+		u8 _14F3;
+		u8 _14F4;
+		u8 _14F5;
+		u8 _14F6;
+		u8 _14F7;
+		u8 _14F8;
+		u8 _14F9;
+		u8 _14FA;
+		u8 _14FB;
+		u32 unkClassWithAlmostEmptyVtable;
+		u8 _1500;
+		u8 _1501;
+		u8 _1502;
+		u8 _1503;
+		u8 _1504;
+		u8 _1505;
+		u8 _1506;
+		u8 _1507;
+		u32 field_1508;
+		u8 _150C;
+		u8 _150D;
+		u8 _150E;
+		u8 _150F;
+		u8 _1510;
+		u8 _1511;
+		u8 _1512;
+		u8 _1513;
+		u8 _1514;
+		u8 _1515;
+		u8 _1516;
+		u8 _1517;
+		u8 _1518;
+		u8 _1519;
+		u8 _151A;
+		u8 _151B;
+		u8 _151C;
+		u8 _151D;
+		u8 _151E;
+		u8 _151F;
+		u8 _1520;
+		u8 _1521;
+		u8 _1522;
+		u8 _1523;
+		u8 _1524;
+		u8 _1525;
+		u8 _1526;
+		u8 _1527;
+		u8 _1528;
+		u8 _1529;
+		u8 _152A;
+		u8 _152B;
+		u8 _152C;
+		u8 _152D;
+		u8 _152E;
+		u8 _152F;
+		u8 _1530;
+		u8 _1531;
+		u8 _1532;
+		u8 _1533;
+		u8 _1534;
+		u8 _1535;
+		u8 _1536;
+		u8 _1537;
+		u8 _1538;
+		u8 _1539;
+		u8 _153A;
+		u8 _153B;
+		u8 field_153C;
+		u8 field_153D;
+		u8 _153E;
+		u8 _153F;
+		u8 _1540;
+		u8 _1541;
+		u8 _1542;
+		u8 _1543;
+		float field_1544;
+		u8 _1548;
+		u8 _1549;
+		u8 _154A;
+		u8 _154B;
+		u8 _154C;
+		u8 _154D;
+		u8 _154E;
+		u8 _154F;
+		u8 _1550;
+		u8 _1551;
+		u8 _1552;
+		u8 _1553;
+		u8 _1554;
+		u8 _1555;
+		u8 _1556;
+		u8 _1557;
+		u8 _1558;
+		u8 _1559;
+		u8 _155A;
+		u8 _155B;
+		u8 _155C;
+		u8 _155D;
+		u8 _155E;
+		u8 _155F;
+		u8 _1560;
+		u8 _1561;
+		u8 _1562;
+		u8 _1563;
+		u32 jumpSoundRelated;
+		u8 _1568;
+		u8 _1569;
+		u8 _156A;
+		u8 _156B;
+		u8 _156C;
+		u8 _156D;
+		u8 _156E;
+		u8 _156F;
+		mEf::es2 pyeffects1;
+		mEf::es2 pyeffects2;
+		u8 _17C0;
+		u8 _17C1;
+		u8 _17C2;
+		u8 _17C3;
+		u8 _17C4;
+		u8 _17C5;
+		u8 _17C6;
+		u8 _17C7;
+		u8 _17C8;
+		u8 _17C9;
+		u8 _17CA;
+		u8 _17CB;
+		u16 field_17CC;
+		u8 _17CE;
+		u8 _17CF;
+		u8 _17D0;
+		u8 _17D1;
+		u8 _17D2;
+		u8 _17D3;
+		mEf::es2 pyeffects3;
+		EGG::Effect anotherPyEffector;
+		u8 _1A10;
+		u8 _1A11;
+		u8 _1A12;
+		u8 _1A13;
+		u8 _1A14;
+		u8 _1A15;
+		u8 _1A16;
+		u8 _1A17;
+		u8 _1A18;
+		u8 _1A19;
+		u8 _1A1A;
+		u8 _1A1B;
+		u8 _1A1C;
+		u8 _1A1D;
+		u8 _1A1E;
+		u8 _1A1F;
+		u8 _1A20;
+		u8 _1A21;
+		u8 _1A22;
+		u8 _1A23;
+		u8 _1A24;
+		u8 _1A25;
+		u8 _1A26;
+		u8 _1A27;
+		mEf::es2 pyeffects4;
+		mEf::es2 pyeffects5;
+		u8 _1C78;
+		u8 _1C79;
+		u8 _1C7A;
+		u8 _1C7B;
+		u8 _1C7C;
+		u8 _1C7D;
+		u8 _1C7E;
+		u8 _1C7F;
+		u8 _1C80;
+		u8 _1C81;
+		u8 _1C82;
+		u8 _1C83;
+		u8 _1C84;
+		u8 _1C85;
+		u8 _1C86;
+		u8 _1C87;
+		u8 _1C88;
+		u8 _1C89;
+		u8 _1C8A;
+		u8 _1C8B;
+		u8 _1C8C;
+		u8 _1C8D;
+		u8 _1C8E;
+		u8 _1C8F;
+		u8 _1C90;
+		u8 _1C91;
+		u8 _1C92;
+		u8 _1C93;
+		u8 _1C94;
+		u8 _1C95;
+		u8 _1C96;
+		u8 _1C97;
+		u8 _1C98;
+		u8 _1C99;
+		u8 _1C9A;
+		u8 _1C9B;
+		u8 _1C9C;
+		u8 _1C9D;
+		u8 _1C9E;
+		u8 _1C9F;
+		mEf::es2 pyeffects6;
+		u8 _1DC8;
+		u8 _1DC9;
+		u8 _1DCA;
+		u8 _1DCB;
+		u8 _1DCC;
+		u8 _1DCD;
+		u8 _1DCE;
+		u8 _1DCF;
+		u8 _1DD0;
+		u8 _1DD1;
+		u8 _1DD2;
+		u8 _1DD3;
+		u8 _1DD4;
+		u8 _1DD5;
+		u8 _1DD6;
+		u8 _1DD7;
+		u8 _1DD8;
+		u8 _1DD9;
+		u8 _1DDA;
+		u8 _1DDB;
+		u8 _1DDC;
+		u8 _1DDD;
+		u8 _1DDE;
+		u8 _1DDF;
+		u8 _1DE0;
+		u8 _1DE1;
+		u8 _1DE2;
+		u8 _1DE3;
+		u8 _1DE4;
+		u8 _1DE5;
+		u8 _1DE6;
+		u8 _1DE7;
+		u8 _1DE8;
+		u8 _1DE9;
+		u8 _1DEA;
+		u8 _1DEB;
+		u8 _1DEC;
+		u8 _1DED;
+		u8 _1DEE;
+		u8 _1DEF;
+		u8 _1DF0;
+		u8 _1DF1;
+		u8 _1DF2;
+		u8 _1DF3;
+		u8 _1DF4;
+		u8 _1DF5;
+		u8 _1DF6;
+		u8 _1DF7;
+		mEf::es2 pyeffects7;
+		mEf::es2 pyeffects8;
+		u8 _2048;
+		u8 _2049;
+		u8 _204A;
+		u8 _204B;
+		u8 _204C;
+		u8 _204D;
+		u8 _204E;
+		u8 _204F;
+		u8 _2050;
+		u8 _2051;
+		u8 _2052;
+		u8 _2053;
+		u8 _2054;
+		u8 _2055;
+		u8 _2056;
+		u8 _2057;
+		u32 field_2058;
+		u32 someCountdown;
+		u8 anotherCountdown;
+		u8 field_2061;
+		u8 _2062;
+		u8 _2063;
+		float field_2064;
+		u8 _2068;
+		u8 _2069;
+		u8 _206A;
+		u8 _206B;
+		u8 _206C;
+		u8 _206D;
+		u8 _206E;
+		u8 _206F;
+		u32 field_2070;
+		mEf::es2 pyeffects9;
+		mEf::es2 pyeffects10;
+		mEf::es2 pyeffects11;
+		mEf::es2 pyeffects12;
+		u8 _2514;
+		u8 _2515;
+		u8 _2516;
+		u8 _2517;
+		u32 stunRumbleNextCountdown;
+		u8 _251C;
+		u8 _251D;
+		u8 _251E;
+		u8 _251F;
+		u8 _2520;
+		u8 _2521;
+		u8 _2522;
+		u8 _2523;
+		u8 _2524;
+		u8 _2525;
+		u8 _2526;
+		u8 _2527;
+		u8 _2528;
+		u8 _2529;
+		u8 _252A;
+		u8 _252B;
+		u8 _252C;
+		u8 _252D;
+		u8 _252E;
+		u8 _252F;
+		u8 _2530;
+		u8 _2531;
+		u8 _2532;
+		u8 _2533;
+		u16 field_2534;
+		u8 _2536;
+		u8 _2537;
+		EGG::Effect anotherPyEffector2;
+		EGG::Effect anotherPyEffector3;
+		u8 _2760;
+		u8 _2761;
+		u8 _2762;
+		u8 _2763;
+		u8 _2764;
+		u8 _2765;
+		u8 _2766;
+		u8 _2767;
+		u8 _2768;
+		u8 _2769;
+		u8 _276A;
+		u8 _276B;
+		u8 _276C;
+		u8 _276D;
+		u8 _276E;
+		u8 _276F;
+		u8 _2770;
+		u8 _2771;
+		u8 _2772;
+		u8 _2773;
+		u8 _2774;
+		u8 _2775;
+		u8 _2776;
+		u8 _2777;
+		u8 _2778;
+		u8 _2779;
+		u8 _277A;
+		u8 _277B;
+		u8 _277C;
+		u8 _277D;
+		u8 _277E;
+		u8 _277F;
+		u8 _2780;
+		u8 _2781;
+		u8 _2782;
+		u8 _2783;
+		u8 _2784;
+		u8 _2785;
+		u8 _2786;
+		u8 _2787;
+		u8 _2788;
+		u8 _2789;
+		u8 _278A;
+		u8 _278B;
+		u8 _278C;
+		u8 _278D;
+		u8 _278E;
+		u8 _278F;
+		u8 _2790;
+		u8 _2791;
+		u8 _2792;
+		u8 _2793;
+		u8 _2794;
+		u8 _2795;
+		u8 _2796;
+		u8 _2797;
+		float ridingMatrix[12];
+		u32 field_27C8;
+		u8 field_27CC;
+		u8 _27CD;
+		u8 _27CE;
+		u8 _27CF;
+		u8 _27D0;
+		u8 _27D1;
+		u8 _27D2;
+		u8 _27D3;
+		u8 _27D4;
+		u8 _27D5;
+		u8 _27D6;
+		u8 _27D7;
+		u8 _27D8;
+		u8 _27D9;
+		u8 _27DA;
+		u8 _27DB;
+		float field_27DC;
+		u32 field_27E0;
+		u8 _27E4;
+		u8 _27E5;
+		u8 _27E6;
+		u8 _27E7;
+		u8 _27E8;
+		u8 _27E9;
+		u8 _27EA;
+		u8 _27EB;
+		u8 _27EC;
+		u8 _27ED;
+		u8 _27EE;
+		u8 _27EF;
+		u8 _27F0;
+		u8 _27F1;
+		u8 _27F2;
+		u8 _27F3;
+		u8 _27F4;
+		u8 _27F5;
+		u8 _27F6;
+		u8 _27F7;
+		u8 _27F8;
+		u8 _27F9;
+		u8 _27FA;
+		u8 _27FB;
+		u8 _27FC;
+		u8 _27FD;
+		u8 _27FE;
+		u8 _27FF;
+		u8 _2800;
+		u8 _2801;
+		u8 _2802;
+		u8 _2803;
+		EGG::Effect effectsOutTheAss;
+		u8 _2918;
+		u8 _2919;
+		u8 _291A;
+		u8 _291B;
+		u8 _291C;
+		u8 _291D;
+		u8 _291E;
+		u8 _291F;
+		u8 _2920;
+		u8 _2921;
+		u8 _2922;
+		u8 _2923;
+		u8 _2924;
+		u8 _2925;
+		u8 _2926;
+		u8 _2927;
+		u8 _2928;
+		u8 _2929;
+		u8 _292A;
+		u8 _292B;
+		EGG::Effect effectsOutTheAss2;
+		u8 _2A40;
+		u8 _2A41;
+		u8 _2A42;
+		u8 _2A43;
+		u8 _2A44;
+		u8 _2A45;
+		u8 _2A46;
+		u8 _2A47;
+		u8 _2A48;
+		u8 _2A49;
+		u8 _2A4A;
+		u8 _2A4B;
+		u8 _2A4C;
+		u8 _2A4D;
+		u8 _2A4E;
+		u8 _2A4F;
+		u8 _2A50;
+		u8 _2A51;
+		u8 _2A52;
+		u8 _2A53;
+		u8 _2A54;
+		u8 _2A55;
+		u8 _2A56;
+		u8 _2A57;
+		u32 field_2A58;
+		u8 _2A5C;
+		u8 _2A5D;
+		u8 _2A5E;
+		u8 _2A5F;
+		dPlayerModelHandler_c modelCls;
+		float field_2A6C;
+		float field_2A70;
+		u8 _2A74;
+		u8 _2A75;
+		u8 _2A76;
+		u8 _2A77;
+		u32 idWeAreCarrying;
+		u8 _2A7C;
+		u8 _2A7D;
+		u8 _2A7E;
+		u8 _2A7F;
+		u8 _2A80;
+		u8 _2A81;
+		u8 _2A82;
+		u8 _2A83;
+		u8 _2A84;
+		u8 _2A85;
+		u8 _2A86;
+		u8 _2A87;
+		u8 _2A88;
+		u8 _2A89;
+		u8 _2A8A;
+		u8 _2A8B;
+		u8 _2A8C;
+		u8 _2A8D;
+		u16 field_2A8E;
+		u8 _2A90;
+		u8 _2A91;
+		u8 _2A92;
+		u8 _2A93;
+		EGG::Effect anotherPyEffector4;
+		
+		
+		u32 _vfE0(); // 80038FD0
+		void sub_800540F0(); // 800540F0
+		void sub_80054280(); // 80054280
+		static dAcPy_c *findByID(int id); // 8005F900 (Actually it's GetSpecificPlayerActor)
+		u32 _vf120(); // 8006C400
+		void getConnectedSizeInfo(); // 800E2640
+		u32 _vf408(); // 80126650
+		void playsSoundForHipAttack_and_things(); // 80126770
+		bool areWeCarryingAnything(); // 801268F0
+		void playsHipatAnim(); // 80126910
+		u32 GetMaxYSpeed_Maybe(); // 801275B0
+		void sub_80129AF0(); // 80129AF0
+		void sub_80129B00(); // 80129B00
+		void startSlipping(); // 8012AB70
+		u32 _vf39C(); // 8012ACC0
+		u32 _vf370(); // 8012BEB0
+		u32 _vf374(); // 8012BED0
+		u32 _vf37C(); // 8012C0B0
+		u32 _vf378(); // 8012C360
+		u32 _vf380(); // 8012CAC0
+		u32 _vf384(); // 8012CAF0
+		u32 _vf388(); // 8012CC30
+		void dealWithLateralMovement_maybe(); // 8012CC50
+		u32 _vf390(); // 8012D5D0
+		u32 _vf394(); // 8012DCD0
+		static dAcPy_c getHeldPlayer(); // 8012DD20
+		static dStageActor_c getHeldPropellerBlock(); // 8012DD60
+		static dStageActor_c getHeldPropellerItem(); // 8012DDA0
+		static dStageActor_c getHeldLightOrPropellerBlock(); // 8012DE00
+		u32 _vf3CC(); // 8012DE50
+		bool areWeHoldingMiniMario(); // 8012DEB0
+		u32 _vf3D0(); // 8012DEF0
+		void dropObject(); // 8012E650
+		void dropObjectWereHolding(); // 8012E6E0
+		void stopBeingCarried(); // 8012E790
+		u32 _vfF0(); // 8012EF00
+		u32 _vfEC(); // 8012EF30
+		virtual int _vf74(); // 8012F2E0
+		void itemPickedUp(); // 8012F3B0
+		void sub_8012FE30(); // 8012FE30
+		void sub_80130480(); // 80130480
+		void swimHip0(); // 801306F0
+		void swimHip1(); // 80130D50
+		void adjustMovementForPenguinSwim_maybe(); // 80131080
+		void doPenguinSwim(); // 80131510
+		void swimHip2(); // 801315B0
+		void shootUnderwater(); // 801318D0
+		void swimHip3(); // 801319B0
+		void sub_80131AD0(); // 80131AD0
+		void executeSwimRelated(); // 80132060
+		void getHeight(); // 80132670
+		u32 stunPlayer(); // 80137650
+		u32 otherStunPlayer(); // 80137690
+		u32 stunBase(); // 801376D0
+		u32 unstunPlayer(); // 80137790
+		u32 _vf11C(); // 80139340
+		void *getYoshi(); // 80139A90
+		u32 getYDeltaForCloudRidingOrSomething(); // 80139E40
+		void getActorWereStandingOn(); // 8013ABE0
+		virtual void eatIn(); // 8013AD90
+		virtual void disableEatIn(); // 8013ADB0
+		virtual void _vf88(); // 8013ADD0
+		virtual bool _vf8C(void *other); // 8013AE70
+		virtual void _vf94(void *other); // 8013B2C0
+		void rideOnJrClown(); // 8013B690
+		bool areYouStandingOnMe(); // 8013B6F0
+		void setRidingMatrix_maybe(float newRidingMatrix); // 8013B750
+		void usedToPlayClownStoopAnim(); // 8013B850
+		bool checkIfCanShootProjectile(); // 8013BB00
+		void shootProjectile(bool isSpinning); // 8013BCD0
+		void set17CCIfNotSet(u16 value); // 8013C4C0
+		void sub_8013CF40(); // 8013CF40
+		u32 _vf274(); // 8013DBA0
+		u32 _vf278(); // 8013DF10
+		u32 _vf130(); // 8013FE20
+		u32 _vf12C(); // 8013FF40
+		u32 _vf288(); // 8013FFC0
+		u32 _vf28C(); // 801400B0
+		void dealsWithGoalPutonCapAnimation(); // 80140440
+		u32 _vf290(); // 801406D0
+		u32 _vf134(); // 80140720
+		u32 _vf128(); // 80140B70
+		u32 _vf27C(); // 80140C30
+		u32 _vf280(); // 80140D70
+		void enterByDoor(); // 80140DD0
+		void enterByInJump0(); // 80140DE0
+		void enterByInJump1(); // 80140DF0
+		void enterByInVine(); // 80140E00
+		void enterBySwim(); // 80140E10
+		void enterByDemoControlJump(); // 80140E90
+		void enterByDemoControlFall(); // 80140EF0
+		u32 _vf270(); // 80140F50
+		void sub_80141600(); // 80141600
+		u32 setPowerupAlt(u32 powerup); // 801416C0
+		void dealWithBlahTable(); // 80141F70
+		void sub_80142170(); // 80142170
+		u32 _vfF8(); // 80142670
+		void sub_801427A0(); // 801427A0
+		void setField118toMinus4dot0(); // 80143670
+		u32 _vf418(); // 801436C0
+		u32 _vf41C(); // 801436D0
+		void sub_80143830(); // 80143830
+		void sub_801438D0(); // 801438D0
+		void playerExec(); // 801439E0
+		u32 _vfFC(); // 80143BD0
+		u32 _vf100(); // 80143D70
+		u32 _vf40C(); // 80144170
+		u32 _vf104(); // 80144240
+		u32 _vf118(); // 80144250
+		int onDelete(); // 80144BE0
+		int onCreate(); // 80144EA0
+		void sub_80145330(); // 80145330
+		u32 _vfD8(); // 80145580
+		u32 _vfDC(); // 80145660
+		int onDraw(); // 80145BA0
+		void ChangePowerupWithAnimation(int powerup); // 80145C00
+		u32 _vf3D8(); // 80145C90
+		u32 _vf3DC(); // 80145D90
+		void sub_80145E00(); // 80145E00
+		u32 _vf3E0(); // 80145F30
+		void sub_80145F80(); // 80145F80
+		void playSomeJumpSound(); // 80145FD0
+		u32 _vf3F0(); // 801461A0
+		void hurtPlayer_maybe(); // 80146230
+		void throwBack(dActor_c *Actor, int unk); // 80146310
+		u32 _vf450(); // 801463E0
+		void getCurrentSizeID(); // 801466C0
+		void sub_80146710(); // 80146710
+		void setVisibleArea(); // 80146810
+		void assignTempusFloatStruct(); // 80146880
+		void returnValue1068(); // 801468B0
+		u32 setPowerup_orig(u32 powerup_id); // 801468F0
+		u32 patch_thing(u32 powerup_id); // Over setPowerup
+		u32 _vf3FC(); // 80146A10
+		u32 _vf400(); // 80146B10
+		u32 _vf410(); // 80146FD0
+		bool canWePropelOurselves(int effectivePowerup); // 801470E0
+		void sub_80147390(); // 80147390
+		void rumbleWiimote_maybe(); // 80147530
+		void somethingAboutWiimote(); // 80147590
+		void sub_801476A0(); // 801476A0
+		void sub_80147960(); // 80147960
+		u32 vfF4(); // 80147D00
+		
+		int onExecute_orig(); // 80046BB0
+		int newOnExecute();
+};
+
 dScript::Res_c *GetBMG(); // 800CDD50
 void WriteBMGToTextBox(nw4r::lyt::TextBox *textBox, dScript::Res_c *res, int category, int message, int argCount, ...); // 0x800C9B50
 
@@ -3861,6 +4571,18 @@ class dStockItemShadow_c : public dBase_c {
 	int values[8];
 	nw4r::lyt::TextBox *hammerValue, *hammerX;
 	nw4r::lyt::Picture *hammerButtonBase;
+	nw4r::lyt::TextBox *boomerValue, *boomerX;
+	nw4r::lyt::Picture *boomerButtonBase;
+	nw4r::lyt::TextBox *spikeValue, *spikeX;
+	nw4r::lyt::Picture *spikeButtonBase;
+	nw4r::lyt::TextBox *bombValue, *bombX;
+	nw4r::lyt::Picture *bombButtonBase;
+	nw4r::lyt::TextBox *frogValue, *frogX;
+	nw4r::lyt::Picture *frogButtonBase;
+	nw4r::lyt::TextBox *thunderValue, *thunderX;
+	nw4r::lyt::Picture *thunderButtonBase;
+	nw4r::lyt::TextBox *cloudValue, *cloudX;
+	nw4r::lyt::Picture *cloudButtonBase;
 };
 
 class dStockItem_c : public dBase_c {

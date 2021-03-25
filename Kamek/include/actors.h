@@ -753,7 +753,35 @@ enum Actors {
 	LETTER_WINDOW = 746,
 	DUMMY_ACTOR = 747,
 	LASTACTOR_STAGE = 748,
-	LASTACTOR = 749
+	LASTACTOR = 749,
+
+	//Beginning of new entries
+	PurpleCoin = 750,
+	FlipBlock = 751,
+	BonePiece = 752,
+	EventBlock = 753,
+	ShyGuy = 754,
+	ShyGuyGiant = 755,
+	Samurshai = 756,
+	Topman = 757,
+	SuperTopman = 758,
+	ElectricLine = 759,
+	SpriteSpawner = 760,
+	SpriteSwapper = 761,
+	LaunchStar = 762,
+	LeafPile = 763,
+	PlayerNumberEvent = 764,
+	GameStateEvent = 765,
+	TimeClock = 766,
+	SuperBubble = 767,
+	ExitEvent = 768,
+	NumPad = 769,
+	EN_YOSHIWINGS = 770,
+	UpsideDownEvent = 771,
+	MegaGoomba = 772,
+	PumpkinGoomba = 773,
+	Ballon = 774,
+	TripleBlock = 775
 };
 
 struct Actor {

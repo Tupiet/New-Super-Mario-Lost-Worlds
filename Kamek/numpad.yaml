@@ -1,0 +1,6 @@
+---
+#Replaced Actor 490 EN_RAIL_POLY_CHILD (Sprite 160)
+
+
+source_files: [../src/numpad.cpp]
+hooks: []

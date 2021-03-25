@@ -11,6 +11,6 @@ hooks:
   - name: MegaGoombaSpriteFileInfo
     type: add_func_pointer
     src_addr_pal: 0x8031B1B4
-    target_func: 'MGarcNameList'
+    target_func: 'MegaGoombaFileList'
     # 0x8031AB4C + sprite num * 0x4 == offset
 

@@ -1,0 +1,22 @@
+hooks:
+- branch_type: b
+  name: TitleScreenHook
+  src_addr_jpn: 2155356504
+  src_addr_jpn2: 2155356568
+  src_addr_ntsc: 2155356808
+  src_addr_ntsc2: 2155356872
+  src_addr_pal: 2155356808
+  src_addr_pal2: 2155356872
+  target_func: TitleScreenExec
+  type: branch_insn
+- addr_jpn: 2155356768
+  addr_jpn2: 2155356832
+  addr_ntsc: 2155357072
+  addr_ntsc2: 2155357136
+  addr_pal: 2155357072
+  addr_pal2: 2155357136
+  data: '60000000'
+  name: InfiniteTitleScreen
+  type: patch
+source_files:
+- ../src/TS.S
