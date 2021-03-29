@@ -188,49 +188,49 @@ fourthHook_Return:
 	b		ContinueFromFourthHook
 
 
-# FifthHook:	#Basically, do shit with floats and store it in the current player's y speed or not, probably applies to enemies too
-# 	stwu	r4, -0x4(r1)					#UwU
-# 	stwu	r5, -0x4(r1)
-# 	stwu	r6, -0x4(r1)
-# 	lis		r5, IsGravityEnabled@h			#Store Gravity flag in r5
-# 	ori		r5, r5, IsGravityEnabled@l
-# 	lwz		r4, 0(r5)						#Get if the gravity swap is enabled in r4
-# 	cmpwi	r4, 0							#Compare r4 with 0, if it's not equal, then lower line
-# 	bne		fifthHook_doBLEComparaison		#So - If no gravity swap, then if f0 =< f29, then return, otherwise, set r31->speed.y to f29 - If gravity, same but if f0 => f29
-# 	fcmpo	cr0, f0, f29
-# 	bge		fifthHook_return
-# 	b		fifthHook_storeF29IntoYSpeed
-# fifthHook_doBLEComparaison:
-# 	fcmpo	cr0, f0, f29
-# 	ble		fifthHook_return
-# fifthHook_storeF29IntoYSpeed:
-# 	stfs	f29, 0xEC(r30)					#Store f29 in r31->speed.y (r31 being this, A.K.A. the current player)
-# fifthHook_return:
-# 	lwzu	r6, 0(r1)						#ÈwÉ
-# 	lwzu	r5, 4(r1)
-# 	lwzu	r4, 4(r1)
-# 	addi	r1, r1, 4
-# 	b		ContinueFromFifthHook
-
-FifthHook:
+FifthHook:	#Basically, do shit with floats and store it in the current player's y speed or not, probably applies to enemies too
  	stwu	r4, -0x4(r1)					#UwU
  	stwu	r5, -0x4(r1)
  	stwu	r6, -0x4(r1)
  	lis		r5, IsGravityEnabled@h			#Store Gravity flag in r5
  	ori		r5, r5, IsGravityEnabled@l
  	lwz		r4, 0(r5)						#Get if the gravity swap is enabled in r4
- 	fabs	f28, f0
-	fabs	f31, f29
-	fcmpo	cr0, f28, f31
-	ble-	fifthHook_return
-	stfs	f29, 0xEC(r30)
+ 	cmpwi	r4, 0							#Compare r4 with 0, if it's not equal, then lower line
+ 	bne		fifthHook_doBLEComparaison		#So - If no gravity swap, then if f0 =< f29, then return, otherwise, set r31->speed.y to f29 - If gravity, same but if f0 => f29
+ 	fcmpo	cr0, f0, f29
+ 	bge		fifthHook_return
+ 	b		fifthHook_storeF29IntoYSpeed
+fifthHook_doBLEComparaison:
+ 	fcmpo	cr0, f0, f29
+ 	ble		fifthHook_return
+fifthHook_storeF29IntoYSpeed:
+ 	stfs	f29, 0xEC(r30)					#Store f29 in r31->speed.y (r31 being this, A.K.A. the current player)
 fifthHook_return:
-	lfs		f31, 0x4(r5)
  	lwzu	r6, 0(r1)						#ÈwÉ
  	lwzu	r5, 4(r1)
  	lwzu	r4, 4(r1)
  	addi	r1, r1, 4
  	b		ContinueFromFifthHook
+
+# FifthHook:								#Don't know why this was added - apparently disables tripple jumping while the other version does not
+# 	stwu	r4, -0x4(r1)					#UwU
+# 	stwu	r5, -0x4(r1)
+# 	stwu	r6, -0x4(r1)
+# 	lis		r5, IsGravityEnabled@h			#Store Gravity flag in r5
+# 	ori		r5, r5, IsGravityEnabled@l
+# 	lwz		r4, 0(r5)						#Get if the gravity swap is enabled in r4
+# 	fabs	f28, f0
+#	fabs	f31, f29
+#	fcmpo	cr0, f28, f31
+#	ble-	fifthHook_return
+#	stfs	f29, 0xEC(r30)
+# fifthHook_return:
+#	lfs		f31, 0x4(r5)
+# 	lwzu	r6, 0(r1)						#ÈwÉ
+# 	lwzu	r5, 4(r1)
+# 	lwzu	r4, 4(r1)
+# 	addi	r1, r1, 4
+# 	b		ContinueFromFifthHook
 
 
 SixthHook:	#I don't want to comment anymore at this point

@@ -8,7 +8,7 @@ hooks:
     src_addr_pal: 0x80070ef4
     target_func: 'FirstHook'
 
-#  - name: SecondHook
+#  - name: SecondHook           #Activated UpsideDown for any event being activated
 #    type: branch_insn
 #    branch_type: b
 #    src_addr_pal: 0x800e453c
@@ -26,7 +26,7 @@ hooks:
     src_addr_pal: 0x8012771c
     target_func: 'FourthHook'
 
-  - name: FifthHook
+  - name: FifthHook            #Responsible for UpsideDown jumping, maybe has bugs?
     type: branch_insn
     branch_type: b
     src_addr_pal: 0x8005714c
