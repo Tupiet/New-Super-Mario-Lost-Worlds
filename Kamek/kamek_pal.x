@@ -1,4 +1,11 @@
 SECTIONS {
+	/* timeclock.S */
+	updateUI = 0x800e3b18;
+	ApparentlyStartsMusic = 0x8019bd90;
+	continueTimerLeq100 = 0x800e3af8;
+	continueAt8019e154 = 0x8019e154;
+	continueAt8019e140 = 0x8019e140;
+
 	instance__7StageC4 = 0x8042A2B8;
 	mHeapAllocator_c_done = 0x8016AAF0;
 	

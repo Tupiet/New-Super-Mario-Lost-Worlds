@@ -214,7 +214,7 @@ class DyLinkCreator(object):
 
     def add_reloc(self, reltype, addr, target, name="UNKNOWN NAME"):
         if reltype not in self.VALID_RELOCS:
-            raise ValueError('Unknown/unsupported rel type: %d (%x => %x)' % (reltype, addr, target))
+            raise ValueError('Unknown/unsupported rel type: %d (%x => %x) %s' % (reltype, addr, target, name))
 
         try:
             target_id = self._target_lookups[target]

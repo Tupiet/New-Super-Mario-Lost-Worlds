@@ -9,6 +9,8 @@ const char* TimeClockFileList [] = { "clock", 0 };
 extern "C" void PlaySoundWithFunctionB4(void *spc, nw4r::snd::SoundHandle *handle, int id, int unk);
 static nw4r::snd::StrmSoundHandle handle;
 
+bool slowDownTime = false;	//used in timeclock.S
+
 u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int channelCount, int trackCount, int *wantRealStreamID);
 
 class daTimeClock_c : public dEn_c {
@@ -48,8 +50,11 @@ Profile timeClockEventProfile(&daTimeClock_c::build, SpriteId::TimeClock, timeCl
 
 
 void daTimeClock_c::playerCollision(ActivePhysics *apThis, ActivePhysics *apOther) {
+	int addTime = ((this->settings >> 20 & 0xF) * 10);
 	PlaySoundWithFunctionB4(SoundRelatedClass, &handle, SE_DEMO_OP_V_PCH_INTO_CAKE, 1); //Audio[1045], replaced with the clock sound
-	TimeKeeper::instance->setTime(dGameDisplay_c::instance->timer + ((this->settings >> 20 & 0xF) * 10));
+	if(dGameDisplay_c::instance->timer <= 100 && dGameDisplay_c::instance->timer + addTime > 100)
+		slowDownTime = true;
+	TimeKeeper::instance->setTime(dGameDisplay_c::instance->timer + addTime);
 	removeMyActivePhysics();
 	// ClassWithCameraInfo *cwci = ClassWithCameraInfo::instance;
 	// Vec debug = ConvertStagePositionIntoScreenPosition(&dGameDisplay_c::instance->timerBox->trans, &this->pos, ClassWithCameraInfo::instance);

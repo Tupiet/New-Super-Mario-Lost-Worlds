@@ -1,7 +1,7 @@
 ---
 #Replaced Actor 275 AC_BOSS_KOOPA_RUBBLE (Sprite 481)
 
-source_files: [../src/timeclock.cpp]
+source_files: [../src/timeclock.cpp, ../src/timeclock.S]
 hooks:
 #  - name: TimeClockBuild
 #    type: add_func_pointer
@@ -36,3 +36,16 @@ hooks:
     type: patch
     addr_pal: 0x8019E664
     data: '38800500'
+
+  - name: Test
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x800e3af0
+    target_func: 'TimeCmpwi100'
+
+  - name: Test80
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8019e138
+    target_func: 'speedSelection'
+    
