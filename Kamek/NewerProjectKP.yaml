@@ -104,3 +104,4 @@ modules:
   - processed/glasPipes.yaml
   - processed/ballon.yaml
   - processed/pinkKoopa.yaml
+  - processed/ActorSpawner.yaml

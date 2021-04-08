@@ -526,6 +526,7 @@ enum
 	PumpkinGoomba = 506,
 	Ballon = 507,
 	TripleBlock = 508,
+	NewActorSpawner = 509,
 	Num
 };
 
@@ -1314,6 +1315,7 @@ enum
 	PumpkinGoomba = 773,
 	Ballon = 774,
 	TripleBlock = 775,
+	NewActorSpawner = 776,
 	Num
 };
 

@@ -1,4 +1,7 @@
 SECTIONS {
+
+	getZoneByID__9dCourse_cFUcP5mRect = 0x8008E410;
+
 	/* timeclock.S */
 	updateUI = 0x800E39A8;
 	ApparentlyStartsMusic = 0x8019BA60;

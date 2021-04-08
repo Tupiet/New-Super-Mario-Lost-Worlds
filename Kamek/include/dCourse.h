@@ -107,7 +107,7 @@ class dCourse_c {
 			u8 boundingID;
 			u8 scrollMode;
 			u8 zoomMode;
-			u8 unk10;
+			u8 relatedToEventCamera;
 			u8 visibility;
 			u8 fgID;
 			u8 bgID;

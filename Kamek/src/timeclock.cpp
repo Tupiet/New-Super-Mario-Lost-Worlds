@@ -9,7 +9,18 @@ const char* TimeClockFileList [] = { "clock", 0 };
 extern "C" void PlaySoundWithFunctionB4(void *spc, nw4r::snd::SoundHandle *handle, int id, int unk);
 static nw4r::snd::StrmSoundHandle handle;
 
-bool slowDownTime = false;	//used in timeclock.S
+
+
+//used in timeclock.S
+bool slowDownTime = false;	
+int getTimeSfxIndex() {
+	dCourse_c *course = dCourseFull_c::instance->get(GetAreaNum());
+	dCourse_c::zone_s *zone = course->getZoneByID(GetZoneNum());
+	return zone->unk3;
+}
+
+
+
 
 u8 hijackMusicWithSongName(const char *songName, int themeID, bool hasFast, int channelCount, int trackCount, int *wantRealStreamID);
 
