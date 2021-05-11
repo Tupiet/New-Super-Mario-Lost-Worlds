@@ -527,6 +527,7 @@ enum
 	Ballon = 507,
 	TripleBlock = 508,
 	NewActorSpawner = 509,
+	GreatGoalPole = 510,
 	Num
 };
 
@@ -1316,6 +1317,7 @@ enum
 	Ballon = 774,
 	TripleBlock = 775,
 	NewActorSpawner = 776,
+	GreatGoalPole = 777,
 	Num
 };
 

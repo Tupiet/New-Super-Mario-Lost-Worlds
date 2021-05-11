@@ -2424,6 +2424,8 @@ class daPlBase_c : public dStageActor_c {
 		void clearFlag(int flag);
 		bool testFlag(int flag);
 
+		//bool sub_8004DD00(int unk); //maybe isPlayerStunned ???
+
 		static daPlBase_c *findByID(int id);
 };
 
@@ -4400,7 +4402,7 @@ class dAcPy_c : public daPlBase_c {
 		u32 _vf28C(); // 801400B0
 		void dealsWithGoalPutonCapAnimation(); // 80140440
 		u32 _vf290(); // 801406D0
-		u32 _vf134(); // 80140720
+		u32 cannonShot(int framesToWait, short rotX, short rotY); // 80140720
 		u32 _vf128(); // 80140B70
 		u32 _vf27C(); // 80140C30
 		u32 _vf280(); // 80140D70
@@ -4455,6 +4457,7 @@ class dAcPy_c : public daPlBase_c {
 		u32 patch_thing(u32 powerup_id); // Over setPowerup
 		u32 _vf3FC(); // 80146A10
 		u32 _vf400(); // 80146B10
+		bool pipeCannonShot(int unk, float x, float y); //80146f60
 		u32 _vf410(); // 80146FD0
 		bool canWePropelOurselves(int effectivePowerup); // 801470E0
 		void sub_80147390(); // 80147390

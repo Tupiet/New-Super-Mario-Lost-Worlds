@@ -1,5 +1,10 @@
 SECTIONS {
 	
+	pipeCannonShot__7dAcPy_cFiff = 0x80146f60;
+	
+	dealsWithGoalPutonCapAnimation__7dAcPy_cFv = 0x80140440;
+	cannonShot__7dAcPy_cFiss = 0x80140720;
+	
 	getZoneByID__9dCourse_cFUcP5mRect = 0x8008e410;
 	
 	/* timeclock.S */

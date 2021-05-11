@@ -782,7 +782,8 @@ enum Actors {
 	PumpkinGoomba = 773,
 	Ballon = 774,
 	TripleBlock = 775,
-	NewActorSpawner = 776
+	NewActorSpawner = 776,
+	GreatGoalPole = 777
 };
 
 struct Actor {
