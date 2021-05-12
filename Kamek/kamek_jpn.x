@@ -1,4 +1,6 @@
 SECTIONS {
+	StateID_FoolMove__14daEnGakeNoko_c = 0x80B144C0;
+	StateID_Move__14daEnGakeNoko_c = 0x80B14500;
 
 	pipeCannonShot__7dAcPy_cFiff = 0x80146C30;
 

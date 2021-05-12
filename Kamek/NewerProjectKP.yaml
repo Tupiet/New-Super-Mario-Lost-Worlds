@@ -107,3 +107,5 @@ modules:
   - processed/ActorSpawner.yaml
   - processed/theGreatGoalPole.yaml
 #  - processed/poisontex.yaml
+  - processed/gakenoko.yaml
+  - processed/removeMapAmbushes.yaml
