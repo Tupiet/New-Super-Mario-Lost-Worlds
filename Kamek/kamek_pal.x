@@ -1,4 +1,6 @@
 SECTIONS {
+	destroyBarrel = 0x807c1dc0; /* extern "C" void destroyBarrel(dStageActor_c *); */
+
 	StateID_FoolMove__14daEnGakeNoko_c = 0x80B14BC0;
 	StateID_Move__14daEnGakeNoko_c = 0x80B14C00;
 	

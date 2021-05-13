@@ -528,6 +528,7 @@ enum
 	TripleBlock = 508,
 	NewActorSpawner = 509,
 	GreatGoalPole = 510,
+	WATER_LIFT = 511,
 	Num
 };
 
@@ -1318,6 +1319,7 @@ enum
 	TripleBlock = 775,
 	NewActorSpawner = 776,
 	GreatGoalPole = 777,
+	WATER_LIFT_NEW = 778,
 	Num
 };
 

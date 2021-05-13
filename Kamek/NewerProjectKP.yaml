@@ -109,3 +109,5 @@ modules:
 #  - processed/poisontex.yaml
   - processed/gakenoko.yaml
   - processed/removeMapAmbushes.yaml
+  - processed/sidestepper.yaml
+  - processed/waterlift.yaml
