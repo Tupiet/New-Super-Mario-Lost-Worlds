@@ -1,4 +1,8 @@
 SECTIONS {
+	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
+
+	returnToOriginalScriptCode = 0x8010153C;
+
 	destroyBarrel = 0x807C1B50; /* extern "C" void destroyBarrel(dStageActor_c *); */
 
 	StateID_FoolMove__14daEnGakeNoko_c = 0x80B144C0;

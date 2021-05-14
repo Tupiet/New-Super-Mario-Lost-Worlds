@@ -111,3 +111,4 @@ modules:
   - processed/removeMapAmbushes.yaml
   - processed/sidestepper.yaml
   - processed/waterlift.yaml
+  - processed/worldmapScripts.yaml
