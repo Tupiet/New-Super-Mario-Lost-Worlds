@@ -783,7 +783,9 @@ enum Actors {
 	Ballon = 774,
 	TripleBlock = 775,
 	NewActorSpawner = 776,
-	GreatGoalPole = 777
+	GreatGoalPole = 777,
+	WATER_LIFT_NEW = 778,
+	Sidestepper = 779
 };
 
 struct Actor {

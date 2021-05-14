@@ -529,6 +529,7 @@ enum
 	NewActorSpawner = 509,
 	GreatGoalPole = 510,
 	WATER_LIFT = 511,
+	Sidestepper = 512,
 	Num
 };
 
@@ -1320,6 +1321,7 @@ enum
 	NewActorSpawner = 776,
 	GreatGoalPole = 777,
 	WATER_LIFT_NEW = 778,
+	Sidestepper = 779,
 	Num
 };
 
