@@ -1,0 +1,40 @@
+---
+source_files: [../src/worldmapGrid.cpp, ../src/worldmapGrid.S]
+hooks:
+  - name: wmLoop
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8092c284
+    target_func: 'saveForWM'
+
+  - name: changeWMMantaFileName
+    type: patch
+    addr_pal: 0x80984608
+    data: '6d6f6465 6c2e6272 72657300'
+
+  - name: changeWMMantaFileName2
+    type: patch
+    addr_pal: 0x80984618
+    data: '636f6247 72696400'
+
+  - name: useNewFileListR26
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x809278f4
+    target_func: 'useNewFileListR26'
+
+  - name: loadOneMoreFile1
+    type: patch
+    addr_pal: 0x80927910
+    data: '281b0011'                #one more file please
+
+  - name: useNewFileListR31
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80926bfc
+    target_func: 'useNewFileListR31'
+
+  - name: loadOneMoreFile2
+    type: patch
+    addr_pal: 0x80926c20
+    data: '281c0011'                #one more file please

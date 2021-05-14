@@ -1,7 +1,7 @@
 ---
 source_files: [../src/worldmapScripts.cpp, ../src/worldmapScripts.S]
 hooks:
-  - name: DidClockRaiseSecondsOver100
+  - name: useCustomScripts
     type: branch_insn
     branch_type: b
     src_addr_pal: 0x801016C8

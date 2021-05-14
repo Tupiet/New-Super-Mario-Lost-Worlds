@@ -1,6 +1,24 @@
 SECTIONS {
 	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
 
+	aRouteinfo_1 = 0x8098DD84;
+	aCollectioncoincoursesort = 0x8098DD90;
+	aCobcastle_1 = 0x8098DDAC;
+	aCobcourse_0 = 0x8098DDB8;
+	aCobkinokored_3 = 0x8098DC98;
+	aCobkinoko1up_4 = 0x8098DCA8;
+	aCobkinokosta_3 = 0x8098DCB8;
+	aCobstart_0 = 0x8098DDC4;
+	aCobanchor_0 = 0x8098DDD0;
+	aCobtoride_1 = 0x8098DDDC;
+	aCobghost_1 = 0x8098DDE8;
+	aCobcannon_1 = 0x8098DDF4;
+	aCobkoopaship_5 = 0x8098DCC8;
+	aCharacter_s_12 = 0x8098DE00;
+	aCobsurrender_0 = 0x8098DE10;
+	aCobkinopio_1 = 0x8098DE20;
+	create__8dActor_cF6ActorsUiP7Point3dPv = 0x8006CA80;
+
 	returnToOriginalScriptCode = 0x801015BC;
 
 	destroyBarrel = 0x807C1DC0; /* extern "C" void destroyBarrel(dStageActor_c *); */

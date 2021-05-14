@@ -1,5 +1,5 @@
 ---
-source_files: [../src/0.cpp, ../src/0.S]
+source_files: [../src/0.cpp]
 hooks:
 
  # - name: ExceptionRecovery
@@ -19,23 +19,23 @@ hooks:
   #  src_addr_pal: 0x8000300
   #  target_func: 'loc_0x0'
 
-  - name: crashReport   #DSI Interrupt
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x80000300
-    target_func: 'reportCrashAdress'
+#  - name: crashReport   #DSI Interrupt
+#    type: branch_insn
+#    branch_type: b
+#    src_addr_pal: 0x80000300
+#    target_func: 'reportCrashAdress'
 
-  - name: crashReport   #Program Interrupt
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x80000700
-    target_func: 'reportCrashAdress'
+#  - name: crashReport   #Program Interrupt
+#    type: branch_insn
+#    branch_type: b
+#    src_addr_pal: 0x80000700
+#    target_func: 'reportCrashAdress'
 
-  - name: crashReport   #Trace Interrupt
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x80000d00
-    target_func: 'reportCrashAdress'
+#  - name: crashReport   #Trace Interrupt
+#    type: branch_insn
+#    branch_type: b
+#    src_addr_pal: 0x80000d00
+#    target_func: 'reportCrashAdress'
 
 
 
@@ -137,11 +137,7 @@ hooks:
 
 
 
-  - name: wmLoop
-    type: branch_insn
-    branch_type: b
-    src_addr_pal: 0x8092c284
-    target_func: 'wmtest(void)'
+
 
   - name: patchReturn3
     type: patch

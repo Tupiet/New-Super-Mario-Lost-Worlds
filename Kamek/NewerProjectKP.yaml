@@ -112,3 +112,4 @@ modules:
   - processed/sidestepper.yaml
   - processed/waterlift.yaml
   - processed/worldmapScripts.yaml
+  - processed/worldmapGrid.yaml

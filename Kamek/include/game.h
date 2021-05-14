@@ -2184,6 +2184,7 @@ public:
 	void UpdateObjectPosBasedOnSpeedValuesReal();
 	void HandleXSpeed();
 	void HandleYSpeed();
+	static dActor_c* create(Actors type, u32 settings, VEC3 *pos, void *rot);
 };
 
 class dStageActor_c : public dActor_c {
