@@ -12,7 +12,7 @@ int wmtest() {
 void createWMGrid() {
 	dActor_c* player = (dActor_c*)fBase_c::search(WM_PLAYER);
 	OSReport("Player: %p\n", player);
-	theGrid = dActor_c::create(WM_MANTA, 0, &player->pos, 0);
+	theGrid = dActor_c::create(WM_GRID, 0, &player->pos, 0);
 }
 
 void deleteWMGrid() {

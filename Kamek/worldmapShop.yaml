@@ -1,0 +1,7 @@
+---
+source_files: [../src/worldmapShop.cpp]
+hooks:
+  - name: BuildWMShop # WM_GRID
+    type: add_func_pointer
+    src_addr_pal: 0x80982f34
+    target_func: 'dWMShop_c::build(void)'
