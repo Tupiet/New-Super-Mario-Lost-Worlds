@@ -530,6 +530,8 @@ enum
 	GreatGoalPole = 510,
 	WATER_LIFT = 511,
 	Sidestepper = 512,
+	MiniSidestepper = 513,
+	BoomBoom = 514,
 	Num
 };
 
@@ -1322,6 +1324,8 @@ enum
 	GreatGoalPole = 777,
 	WATER_LIFT_NEW = 778,
 	Sidestepper = 779,
+	MiniSidestepper = 780,
+	BoomBoom = 781,
 	Num
 };
 
