@@ -32,8 +32,21 @@ hooks:
   - name: FixVanillaMap6
     type: branch_insn
     branch_type: bl
-    src_addr_pal: 0x808d4d5c
+    src_addr_pal: 0x808d4d5c #0x808d4d68
     target_func: 'StockItemHackR3'
+
+#  - name: FixVanillaWM_ITEM1
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x808d4ca0
+#    target_func: 'WMItemHack1'
+
+#  - name: FixVanillaWM_ITEM2
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x808d4ccc
+#    target_func: 'WMItemHack2'
+
 
 #  - name: FixVanillaMap7
 #    type: patch
@@ -51,7 +64,61 @@ hooks:
 #    data: '2c1b000E' #Orig: 2c1b0007
 
 
+#############################################
+  - name: removeSIFromWM1
+    type: nop_insn
+    area_pal: 0x80926fdc
 
+  - name: removeSIFromWM2
+    type: nop_insn
+    area_pal: 0x80926ff4
+
+  - name: removeSIFromWM3
+    type: nop_insn
+    area_pal: 0x809270d0
+
+  - name: removeSIFromWM4
+    type: nop_insn
+    area_pal: 0x809270d4
+
+  - name: removeSIFromWM5
+    type: nop_insn
+    area_pal: 0x80927124
+
+  - name: removeSIFromWM6
+    type: nop_insn
+    area_pal: 0x80927128
+
+  - name: removeSIFromWM7
+    type: nop_insn
+    area_pal: 0x8092712c
+
+  - name: removeSIFromWM8
+    type: nop_insn
+    area_pal: 0x80927130
+
+  - name: removeSIFromWM9
+    type: nop_insn
+    area_pal: 0x80927134
+
+  - name: removeSIFromWM10
+    type: nop_insn
+    area_pal: 0x80927138
+
+  - name: anotherSIpatch
+    type: patch
+    addr_pal: 0x809272d0
+    data: 2c19000E #orig: 2c190007
+
+  - name: anotherSIpatch1
+    type: patch
+    addr_pal: 0x80926fd0
+    data: 386002de #orig: 386002b7
+
+#  - name: anotherSIpatch2
+#    type: nop_insn
+#    area_pal: 0x80926ff4
+#############################################
 
   #! -> done for jam
   #? -> started for jam

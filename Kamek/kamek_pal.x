@@ -2231,6 +2231,29 @@ SECTIONS {
 	SI_Penguin = 0x8098e080;
 	SI_Star = 0x8098e090;
 
+	aSi_kinoko_0 = 0x8098e044;
+	aSi_fireflowe_0 = 0x8098e050;
+	aSi_propeller_0 = 0x8098e060;
+	aSi_iceflower_0 = 0x8098e070;
+	aSi_penguin_0 = 0x8098e080;
+	aSi_star_0 = 0x8098e090;
+
+	aSi_kinoko = 0x80983364;
+	aSi_fireflower = 0x80983370;
+	aSi_propeller = 0x80983380;
+	aSi_iceflower = 0x80983390;
+	aSi_penguin = 0x809833a0;
+	aSi_kinoko = 0x80983364;
+	aSi_star = 0x809833b0;
+
+	aI_kinoko_6 = 0x809832d0;
+	aI_fireflower_1 = 0x809832dc;
+	aI_propeller_4 = 0x809832ec;
+	aI_iceflower_4 = 0x809832f8;
+	aI_penguin_4 = 0x80983204;
+	aI_kinoko_6 = 0x809832d0;
+	aI_star_4 = 0x80983310;
+	aI_propeller_model_2 = 0x80983334;
 
 	goToSpecificWorld__Fiii = 0x801027a0;
 	AssembleScWorldMapSettings__FUcii = 0x80102b70;

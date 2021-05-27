@@ -2,14 +2,14 @@
 #include <asm_setup.S>
 
 .align 4
-.extern aLightMainscene, aLightChikascen, aLightWaterscen, aLightFirescene, aLightSabakusce, aLightKaigansce, aLightDaishizen, aLightYukidaysc, aLightSorascene, aLightIwabascen, aLightToridesce;
-.extern aLightShiroscen, aLightObakescen, aLightKurayamic, aLightObakeouts, aLightShinkaisc, aLightSabakuchi, aLightKorichika, aLightFire2scen, aLightKoopascen, aLightFire3scen, aLightKumorisor, aLightToride2sc;
+.extern aLightMainscene, aLightChikascen, aLightWaterscen, aLightFirescene, aLightSabakusce, aLightKaigansce, aLightDaishizen, aLightYukidaysc, aLightSorascene, aLightIwabascen, aLightToridesce
+.extern aLightShiroscen, aLightObakescen, aLightKurayamic, aLightObakeouts, aLightShinkaisc, aLightSabakuchi, aLightKorichika, aLightFire2scen, aLightKoopascen, aLightFire3scen, aLightKumorisor, aLightToride2sc
 
-.extern aLightMainsce_0, aLightChikasc_0, aLightWatersc_0, aLightFiresce_0, aLightSabakus_0, aLightKaigans_0, aLightDaishiz_0, aLightYukiday_0, aLightSorasce_0, aLightIwabasc_0, aLightTorides_0;
-.extern aLightShirosc_0, aLightObakesc_0, aLightKurayam_0, aLightObakeou_0, aLightShinkai_0, aLightSabakuc_0, aLightKorichi_0, aLightFire2sc_0, aLightKoopasc_0, aLightFire3sc_0, aLightKumoris_0, aLightToride2_0;
+.extern aLightMainsce_0, aLightChikasc_0, aLightWatersc_0, aLightFiresce_0, aLightSabakus_0, aLightKaigans_0, aLightDaishiz_0, aLightYukiday_0, aLightSorasce_0, aLightIwabasc_0, aLightTorides_0
+.extern aLightShirosc_0, aLightObakesc_0, aLightKurayam_0, aLightObakeou_0, aLightShinkai_0, aLightSabakuc_0, aLightKorichi_0, aLightFire2sc_0, aLightKoopasc_0, aLightFire3sc_0, aLightKumoris_0, aLightToride2_0
 
-.extern aFogMainscene_b, aFogChikascene_, aFogWaterscene_, aFogFirescene_b, aFogSabakuscene, aFogKaiganscene, aFogDaishizensc, aFogYukidayscen, aFogSorascene_b, aFogIwabascene_, aFogToridescene;
-.extern aFogShiroscene_, aFogObakescene_, aFogKurayamichi, aFogObakeoutsce, aFogShinkaiscen, aFogSabakuchika, aFogKorichikasc, aFogFire2scene_, aFogKoopascene_, aFogFire3scene_, aFogKumorisoras, aFogToride2scen;
+.extern aFogMainscene_b, aFogChikascene_, aFogWaterscene_, aFogFirescene_b, aFogSabakuscene, aFogKaiganscene, aFogDaishizensc, aFogYukidayscen, aFogSorascene_b, aFogIwabascene_, aFogToridescene
+.extern aFogShiroscene_, aFogObakescene_, aFogKurayamichi, aFogObakeoutsce, aFogShinkaiscen, aFogSabakuchika, aFogKorichikasc, aFogFire2scene_, aFogKoopascene_, aFogFire3scene_, aFogKumorisoras, aFogToride2scen
 
 .global useNewLightList
 useNewLightList:
