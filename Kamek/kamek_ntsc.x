@@ -1,6 +1,80 @@
 SECTIONS {
 	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
 
+
+	aLightMainscene = 0x8098D548;
+	aLightChikascen = 0x8098D560;
+	aLightWaterscen = 0x8098D578;
+	aLightFirescene = 0x8098D590;
+	aLightSabakusce = 0x8098D5A8;
+	aLightKaigansce = 0x8098D5C4;
+	aLightDaishizen = 0x8098D5E0;
+	aLightYukidaysc = 0x8098D5FC;
+	aLightSorascene = 0x8098D618;
+	aLightIwabascen = 0x8098D630;
+	aLightToridesce = 0x8098D648;
+	aLightShiroscen = 0x8098D668;
+	aLightObakescen = 0x8098D680;
+	aLightKurayamic = 0x8098D698;
+	aLightObakeouts = 0x8098D6B8;
+	aLightShinkaisc = 0x8098D6D4;
+	aLightSabakuchi = 0x8098D6F0;
+	aLightKorichika = 0x8098D710;
+	aLightFire2scen = 0x8098D730;
+	aLightKoopascen = 0x8098D748;
+	aLightFire3scen = 0x8098D760;
+	aLightKumorisor = 0x8098D778;
+	aLightToride2sc = 0x8098D798;
+
+	aLightMainsce_0 = 0x8098D7B4;
+	aLightChikasc_0 = 0x8098D7CC;
+	aLightWatersc_0 = 0x8098D7E4;
+	aLightFiresce_0 = 0x8098D7FC;
+	aLightSabakus_0 = 0x8098D818;
+	aLightKaigans_0 = 0x8098D830;
+	aLightDaishiz_0 = 0x8098D848;
+	aLightYukiday_0 = 0x8098D864;
+	aLightSorasce_0 = 0x8098D880;
+	aLightIwabasc_0 = 0x8098D898;
+	aLightTorides_0 = 0x8098D8B0;
+	aLightShirosc_0 = 0x8098D8C8;
+	aLightObakesc_0 = 0x8098D8E0;
+	aLightKurayam_0 = 0x8098D8F8;
+	aLightObakeou_0 = 0x8098D918;
+	aLightShinkai_0 = 0x8098D934;
+	aLightSabakuc_0 = 0x8098D950;
+	aLightKorichi_0 = 0x8098D970;
+	aLightFire2sc_0 = 0x8098D98C;
+	aLightKoopasc_0 = 0x8098D9A4;
+	aLightFire3sc_0 = 0x8098D9BC;
+	aLightKumoris_0 = 0x8098D9D4;
+	aLightToride2_0 = 0x8098D9F0;
+
+	aFogMainscene_b = 0x8098DA0C;
+	aFogChikascene_ = 0x8098DA20;
+	aFogWaterscene_ = 0x8098DA34;
+	aFogFirescene_b = 0x8098DA48;
+	aFogSabakuscene = 0x8098DA5C;
+	aFogKaiganscene = 0x8098DA74;
+	aFogDaishizensc = 0x8098DA90;
+	aFogYukidayscen = 0x8098DAA8;
+	aFogSorascene_b = 0x8098DAC0;
+	aFogIwabascene_ = 0x8098DAD4;
+	aFogToridescene = 0x8098DAE8;
+	aFogShiroscene_ = 0x8098DB00;
+	aFogObakescene_ = 0x8098DB14;
+	aFogKurayamichi = 0x8098DB28;
+	aFogObakeoutsce = 0x8098DB44;
+	aFogShinkaiscen = 0x8098DB5C;
+	aFogSabakuchika = 0x8098DB74;
+	aFogKorichikasc = 0x8098DB90;
+	aFogFire2scene_ = 0x8098DBA8;
+	aFogKoopascene_ = 0x8098DBBC;
+	aFogFire3scene_ = 0x8098DBD0;
+	aFogKumorisoras = 0x8098DBE4;
+	aFogToride2scen = 0x8098DC00;
+
+
 	aRouteinfo_1 = 0x8098DD84;
 	aCollectioncoincoursesort = 0x8098DD90;
 	aCobcastle_1 = 0x8098DDAC;

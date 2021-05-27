@@ -115,3 +115,4 @@ modules:
   - processed/worldmapScripts.yaml
   - processed/worldmapGrid.yaml
   - processed/worldmapShop.yaml
+  - processed/sceneLight.yaml
