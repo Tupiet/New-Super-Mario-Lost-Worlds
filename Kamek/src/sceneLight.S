@@ -116,18 +116,18 @@ newSceneFogList:
 
 .global aLightSilhouette
 aLightSilhouette:
-	.string	"light/SilhouetteScene.blight"
+	.string	"light/Silhouette.blight"
 	.byte	0
 	.byte	0
 
 .global aLightMapSilhouette
 aLightMapSilhouette:
-	.string	"light/SilhouetteScene.blmap"
+	.string	"light/Silhouette.blmap"
 	.byte	0
 	.byte	0
 
 .global aFogSilhouette
 aFogSilhouette:
-	.string	"fog/SilhouetteScene.bfog"
+	.string	"fog/Silhouette.bfog"
 	.byte	0
 	.byte	0

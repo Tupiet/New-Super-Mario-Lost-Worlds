@@ -52,6 +52,14 @@ hooks:
 #    src_addr_pal: 0x800ebe74
 #    target_func: 'TEX_Poisonwater'
 
+#  - name: TEX_SnakeBlock
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x80aa6b9c
+#    target_func: 'TEX_SnakeBlock'
+
+
+
 # The below was added by Tempus
   - name: TEX_Goomba
     type: branch_insn
