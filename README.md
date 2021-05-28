@@ -1,3 +1,5 @@
+![Logo](logo.png)
+
 ### Introduction
 
 This is a fork of NSMBWer, a slightly modified version of NewerSMBW, which had most of the sprite mods whilst keeping the original game's map system intact and working. A notable change made in NSMBWer is the usage of CodeWarrior and Python 3 for Kamek.
