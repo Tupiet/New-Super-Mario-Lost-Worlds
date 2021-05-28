@@ -221,5 +221,3 @@ void MyGoomba::endState_Die() {
 So that is everything related to states. They allow you to seperate behaviour and keep the code clean. Try them and have fun! :)
 
 ___
-# Insider knowledge about states
-TODO
