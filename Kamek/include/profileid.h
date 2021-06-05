@@ -532,6 +532,8 @@ enum
 	Sidestepper = 512,
 	MiniSidestepper = 513,
 	BoomBoom = 514,
+	CutsceneMgr = 515,
+	SecretGem = 516,
 	Num
 };
 
@@ -1326,6 +1328,8 @@ enum
 	Sidestepper = 779,
 	MiniSidestepper = 780,
 	BoomBoom = 781,
+	CutsceneMgr = 782,
+	SecretGem = 783,
 	Num
 };
 

@@ -116,3 +116,5 @@ modules:
   - processed/worldmapGrid.yaml
   - processed/worldmapShop.yaml
   - processed/sceneLight.yaml
+  - processed/cutsceneMgr.yaml
+  - processed/secretGem.yaml

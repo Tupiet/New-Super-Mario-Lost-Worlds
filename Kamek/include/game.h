@@ -258,11 +258,12 @@ public:
 		struct {
 			// ALL Newer additions should go here
 			// This array has been verified as safe to replace
+			u8 secretGems;
 			u8 addToLevelNum;
 			u8 collected;
 			u8 secret_worlds_available[10];
 			u8 SIHammer;
-			char additional[50];
+			char additional[49];
 		/*
 			char newerWorldName[32]; // 0x6FC
 			GXColor fsTextColours[2]; // 0x71C

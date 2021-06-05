@@ -785,7 +785,11 @@ enum Actors {
 	NewActorSpawner = 776,
 	GreatGoalPole = 777,
 	WATER_LIFT_NEW = 778,
-	Sidestepper = 779
+	Sidestepper = 779,
+	MiniSidestepper = 780,
+	BoomBoom = 781,
+	CutsceneMgr = 782,
+	SecretGem = 783
 };
 
 struct Actor {
