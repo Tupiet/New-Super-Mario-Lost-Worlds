@@ -972,6 +972,49 @@
     <value nybble="11" title="Withstands (Needs Multiple Hits)" comment="This determines the number of hits or ground-pounds needed for the block to break. For this function, a texture will be used that has some odd-looking white numbers on it." advanced="True" advancedcomment="This setting may only apply to the original Giant Breakable Brick Block"/>
   </sprite> <!-- #157: Big Pumpkin -->
 
+  <sprite id="166" name="Snake Block (Ice)">
+  <dependency notes="The sprite snaps to the Path Node location. From Node-0 to Node-1, it must be a straight horizontal line, and it must be at least as long as the Snake Block itself. Straight lines and exact 45° angles are recommended, as after each Node, the Snake Block will navigate in a 1-by-1 zigzag until it reaches the height of the next Node before going straight."/>
+    <checkbox bit="28" title="Icy (Must Be Enabled)" comment="This causes the Snake Block to be icy instead of green. The green version is incomplete and crashes the game, so you MUST use an icy one."/> <!-- All other options are hidden unless this is enabled -->
+    <value nybble="11" title="Path ID" requiredbit="28" idtype="Path"/>
+    <value nybble="8-9" title="Starting Node" comment="This determines the Node of the Path that the Snake Block will start moving from." requiredbit="28"/>
+    <list nybble="12" title="Length" requiredbit="28">
+      <entry value="0">3 Blocks</entry>
+      <entry value="1">4 Blocks</entry>
+      <entry value="2">5 Blocks</entry>
+      <entry value="3">6 Blocks</entry>
+      <entry value="4">7 Blocks</entry>
+      <entry value="5">8 Blocks</entry>
+      <entry value="6">9 Blocks</entry>
+      <entry value="7">10 Blocks</entry>
+      <entry value="8">11 Blocks</entry>
+      <entry value="9">12 Blocks</entry>
+      <entry value="10">13 Blocks</entry>
+      <entry value="11">14 Blocks</entry>
+      <entry value="12">15 Blocks</entry>
+      <entry value="13">16 Blocks</entry>
+      <entry value="14">17 Blocks</entry>
+      <entry value="15">18 Blocks</entry>
+    </list>
+    <list bit="39-40" title="Speed" requiredbit="28">
+      <entry value="0">Very Slow (0.5)</entry>
+      <entry value="1">Slow (1.0)</entry>
+      <entry value="2">Fast (1.4)</entry>
+      <entry value="3">Slow (1.0)</entry>
+    </list>
+    <list nybble="5" title="End Animation" comment="This determines what the Snake Block will do when it reaches the final Node of the Path. Values higher than 3 cause a crash." requiredbit="28">
+      <entry value="0">Stop</entry>
+      <entry value="1">Fall Straight Through Last Node</entry>
+      <entry value="2">Stop, Fall Piece by Piece</entry>
+      <entry value="3">Stop, Fall All at Once</entry>
+    </list>
+	<!--<list bit="21-26" title="Color" requiredbit="28">
+      <entry value="0">Ice</entry>
+	  <entry value="1">Normal Green</entry>
+    </list> -->
+	
+  </sprite> <!-- #166: Snake Block (Ice) -->
+
+
   <sprite id="168" name="Thundercloud" asmhacks="True" notes="This creates an unhappy Thundercloud that is similar to a Lakitu's cloud. It will slingshot around the top of the stage and occasionally shoot down Thunder. This Thunder will turn non-tiny Marios into Mini-Mario, and kill Mini-Marios outright. The Thunder will not reach beneath solid terrain.">
     <dualbox bit="48" title1="Chases Player" title2="Stationary" comment="This determines if the Thundercloud will chase the player, or if it will remain in a single position."/>
     <value bit="26-32" title="Triggering Event ID (Die)" comment="When the Triggering Event is activated, the Thundercloud will die." requiredbit="48" requiredval="0"/> <!-- Appears if Chases Player is set -->
@@ -2901,21 +2944,30 @@
     <value bit="45-46" title="Nybble 11" />
     <value bit="47-48" title="Nybble 12" />
   </sprite> <!-- #494: Actor Multi-Spawner -->
-
+  
   <sprite id="495" name="Launch Star" asmhacks="True" notes="A launch star ported from SMG.">
     <dualbox bit="17" title1="Launch Star" title2="Super Launch Star" comment="This determines whether the player will be shooted within the zone or out of the level to the world map." />
     <checkbox bit="18" title="Active" comment="When enabled, the Launch Star will be activated from the start." />
     <dualbox bit="19" title1="Star Pieces" title2="Event" comment="This determines whether the Launch Star gets activated by collecting Star Pieces with the same ID or by an event with the ID." />
-    <value bit="21-28" title="Launch Star ID" comment="You have to add 5 Star Pieces with the same ID to activate this Launch Star." requiredbit="19" requiredval="0" />
-    <value bit="21-28" title="Triggering Event ID" comment="You have to trigger the event with this ID to activate this Launch Star." requiredbit="19" requiredval="1" idtype="Triggering Event" />
+	
+	<dependency notes="You need 5 star chips with the same id if you check Star Pieces.">
+      <suggested sprite="485"/>
+	  <suggested sprite="485"/>
+	  <suggested sprite="485"/>
+	  <suggested sprite="485"/>
+	  <suggested sprite="485"/>
+    </dependency>
+	
+    <value bit="20-24" title="Launch Star ID" comment="You have to add 5 Star Pieces with the same ID to activate this Launch Star." requiredbit="19" requiredval="0" />
+    <value bit="20-24" title="Triggering Event ID" comment="You have to trigger the event with this ID to activate this Launch Star." requiredbit="19" requiredval="1" />
 
-    <value bit="29-36" title="Speed" comment="The speed decides the distance the player can reach with the launch star." requiredbit="17" requiredval="0" />
+    <value bit="25-32" title="Star Rotation" comment="The rotation of the star" />
+    <value bit="33-36" title="Rotation Speed" comment="the speed of the rotation" />
 
-    <value bit="29-32" title="Destination World" comment="The destination world." requiredbit="17" requiredval="1" />
-    <value bit="33-36" title="Destination Sub World" comment="The destination subworld (a, b, c, [...]." requiredbit="17" requiredval="1" />
-
-    <value bit="37-44" title="Rotation" comment="The rotation of the launch star." />
-    <value bit="45-48" title="Rotation speed" comment="The speed at which the Launch Star rotates. 0 equals no rotation at all." />
+    <value bit="37-40" title="Destination World" comment="You have to add 5 Star Pieces with the same ID to activate this Launch Star." requiredbit="17" requiredval="1" />
+    <value bit="41-44" title="Destination Sub World" comment="You have to add 5 Star Pieces with the same ID to activate this Launch Star." requiredbit="17" requiredval="1" />
+	
+    <value bit="37-44" title="Speed" comment="The speed." requiredbit="17" requiredval="0"/>
   </sprite> <!-- #495: Launch Star -->
 
   <sprite id="496" name="Leaf Pile" asmhacks="True" notes="A leaf pile ported from MKW.">
@@ -3152,5 +3204,78 @@
   
   <sprite id="512" name="Sidestepper Boss" asmhacks="True" notes="A Sidestepper boss.">
   </sprite> <!-- #512: Sidestepper Boss -->
+  
+  <sprite id="513" name="Sidestepper" asmhacks="True" notes="A Sidestepper.">
+  </sprite> <!-- #513: Sidestepper -->
+  
+  <sprite id="514" name="Boom Boom" asmhacks="True" notes="A Boom Boom boss.">
+  </sprite> <!-- #514: Boom Boom -->
+  
+  <sprite id="515" name="Game Display Remover" asmhacks="True">
+    <value bit="9-16" title="Triggering Event ID" idtype="Triggering Event" />
+  </sprite> <!-- #515: Game Display Remover -->
+  
+  <sprite id="516" name="Secret Gem" asmhacks="True">
+  </sprite> <!-- #516: Secret Gem -->
+  
+  <sprite id="517" name="Star Chip" asmhacks="True" notes="A collacteable fragment of a launch star">
+	<value bit="43-48" title="Launch Star ID" comment="The id of the launch Star which should activate when collected enough."/>
+	<value bit="17-19" title="Star Chip ID" comment="The id of the launch Star which should activate when collected enough."/>
+  </sprite> <!-- #517: Star Chip -->
+  
+  <sprite id="518" name="Shy Cart" asmhacks="True" notes="A Shy Cart.">
+	<value bit="17-24" title="speed" comment="speed" />
+  </sprite> <!-- #518: Shy Cart -->
+  
+  <sprite id="519" name="Rail" asmhacks="True" notes="Not a Rail.">
+	<value bit="17-24" title="Width" comment="Collision width." />
+    <value bit="25-32" title="Height" comment="Collision height." />
+	
+	<list bit="33-48" title="Type" comment="This determines the type" >
+      <entry value="0">Yeet Player</entry>
+      <entry value="1">Stop Cart</entry>
+      <entry value="2">disable Cart Movement</entry>
+      <entry value="3">enable Cart Movement</entry>
+    </list>
+  </sprite> <!-- #519: Rail -->
+  
+  <sprite id="520" name="WhereAmIGoing" asmhacks="True" notes="Where am I going">
+	<list bit="17-20" title="Type" comment="This determines the type" >
+      <entry value="0">Left Right</entry>
+      <entry value="1">Up Down</entry>
+    </list>
+	<value bit="21-30" title="Pos X" comment="zone position x" requiredbit="17-20" requiredval="0"/>
+    <value bit="21-30" title="Pos Y" comment="zone position y" requiredbit="17-20" requiredval="1"/>
+	<value bit="31-48" title="Width" comment="zone width." requiredbit="17-20" requiredval="0"/>
+    <value bit="31-48" title="Height" comment="zone height." requiredbit="17-20" requiredval="1"/>
+  </sprite> <!-- #520: Where Am I Going -->
+  
+  <sprite id="521" name="WarpBox" asmhacks="True" notes="Where am I going">
+	<value bit="17-24" title="ID" comment="ID" />
+  </sprite> <!-- #521: Warp Box -->
+  
+  <sprite id="522" name="Boshi" asmhacks="True" notes="Where am I going">
+	<value bit="29-32" title="Speed" comment="speed" />
+	<value bit="33-40" title="currentNodeNum" comment="don't know why that exists" />
+	<value bit="41-48" title="Path ID" comment="ID" />
+  </sprite> <!-- #522: Boshi -->
+  
+  <sprite id="523" name="Cloud Plattform" asmhacks="True" notes="Where am I going">
+  <checkbox bit="17" title="follow path" comment="Loop" />
+	<value bit="41-48" title="Path ID" comment="ID" />
+	<value bit="33-40" title="currentNodeNum" comment="don't know why that exists" />
+	<value bit="29-32" title="Speed" comment="speed" />
+	<checkbox bit="18" title="Loop" comment="Loop" />
+  </sprite> <!-- #523: Cloud Plattform -->
+  
+  <sprite id="524" name="Goomba Tower" asmhacks="True" notes="Where am I going">
+  </sprite> <!-- #524: Goomba Tower -->
+  
+  <sprite id="525" name="BusuBusu" asmhacks="True" notes="Where am I going">
+	<checkbox bit="17" title="face right" comment="Loop" />
+	<value bit="21-28" title="walking distance" comment="speed" />
+	<value bit="29-32" title="Speed" comment="speed" />
+  </sprite> <!-- #525: BusuBusu -->
+  
 </sprites>
 <!-- Thank you so much for a-playing my game! -->
