@@ -791,18 +791,16 @@ enum Actors {
 	CutsceneMgr = 782,
 	SecretGem = 783,
 
-	//Baddy's stuff
 	ShroobUfo = 784,
-	LaunchStar = 785,
-	StarChip = 786,
-	ShyCart = 787,
-	Rail = 788,
-	WhereAmIGoing = 789,
-	WarpBox = 790,
-	Boshi = 791,
-	CloudPlattform = 792,
-	GoombaTower = 793,
-	BusuBusu = 794
+	StarChip = 785,
+	ShyCart = 786,
+	Rail = 787,
+	WhereAmIGoing = 788,
+	WarpBox = 789,
+	Boshi = 790,
+	CloudPlattform = 791,
+	GoombaTower = 792,
+	BusuBusu = 793
 };
 
 struct Actor {

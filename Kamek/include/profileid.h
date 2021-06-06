@@ -537,16 +537,15 @@ enum
 
 	//Baddy's Stuff
 	ShroobUfo = 517,
-	LaunchStar = 518,
-	StarChip = 519,
-	ShyCart = 520,
-	Rail = 521,
-	WhereAmIGoing = 522,
-	WarpBox = 523,
-	Boshi = 524,
-	CloudPlattform = 525,
-	GoombaTower = 526,
-	BusuBusu = 527,
+	StarChip = 518,
+	ShyCart = 519,
+	Rail = 520,
+	WhereAmIGoing = 521,
+	WarpBox = 522,
+	Boshi = 523,
+	CloudPlattform = 524,
+	GoombaTower = 525,
+	BusuBusu = 526,
 
 	Num
 };
@@ -1345,18 +1344,16 @@ enum
 	CutsceneMgr = 782,
 	SecretGem = 783,
 
-	//Baddy's Stuff
 	ShroobUfo = 784,
-	LaunchStar = 785,
-	StarChip = 786,
-	ShyCart = 787,
-	Rail = 788,
-	WhereAmIGoing = 789,
-	WarpBox = 790,
-	Boshi = 791,
-	CloudPlattform = 792,
-	GoombaTower = 793,
-	BusuBusu = 794,
+	StarChip = 785,
+	ShyCart = 786,
+	Rail = 787,
+	WhereAmIGoing = 788,
+	WarpBox = 789,
+	Boshi = 790,
+	CloudPlattform = 791,
+	GoombaTower = 792,
+	BusuBusu = 793,
 
 	Num
 };
