@@ -789,7 +789,20 @@ enum Actors {
 	MiniSidestepper = 780,
 	BoomBoom = 781,
 	CutsceneMgr = 782,
-	SecretGem = 783
+	SecretGem = 783,
+
+	//Baddy's stuff
+	ShroobUfo = 784,
+	LaunchStar = 785,
+	StarChip = 786,
+	ShyCart = 787,
+	Rail = 788,
+	WhereAmIGoing = 789,
+	WarpBox = 790,
+	Boshi = 791,
+	CloudPlattform = 792,
+	GoombaTower = 793,
+	BusuBusu = 794
 };
 
 struct Actor {

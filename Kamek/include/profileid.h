@@ -534,6 +534,20 @@ enum
 	BoomBoom = 514,
 	CutsceneMgr = 515,
 	SecretGem = 516,
+
+	//Baddy's Stuff
+	ShroobUfo = 517,
+	LaunchStar = 518,
+	StarChip = 519,
+	ShyCart = 520,
+	Rail = 521,
+	WhereAmIGoing = 522,
+	WarpBox = 523,
+	Boshi = 524,
+	CloudPlattform = 525,
+	GoombaTower = 526,
+	BusuBusu = 527,
+
 	Num
 };
 
@@ -1330,6 +1344,20 @@ enum
 	BoomBoom = 781,
 	CutsceneMgr = 782,
 	SecretGem = 783,
+
+	//Baddy's Stuff
+	ShroobUfo = 784,
+	LaunchStar = 785,
+	StarChip = 786,
+	ShyCart = 787,
+	Rail = 788,
+	WhereAmIGoing = 789,
+	WarpBox = 790,
+	Boshi = 791,
+	CloudPlattform = 792,
+	GoombaTower = 793,
+	BusuBusu = 794,
+
 	Num
 };
 

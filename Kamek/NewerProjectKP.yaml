@@ -118,3 +118,14 @@ modules:
   - processed/sceneLight.yaml
   - processed/cutsceneMgr.yaml
   - processed/secretGem.yaml
+  
+  # - processed/shroobUfo.yaml
+  - processed/launchStar.yaml
+  - processed/shyCart.yaml
+  - processed/whereAmIGoing.yaml
+  - processed/warpBox.yaml
+  - processed/boshi.yaml
+  - processed/cloudPlattform.yaml
+  - processed/goombaTower.yaml
+  - processed/busuBusu.yaml
+  

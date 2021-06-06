@@ -1,11 +1,11 @@
 #include <common.h>
 #include <game.h>
 #include <profile.h>
-//#include "baddy.h"
+#include "baddy.h"
 
 const char* LaunchStarFileList[] = { "launchStar", 0 };
 
-/*void initStarArraysMidway() {
+void initStarArraysMidway() {
 	for (int i = 0; i < 32; i++) {
 		for (int j = 0; j < 5; j++) {
 			launchStarChipCollectedAfterFlag[i][j] = false;
@@ -21,7 +21,7 @@ void initStarArrays() {
 		}
 		OSReport("Inner Array: %p\n", launchStarChipCollectedBeforeFlag[i]);
 	}
-}*/
+}
 
 class daEnLaunchStar_c : public dEn_c {
 public:
@@ -101,10 +101,10 @@ void daEnLaunchStar_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apO
 
 		//OSReport("getsMoved: %d\n", apOther->owner->getsMoved)
 
-		/*if (apOther->owner->getsMoved != 0)
+		if (apOther->owner->getsMoved != 0)
 		{
 			return;
-		}*/
+		}
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -112,10 +112,7 @@ void daEnLaunchStar_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apO
 			{
 				OSReport("Yes\n");
 				this->actorsCurrentlyShooting[i] = apOther->owner;
-				//this->actorsCurrentlyShooting[i]->getsMoved = 1;
-				
-				dAcPy_c *player = (dAcPy_c*)actorsCurrentlyShooting[i];
-				player->pipeCannonShot(0, 0.0f, 0.0f);
+				this->actorsCurrentlyShooting[i]->getsMoved = 1;
 
 				//OSReport("getsMoved: %d\n", this->actorsCurrentlyShooting[i]->getsMoved);
 
@@ -363,7 +360,7 @@ int daEnLaunchStar_c::onExecute()
 					this->actorsCurrentlyShooting[i]->speed.x = 0;
 					this->actorsCurrentlyShooting[i]->speed.y = 0;
 					this->actorsCurrentlyShooting[i]->rot.x = 0;
-					//this->actorsCurrentlyShooting[i]->getsMoved = 0;
+					this->actorsCurrentlyShooting[i]->getsMoved = 0;
 					this->actorsCurrentlyShooting[i] = 0;
 					this->timePlayer[i] = 0;
 				}
@@ -442,7 +439,7 @@ int daEnLaunchStar_c::onExecute()
 
 		OSReport("Collected %d\n", this->collected);
 		OSReport("Eight Launch two: %d\n", GameMgrP->eight.checkpointEntranceID);
-		/*OSReport("Collected After 1: %d\n", launchStarChipCollectedAfterFlag[this->id][0]);
+		OSReport("Collected After 1: %d\n", launchStarChipCollectedAfterFlag[this->id][0]);
 		OSReport("Collected After 2: %d\n", launchStarChipCollectedAfterFlag[this->id][1]);
 		OSReport("Collected After 3: %d\n", launchStarChipCollectedAfterFlag[this->id][2]);
 		OSReport("Collected After 4: %d\n", launchStarChipCollectedAfterFlag[this->id][3]);
@@ -459,7 +456,7 @@ int daEnLaunchStar_c::onExecute()
 			if (launchStarChipCollectedAfterFlag[this->id][i] != true && launchStarChipCollectedBeforeFlag[this->id][i] != true) {
 				return true;
 			}
-		}*/
+		}
 
 		this->active = true;
 		return true;
