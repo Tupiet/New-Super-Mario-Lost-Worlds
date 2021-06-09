@@ -2207,7 +2207,7 @@ ImageClasses = {
     493: SpriteImage_ActorSpawner,
     494: SpriteImage_ActorMultiSpawner,
     495: SpriteImage_LaunchStar,
-    517: SpriteImage_StarChip,
-    523: SpriteImage_CloudPlattform,
-    524: SpriteImage_GoombaTower
+    518: SpriteImage_StarChip,
+    524: SpriteImage_CloudPlattform,
+    525: SpriteImage_GoombaTower
 }

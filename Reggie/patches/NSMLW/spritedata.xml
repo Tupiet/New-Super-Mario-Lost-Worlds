@@ -3218,16 +3218,19 @@
   <sprite id="516" name="Secret Gem" asmhacks="True">
   </sprite> <!-- #516: Secret Gem -->
   
-  <sprite id="517" name="Star Chip" asmhacks="True" notes="A collacteable fragment of a launch star">
+  <sprite id="517" name="Shroob Ufo" asmhacks="True" notes="DO NOT USE THIS">
+  </sprite> <!-- #517: Shroob Ufo -->
+  
+  <sprite id="518" name="Star Chip" asmhacks="True" notes="A collacteable fragment of a launch star">
 	<value bit="43-48" title="Launch Star ID" comment="The id of the launch Star which should activate when collected enough."/>
 	<value bit="17-19" title="Star Chip ID" comment="The id of the launch Star which should activate when collected enough."/>
   </sprite> <!-- #517: Star Chip -->
   
-  <sprite id="518" name="Shy Cart" asmhacks="True" notes="A Shy Cart.">
+  <sprite id="519" name="Shy Cart" asmhacks="True" notes="A Shy Cart.">
 	<value bit="17-24" title="speed" comment="speed" />
   </sprite> <!-- #518: Shy Cart -->
   
-  <sprite id="519" name="Rail" asmhacks="True" notes="Not a Rail.">
+  <sprite id="520" name="Rail" asmhacks="True" notes="Not a Rail.">
 	<value bit="17-24" title="Width" comment="Collision width." />
     <value bit="25-32" title="Height" comment="Collision height." />
 	
@@ -3239,7 +3242,7 @@
     </list>
   </sprite> <!-- #519: Rail -->
   
-  <sprite id="520" name="WhereAmIGoing" asmhacks="True" notes="Where am I going">
+  <sprite id="521" name="WhereAmIGoing" asmhacks="True" notes="Where am I going">
 	<list bit="17-20" title="Type" comment="This determines the type" >
       <entry value="0">Left Right</entry>
       <entry value="1">Up Down</entry>
@@ -3250,17 +3253,17 @@
     <value bit="31-48" title="Height" comment="zone height." requiredbit="17-20" requiredval="1"/>
   </sprite> <!-- #520: Where Am I Going -->
   
-  <sprite id="521" name="WarpBox" asmhacks="True" notes="Where am I going">
+  <sprite id="522" name="WarpBox" asmhacks="True" notes="Where am I going">
 	<value bit="17-24" title="ID" comment="ID" />
   </sprite> <!-- #521: Warp Box -->
   
-  <sprite id="522" name="Boshi" asmhacks="True" notes="Where am I going">
+  <sprite id="523" name="Boshi" asmhacks="True" notes="Where am I going">
 	<value bit="29-32" title="Speed" comment="speed" />
 	<value bit="33-40" title="currentNodeNum" comment="don't know why that exists" />
 	<value bit="41-48" title="Path ID" comment="ID" />
   </sprite> <!-- #522: Boshi -->
   
-  <sprite id="523" name="Cloud Plattform" asmhacks="True" notes="Where am I going">
+  <sprite id="524" name="Cloud Plattform" asmhacks="True" notes="Where am I going">
   <checkbox bit="17" title="follow path" comment="Loop" />
 	<value bit="41-48" title="Path ID" comment="ID" />
 	<value bit="33-40" title="currentNodeNum" comment="don't know why that exists" />
@@ -3268,10 +3271,10 @@
 	<checkbox bit="18" title="Loop" comment="Loop" />
   </sprite> <!-- #523: Cloud Plattform -->
   
-  <sprite id="524" name="Goomba Tower" asmhacks="True" notes="Where am I going">
+  <sprite id="525" name="Goomba Tower" asmhacks="True" notes="Where am I going">
   </sprite> <!-- #524: Goomba Tower -->
   
-  <sprite id="525" name="BusuBusu" asmhacks="True" notes="Where am I going">
+  <sprite id="526" name="BusuBusu" asmhacks="True" notes="Where am I going">
 	<checkbox bit="17" title="face right" comment="Loop" />
 	<value bit="21-28" title="walking distance" comment="speed" />
 	<value bit="29-32" title="Speed" comment="speed" />
