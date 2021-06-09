@@ -10,8 +10,6 @@ daEnShyCart_c* playerCart[4] = {};
 bool launchStarChipCollectedBeforeFlag[32][5];
 bool launchStarChipCollectedAfterFlag[32][5];
 
-bool playerInWork[4] = { false,false,false,false };
-
-bool playerRiding[4] = { false,false,false,false };
+u8 playerStatus[4] = { 0,0,0,0 };
 
 #endif

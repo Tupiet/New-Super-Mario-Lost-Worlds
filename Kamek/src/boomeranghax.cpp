@@ -233,6 +233,10 @@ void daBoomerangHax_c::dieFall_End() {
 					}
 				}
 			}
+			else
+			{
+				this->Delete(1);
+			}
 		}
 	}
 
@@ -259,6 +263,15 @@ void daBoomerangHax_c::dieFall_End() {
 				this->Delete(1);
 			}
 		}
+		if (this->variation == 4)
+		{
+			daPlBase_c* player = (daPlBase_c*)apOther->owner;
+
+			if (CheckExistingPowerup(player) != 13 && CheckExistingPowerup(player) != 3)
+			{
+				this->Delete(1);
+			}
+		}
 	}
 
 	void daBoomerangHax_c::yoshiCollision(ActivePhysics *apThis, ActivePhysics *apOther) {
@@ -271,6 +284,15 @@ void daBoomerangHax_c::dieFall_End() {
 		}
 		if(this->variation == 3) {
 			this->playerCollision(apThis, apOther);
+		}
+		if (this->variation == 4)
+		{
+			daPlBase_c* player = (daPlBase_c*)apOther->owner;
+
+			if (CheckExistingPowerup(player) != 13 && CheckExistingPowerup(player) != 3)
+			{
+				this->Delete(1);
+			}
 		}
 	}
 
@@ -405,7 +427,7 @@ int daBoomerangHax_c::onCreate() {
 	this->alreadyOnTop = 0;
 	this->canI = false;
 	this->variation = (this->settings >> 12) & 0xF;
-	OSReport("daBoomerangHax_c::onCreate()!!!");
+	OSReport("daBoomerangHax_c::onCreate()!!!\n");
 	if(this->variation == 0) { //Boomerang
 		this->deleteForever = true;
 
@@ -599,7 +621,7 @@ int daBoomerangHax_c::onCreate() {
 		HitMeBaby.yDistToCenter = 0.0;
 
 		HitMeBaby.xDistToEdge = 7.5;
-		HitMeBaby.yDistToEdge = 7.5;
+		HitMeBaby.yDistToEdge = 7.5;		
 
 		HitMeBaby.category1 = 0x3;
 		HitMeBaby.category2 = 0x0;

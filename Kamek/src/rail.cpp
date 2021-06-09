@@ -53,7 +53,7 @@ void daEnRail_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apOther) 
 	switch (type)
 	{
 	case 0:
-		if (playerRiding[apOther->owner->which_player])
+		if (playerStatus[apOther->owner->which_player] == 2)
 		{
 			playerCart[apOther->owner->which_player]->done = true;
 		}
@@ -61,13 +61,13 @@ void daEnRail_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apOther) 
 	case 1:
 		break;
 	case 2:
-		if (playerRiding[apOther->owner->which_player])
+		if (playerStatus[apOther->owner->which_player] == 2)
 		{
 			playerCart[apOther->owner->which_player]->moveable = false;
 		}
 		break;
 	case 3:
-		if (playerRiding[apOther->owner->which_player])
+		if (playerStatus[apOther->owner->which_player] == 2)
 		{
 			playerCart[apOther->owner->which_player]->moveable = true;
 		}

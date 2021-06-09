@@ -28,7 +28,7 @@ public:
 
 	int driveSpeed;
 	bool moveable;
-
+	
 	//int last_speed_y;
 	//int last_speed_x;
 
@@ -127,11 +127,11 @@ void daEnShyCart_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apOthe
 	{
 		return;
 	}*/
-	if (this->passenger == 0 && apOther->owner->getsMoved == 0)
+	if (this->passenger == 0 && playerStatus[apOther->owner->which_player] == 0)
 	{
 		OSReport("Yes\n");
 		this->passenger = (dPlayer*)apOther->owner;
-		apOther->owner->getsMoved = 2;
+		playerStatus[apOther->owner->which_player] = 2;
 		//playerInWork[apOther->owner->which_player] = true;
 		//playerRiding[apOther->owner->which_player] = true;
 		return;
@@ -441,8 +441,7 @@ int daEnShyCart_c::onExecute() {
 	{
 		this->passenger->speed.x = this->speed.x * 3;
 		this->passenger->speed.y += 9;
-		playerInWork[this->passenger->which_player] = false;
-		playerRiding[this->passenger->which_player] = false;
+		playerStatus[this->passenger->which_player] = 0;
 		this->passenger = 0;
 	}
 

@@ -101,7 +101,7 @@ void daEnLaunchStar_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apO
 
 		//OSReport("getsMoved: %d\n", apOther->owner->getsMoved)
 
-		if (apOther->owner->getsMoved != 0)
+		if (playerStatus[apOther->owner->which_player] != 0)
 		{
 			return;
 		}
@@ -112,7 +112,7 @@ void daEnLaunchStar_c::playerCollision(ActivePhysics* apThis, ActivePhysics* apO
 			{
 				OSReport("Yes\n");
 				this->actorsCurrentlyShooting[i] = apOther->owner;
-				this->actorsCurrentlyShooting[i]->getsMoved = 1;
+				playerStatus[apOther->owner->which_player] = 1;
 
 				//OSReport("getsMoved: %d\n", this->actorsCurrentlyShooting[i]->getsMoved);
 
@@ -360,7 +360,7 @@ int daEnLaunchStar_c::onExecute()
 					this->actorsCurrentlyShooting[i]->speed.x = 0;
 					this->actorsCurrentlyShooting[i]->speed.y = 0;
 					this->actorsCurrentlyShooting[i]->rot.x = 0;
-					this->actorsCurrentlyShooting[i]->getsMoved = 0;
+					playerStatus[this->actorsCurrentlyShooting[i]->which_player] = 0;
 					this->actorsCurrentlyShooting[i] = 0;
 					this->timePlayer[i] = 0;
 				}
