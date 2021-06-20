@@ -3205,7 +3205,15 @@
   <sprite id="512" name="Sidestepper Boss" asmhacks="True" notes="A Sidestepper boss.">
   </sprite> <!-- #512: Sidestepper Boss -->
   
-  <sprite id="513" name="Sidestepper" asmhacks="True" notes="A Sidestepper.">
+  <sprite id="513" name="Sidestepper" asmhacks="True" notes="A Sidestepper. TICK ONLY ONE BOX IN EACH CATEGORY!!!">
+	<checkbox bit="48" title="1 Spawn Point" comment="Number of the Spawn Points." />
+	<checkbox bit="47" title="2 Spawn Points" comment="Number of the Spawn Points." />
+	<checkbox bit="46" title="3 Spawn Points" comment="Number of the Spawn Points." />
+	<checkbox bit="45" title="Point Distance = 1" comment="Number of blocks between the Spawn Points." />
+	<checkbox bit="44" title="Point Distance = 2" comment="Number of blocks between the Spawn Points." />
+	<checkbox bit="43" title="Point Distance = 3" comment="Number of blocks between the Spawn Points." />
+	<checkbox bit="42" title="Point Distance = 4" comment="Number of blocks between the Spawn Points." />
+	<checkbox bit="41" title="Point Distance = 5" comment="Number of blocks between the Spawn Points." />
   </sprite> <!-- #513: Sidestepper -->
   
   <sprite id="514" name="Boom Boom" asmhacks="True" notes="A Boom Boom boss.">
