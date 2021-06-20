@@ -546,6 +546,9 @@ enum
 	CloudPlattform = 524,
 	GoombaTower = 525,
 	BusuBusu = 526,
+	TikiTongBody = 527,
+	TikiTongHand = 528,
+	TikiTongCrown = 529,
 
 	Num
 };
@@ -1354,6 +1357,9 @@ enum
 	CloudPlattform = 791,
 	GoombaTower = 792,
 	BusuBusu = 793,
+	TikiTongBody = 794,
+	TikiTongHand = 795,
+	TikiTongCrown = 796,
 
 	Num
 };

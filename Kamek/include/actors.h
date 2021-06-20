@@ -800,7 +800,10 @@ enum Actors {
 	Boshi = 790,
 	CloudPlattform = 791,
 	GoombaTower = 792,
-	BusuBusu = 793
+	BusuBusu = 793,
+	TikiTongBody = 794,
+	TikiTongHand = 795,
+	TikiTongCrown = 796
 };
 
 struct Actor {

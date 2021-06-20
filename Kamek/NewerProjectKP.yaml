@@ -127,4 +127,4 @@ modules:
   - processed/cloudPlattform.yaml
   - processed/goombaTower.yaml
   - processed/busuBusu.yaml
-  
+  - processed/tiki.yaml
