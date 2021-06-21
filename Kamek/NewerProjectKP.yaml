@@ -110,6 +110,7 @@ modules:
   - processed/gakenoko.yaml
   - processed/removeMapAmbushes.yaml
   - processed/sidestepper.yaml
+  - processed/minisidestepper.yaml
   - processed/waterlift.yaml
   - processed/texmapcolouriser.yaml
   - processed/worldmapScripts.yaml
