@@ -180,6 +180,7 @@ void dWMShop_c::ShopModel_c::setupItem(float x, float y, ItemTypes type) {
 
 	this->x = x;
 	this->y = y;
+	
 	scaleFactor = 2.3f;
 
 	int id = (int)type;
@@ -398,8 +399,8 @@ int dWMShop_c::onExecute() {
 	if (visible) {
 		//lakituModel->execute();
 
-		//for (int i = 0; i < 12; i++)
-		//	itemModels[i].execute();
+		for (int i = 0; i < 12; i++)
+			itemModels[i].execute();
 	}
 
 	layout.execAnimations();
@@ -416,14 +417,14 @@ int dWMShop_c::onDraw() {
 }
 
 void dWMShop_c::specialDraw1() {
-	/*if (visible) {
-		lakituModel->scaleEase = scaleEase;
-		lakituModel->draw();
+	if (visible) {
+		//lakituModel->scaleEase = scaleEase;
+		//lakituModel->draw();
 		for (int i = 0; i < 12; i++) {
 			itemModels[i].scaleEase = scaleEase;
 			itemModels[i].draw();
 		}
-	}*/
+	}
 
 
 //		if (wasOff) { effect.spawn("Wm_ob_greencoinkira", 0, &pos, &rot, &scale); wasOff = false; }
@@ -596,7 +597,7 @@ const dWMShop_c::ItemTypes dWMShop_c::Inventory[10][12] = {
 	{ // Yoshi's Island
 		MUSHROOM, FIRE_FLOWER, ICE_FLOWER, PROPELLER,
 		FIRE_FLOWER, ICE_FLOWER, FIRE_FLOWER,
-		MUSHROOM, MUSHROOM, ONE_UP, PROPELLER, PROPELLER
+		MUSHROOM, MUSHROOM, MUSHROOM/*ONE_UP*/, PROPELLER, PROPELLER
 	},
 	{ // Desert
 		MUSHROOM, FIRE_FLOWER, ICE_FLOWER, PROPELLER,
@@ -676,7 +677,10 @@ void dWMShop_c::loadModels() {
 
 	itemModels = new ShopModel_c[ITEM_COUNT];
 	
-	/*for (int i = 0; i < ITEM_COUNT; i++) {
+	OSReport("new ShopModel_c\n");
+	
+	for (int i = 0; i < ITEM_COUNT; i++) {
+		OSReport("for\n");		
 		float effectiveX = itemPos[i][0];
 		float effectiveY = itemPos[i][1];
 		if (!IsWideScreen()) {
@@ -686,7 +690,8 @@ void dWMShop_c::loadModels() {
 			itemModels[i].scaleFactor = 1.6f;
 		}
 		itemModels[i].setupItem(effectiveX, effectiveY, Inventory[shopKind][i]);
-	}*/
+		OSReport("setupItem\n");
+	}
 }
 void dWMShop_c::deleteModels() {
 	if (lakituModel)
