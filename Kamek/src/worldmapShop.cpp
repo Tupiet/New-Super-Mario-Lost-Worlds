@@ -66,6 +66,9 @@ class dWMShop_c : public dActor_c {
 			STARMAN,
 			HAMMER,
 			ONE_UP,
+			BOOMERANG,
+			CLOUD,
+			FROG,
 			ITEM_TYPE_COUNT
 		};
 
@@ -176,6 +179,9 @@ void dWMShop_c::ShopModel_c::setupItem(float x, float y, ItemTypes type) {
 		{ "I_star", 		"g3d/I_star.brres", 			"I_star", 				"wait2" },
 		{ "I_hammer", 		"g3d/I_fireflower.brres",		"I_fireflower",			"wait2" },
 		{ "I_kinoko_bundle","g3d/I_life_kinoko.brres", 		"I_life_kinoko", 		"wait2" },
+		{ "I_boomerang",	"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_cloud",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_frog",			"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 	};
 
 	this->x = x;
@@ -380,6 +386,7 @@ int dWMShop_c::onCreate() {
 
 		layoutLoaded = true;
 	}
+	state.setState(&StateID_ShowWait);
 
 	return true;
 }
@@ -442,9 +449,7 @@ void dWMShop_c::show(int shopNumber) {
 
 // Hidden
 void dWMShop_c::beginState_Hidden() { }
-void dWMShop_c::executeState_Hidden() {
-	state.setState(&StateID_ShowWait);
-}
+void dWMShop_c::executeState_Hidden() { }
 void dWMShop_c::endState_Hidden() { }
 
 // ShowWait
@@ -597,7 +602,7 @@ const dWMShop_c::ItemTypes dWMShop_c::Inventory[10][12] = {
 	{ // Yoshi's Island
 		MUSHROOM, FIRE_FLOWER, ICE_FLOWER, PROPELLER,
 		FIRE_FLOWER, ICE_FLOWER, FIRE_FLOWER,
-		MUSHROOM, MUSHROOM, MUSHROOM/*ONE_UP*/, PROPELLER, PROPELLER
+		MUSHROOM, MUSHROOM, CLOUD/*ONE_UP*/, PROPELLER, PROPELLER
 	},
 	{ // Desert
 		MUSHROOM, FIRE_FLOWER, ICE_FLOWER, PROPELLER,

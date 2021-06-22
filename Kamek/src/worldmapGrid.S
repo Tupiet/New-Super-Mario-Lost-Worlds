@@ -94,9 +94,13 @@ newAlwaysLoadedList:
 	.long aCobsurrender_0
 	.long aCobkinopio_1
 	.long cobGrid
+	.long I_kinoko_bundle
 
 .global cobGrid
 cobGrid:
 	.string	"cobGrid"
 	.byte	0
 	.byte	0
+
+I_kinoko_bundle:
+	.string "I_kinoko_bundle"
