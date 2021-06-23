@@ -355,31 +355,31 @@ void dStockItem_c::setScalesOfSomeThings() {
 			out.x -= -246;
 		}
 		if(i == 7) {
-			out.y = shdRoot->trans.y + 245;
+			out.y = shdRoot->trans.y + 235;
 			out.x -= 246;
 		}
-		if(i == 8) {
-			out.y = shdRoot->trans.y + 245;
+		if(i == 12) {
+			out.y = shdRoot->trans.y + 235;
 			out.x -= 164;
 		}
 		if(i == 9) {
-			out.y = shdRoot->trans.y + 245;
+			out.y = shdRoot->trans.y + 235;
 			out.x -= 82;
 		}
-		if(i == 10) {
-			out.y = shdRoot->trans.y + 245;
+		if(i == 8) {
+			out.y = shdRoot->trans.y + 235;
 			out.x -= 0;
 		}
 		if(i == 11) {
-			out.y = shdRoot->trans.y + 245;
+			out.y = shdRoot->trans.y + 235;
 			out.x -= -82;
 		}
-		if(i == 12) {
-			out.y = shdRoot->trans.y + 245;
+		if(i == 13) {
+			out.y = shdRoot->trans.y + 235;
 			out.x -= -164;
 		}
-		if(i == 13) {
-			out.y = shdRoot->trans.y + 245;
+		if(i == 10) {
+			out.y = shdRoot->trans.y + 235;
 			out.x -= -246;
 		}
 

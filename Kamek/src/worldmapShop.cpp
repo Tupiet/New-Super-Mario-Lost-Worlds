@@ -65,10 +65,13 @@ class dWMShop_c : public dActor_c {
 			MINI_SHROOM,
 			STARMAN,
 			HAMMER,
-			ONE_UP,
+			GOLD_FLOWER,
+			SPIKE_SHROOM,
 			BOOMERANG,
-			CLOUD,
 			FROG,
+			CLOUD,
+			WAND,
+			ONE_UP,
 			ITEM_TYPE_COUNT
 		};
 
@@ -137,6 +140,8 @@ class dWMShop_c : public dActor_c {
 
 extern int PtrToWM_CS_SEQ_MNG;
 extern "C" bool FUN_801017c0(int, int, int, int, int);
+extern "C" void dCourseSelectGuide_c__loadLives(int);
+
 
 CREATE_STATE(dWMShop_c, Hidden);
 CREATE_STATE(dWMShop_c, ShowWait);
@@ -179,10 +184,14 @@ void dWMShop_c::ShopModel_c::setupItem(float x, float y, ItemTypes type) {
 		{ "I_kinoko_bundle","g3d/I_mini_kinoko.brres", 		"I_mini_kinoko", 		"wait2" },
 		{ "I_star", 		"g3d/I_star.brres", 			"I_star", 				"wait2" },
 		{ "I_hammer", 		"g3d/I_fireflower.brres",		"I_fireflower",			"wait2" },
-		{ "I_kinoko_bundle","g3d/I_life_kinoko.brres", 		"I_life_kinoko", 		"wait2" },
+		{ "I_thunder",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_spike",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_boomerang",	"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
-		{ "I_cloud",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_frog",			"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_cloud",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_bobomb",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_kinoko_bundle","g3d/I_life_kinoko.brres", 		"I_life_kinoko", 		"wait2" },
+		
 	};
 
 	this->x = x;
@@ -612,8 +621,8 @@ void dWMShop_c::endState_HideWait() {
 const dWMShop_c::ItemTypes dWMShop_c::Inventory[10][12] = { 
 	{ // Yoshi's Island
 		MUSHROOM, FIRE_FLOWER, ICE_FLOWER, PROPELLER,
-		FIRE_FLOWER, ICE_FLOWER, FIRE_FLOWER,
-		MUSHROOM, MUSHROOM, CLOUD/*ONE_UP*/, PROPELLER, PROPELLER
+		HAMMER, GOLD_FLOWER, SPIKE_SHROOM,
+		BOOMERANG, FROG, CLOUD, WAND, ONE_UP
 	},
 	{ // Desert
 		MUSHROOM, FIRE_FLOWER, ICE_FLOWER, PROPELLER,
@@ -791,7 +800,7 @@ void dWMShop_c::buyItem(int item) {
 	for (int i = 0; i < invCount; i++)
 		appliedItems[(int)Inventory[shopKind][invStartIndex+i]]++;
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 14; i++) {
 		block->powerups_available[i] += appliedItems[i];
 
 		if (block->powerups_available[i] > 99)
@@ -814,6 +823,10 @@ void dWMShop_c::buyItem(int item) {
 	if (appliedItems[(int)ONE_UP] > 0)
 		MapSoundPlayer(SoundRelatedClass, SE_SYS_100COIN_ONE_UP, 1);
 
+	dActor_c* csMng = (dActor_c*)fBase_c::search(COURSE_SELECT_MANAGER);
+	dCourseSelectGuide_c__loadLives((int)(csMng) + 200);
+
+
 	state.setState(&StateID_CoinCountdown);
 	HideSelectCursor(SelectCursorPointer, 0);
 }
@@ -826,6 +839,7 @@ void dWMShop_c::beginState_CoinCountdown() {
 void dWMShop_c::endState_CoinCountdown() { }
 
 void dWMShop_c::executeState_CoinCountdown() {
+	/* removed for testing
 	timerForCoinCountdown--;
 	if (timerForCoinCountdown <= 0) {
 
@@ -873,7 +887,7 @@ void dWMShop_c::executeState_CoinCountdown() {
 			MapSoundPlayer(SoundRelatedClass, SE_SYS_STAR_COIN_PAY, 1);
 			beginState_CoinCountdown();
 		}
-	}
+	}*/state.setState(&StateID_Wait);
 }
 
 

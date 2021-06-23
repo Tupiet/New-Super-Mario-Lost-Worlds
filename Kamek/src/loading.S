@@ -3,6 +3,7 @@
 .set sp, 1
 
 .extern ContinueFromLoadingCRSIN
+.global aI_kinoko_3, aI_fireflower_2, aI_iceflower_0, aI_star_0, aI_propeller_0, aI_penguin, aI_hammer_0, aI_boomerang_0, aI_spike_0, aI_bobomb_0, aI_frog_0, aI_thunder_0, aI_cloud_0
 
 #ifndef __MWERKS__
 .set r0,0;   .set r1,1;   .set r2,2; .set r3,3;   .set r4,4

@@ -2094,6 +2094,13 @@ StrongboxGiveBattleItem:
 .data
 IndexItemsForStockItem:
 .byte 0,1,2,3,5,6,4,7,8,9,10,11,12,13
+#.byte 0,1,2,3,5,6,4,7,12,9,8,11,13,10 #Nin0's order
+#.byte 0,1,2,3,5,6,4,10,8,13,7,10,9,12 #World Progression variant
+#.byte 0,1,2,3,5,6,4,7,8,9,10,11,12,13 #Old, rearranged for progress reasons
+
+OutputPowerupsByItemID:
+.long 1, 2, 4, 6, 5, 3, -1, 7, 12, 9, 8, 11, 13, 10
+#.long 1, 2, 4, 6, 5, 3, -1, 7, 8, 9, 10, 11, 12, 13 #Old, rearranged for progress reasons
 
 
 SLGWindow: .string "A00_Window"
@@ -2135,9 +2142,9 @@ SLIcon6: .string "P_iconStar_00"
 SLIcon7: .string "P_iconHammer_00"
 SLIcon8: .string "P_iconBoomer_00"
 SLIcon9: .string "P_iconSpike_00"
-SLIcon10: .string "P_iconBobomb_00"
+SLIcon10: .string "P_iconWand_00"
 SLIcon11: .string "P_iconFrog_00"
-SLIcon12: .string "P_iconThunder_00"
+SLIcon12: .string "P_iconGold_00"
 SLIcon13: .string "P_iconCloud_00"
 SLIconPane0: .string "N_iconKinoko_00"
 SLIconPane1: .string "N_iconFlower_00"
@@ -2149,9 +2156,9 @@ SLIconPane6: .string "N_iconStar_00"
 SLIconPane7: .string "N_iconHammer_00"
 SLIconPane8: .string "N_iconBoomer_00"
 SLIconPane9: .string "N_iconSpike_00"
-SLIconPane10: .string "N_iconBobomb_00"
+SLIconPane10: .string "N_iconWand_00"
 SLIconPane11: .string "N_iconFrog_00"
-SLIconPane12: .string "N_iconThunder_00"
+SLIconPane12: .string "N_iconGold_00"
 SLIconPane13: .string "N_iconCloud_00"
 .align 4
 SILayoutGroupNames:
@@ -2162,12 +2169,12 @@ SILayoutGroupNames:
 .long SLGBtn0,SLGBtn1,SLGBtn2,SLGBtn6,SLGBtn4,SLGBtn5,SLGBtn3
 .long SLGWindow
 .long SLGBtn7,SLGBtn7,SLGBtn7
-.long SLGBtn8,SLGBtn8,SLGBtn8
-.long SLGBtn9,SLGBtn9,SLGBtn9
-.long SLGBtn10,SLGBtn10,SLGBtn10
-.long SLGBtn11,SLGBtn11,SLGBtn11
 .long SLGBtn12,SLGBtn12,SLGBtn12
+.long SLGBtn9,SLGBtn9,SLGBtn9
+.long SLGBtn8,SLGBtn8,SLGBtn8
+.long SLGBtn11,SLGBtn11,SLGBtn11
 .long SLGBtn13,SLGBtn13,SLGBtn13
+.long SLGBtn10,SLGBtn10,SLGBtn10
 SILayoutGroupIDs:
 .long 0
 .long 1,1,1,1,1,1,1
@@ -2185,16 +2192,16 @@ SILayoutGroupIDs:
 
 SILayoutButtonBases:
 .long SLButtonBase00,SLButtonBase01,SLButtonBase02,SLButtonBase06
-.long SLButtonBase04,SLButtonBase05,SLButtonBase03,SLButtonBase07,SLButtonBase08
-.long SLButtonBase09,SLButtonBase10,SLButtonBase11,SLButtonBase12,SLButtonBase13
+.long SLButtonBase04,SLButtonBase05,SLButtonBase03,SLButtonBase07,SLButtonBase12
+.long SLButtonBase09,SLButtonBase08,SLButtonBase11,SLButtonBase13,SLButtonBase10
 SILayoutIconPictures:
 .long SLIcon0,SLIcon1,SLIcon2,SLIcon3
-.long SLIcon4,SLIcon5,SLIcon6,SLIcon7,SLIcon8
-.long SLIcon9,SLIcon10,SLIcon11,SLIcon12,SLIcon13
+.long SLIcon4,SLIcon5,SLIcon6,SLIcon7,SLIcon12
+.long SLIcon9,SLIcon8,SLIcon11,SLIcon13,SLIcon10
 SILayoutIconPanes:
 .long SLIconPane0,SLIconPane1,SLIconPane2,SLIconPane3
-.long SLIconPane4,SLIconPane5,SLIconPane6,SLIconPane7,SLIconPane8
-.long SLIconPane9,SLIconPane10,SLIconPane11,SLIconPane12,SLIconPane13
+.long SLIconPane4,SLIconPane5,SLIconPane6,SLIconPane7,SLIconPane12
+.long SLIconPane9,SLIconPane8,SLIconPane11,SLIconPane13,SLIconPane10
 
 .text
 .global SILayoutGroupParams
@@ -2278,10 +2285,6 @@ AddHammerPowerupFinalValue:
 	lis r22, OutputPowerupsByItemID@h
 	ori r22, r22, OutputPowerupsByItemID@l
 	blr
-
-.data
-OutputPowerupsByItemID:
-.long 1, 2, 4, 6, 5, 3, -1, 7, 8, 9, 10, 11, 12, 13
 
 .text
 .global FixStockItemEffectPlayer
@@ -2604,17 +2607,17 @@ UpdateCalcPowerupResult:
 	cmpwi r3, 7
 	beq cprIsDoneHammer
 	cmpwi r3, 8
-	beq cprIsDoneBoomerang
+	beq cprIsDoneThunder
 	cmpwi r3, 9
 	beq cprIsDoneSpike
 	cmpwi r3, 10
-	beq cprIsDoneBobomb
+	beq cprIsDoneBoomerang
 	cmpwi r3, 11
 	beq cprIsDoneFrog
 	cmpwi r3, 12
-	beq cprIsDoneThunder
-	cmpwi r3, 13
 	beq cprIsDoneCloud
+	cmpwi r3, 13
+	beq cprIsDoneBobomb
 	b ContinueFromCalcPowerupResult
 cprIsDoneHammer:
 	li r6, 7
@@ -2910,7 +2913,7 @@ changedBase1:
 
 
 	# replicate this shit another time
-	lwz r0, 0x284(r25)
+	lwz r0, 0x28C(r25)
 	cmpwi r0, 0
 	lwz r3, 0x2B0(r25)
 	lbz r0, 0xBB(r3)
@@ -2964,7 +2967,7 @@ changedBase2:
 	bctrl
 
 	lwz r5, 0x2A8(r25)
-	addi r3, r25, 0x284
+	addi r3, r25, 0x28C
 	lis r4, ptrToTwo@h
 	ori r4, r4, ptrToTwo@l
 	li r6, 1
@@ -3036,7 +3039,7 @@ changedBase3:
 
 
 	# replicate this shit another time
-	lwz r0, 0x28C(r25)
+	lwz r0, 0x298(r25)
 	cmpwi r0, 0
 	lwz r3, 0x2C8(r25)
 	lbz r0, 0xBB(r3)
@@ -3090,7 +3093,7 @@ changedBase4:
 	bctrl
 
 	lwz r5, 0x2C0(r25)
-	addi r3, r25, 0x28C
+	addi r3, r25, 0x298
 	lis r4, ptrToTwo@h
 	ori r4, r4, ptrToTwo@l
 	li r6, 1
@@ -3162,7 +3165,7 @@ changedBase5:
 
 
 	# replicate this shit another time
-	lwz r0, 0x294(r25)
+	lwz r0, 0x284(r25)
 	cmpwi r0, 0
 	lwz r3, 0x2E0(r25)
 	lbz r0, 0xBB(r3)
@@ -3216,7 +3219,7 @@ changedBase6:
 	bctrl
 
 	lwz r5, 0x2D8(r25)
-	addi r3, r25, 0x294
+	addi r3, r25, 0x284
 	lis r4, ptrToTwo@h
 	ori r4, r4, ptrToTwo@l
 	li r6, 1
@@ -3225,7 +3228,7 @@ changedBase6:
 
 
 	# replicate this shit another time
-	lwz r0, 0x298(r25)
+	lwz r0, 0x294(r25)
 	cmpwi r0, 0
 	lwz r3, 0x2EC(r25)
 	lbz r0, 0xBB(r3)
@@ -3279,7 +3282,7 @@ changedBase7:
 	bctrl
 
 	lwz r5, 0x2E4(r25)
-	addi r3, r25, 0x298
+	addi r3, r25, 0x294
 	lis r4, ptrToTwo@h
 	ori r4, r4, ptrToTwo@l
 	li r6, 1

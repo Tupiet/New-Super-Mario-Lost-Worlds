@@ -4,6 +4,7 @@ SECTIONS {
 
 	PtrToWM_CS_SEQ_MNG = 0x8042A48C;
 	FUN_801017c0 = 0x801017C0;
+	dCourseSelectGuide_c__loadLives = 0x80010800;
 
 	aLightMainscene = 0x8098D538;
 	aLightChikascen = 0x8098D550;

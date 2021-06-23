@@ -3,9 +3,13 @@
 # Add this to the bl hook!
 .global StockItemHack
 .global StockItemHackR3
+.global ItemNamesHack
 
 # Add these to the symbol map!
 .extern SI_Kinoko, SI_Fireflower, SI_Propeller, SI_Iceflower, SI_Penguin, SI_Star
+
+# From loading.S
+.extern aI_kinoko_3, aI_fireflower_2, aI_iceflower_0, aI_star_0, aI_propeller_0, aI_penguin, aI_hammer_0, aI_boomerang_0, aI_spike_0, aI_bobomb_0, aI_frog_0, aI_thunder_0, aI_cloud_0
 
 .text
 StockItemHack:
@@ -17,6 +21,12 @@ StockItemHack:
 StockItemHackR3:
   lis r3, StockItemListR3@h
   ori r3, r3, StockItemListR3@l
+  blr
+
+.text
+ItemNamesHack:
+  lis r31, ItemNamesList@h
+  ori r31, r31, ItemNamesList@l
   blr
 
 .data
@@ -80,5 +90,26 @@ SI_thunder:
 	.byte 0
 SI_cloud:
 	.string "SI_Cloud"
+	.byte 0
+	.byte 0
+
+ItemNamesList:
+	.long teresa
+	.long aI_kinoko_3							# "I_kinoko"
+	.long aI_fireflower_2						# "I_fireflower"
+	.long aI_iceflower_0						# "I_iceflower"
+	.long aI_star_0								# "I_star"
+	.long aI_propeller_0						# "I_propeller"
+	.long aI_penguin							# "I_penguin"
+	.long aI_hammer_0							# "I_hammer"
+	.long aI_boomerang_0						# "I_boomerang"
+	.long aI_spike_0							# "I_spike"
+	.long aI_bobomb_0							# "I_bobomb"
+	.long aI_frog_0								# "I_frog"
+	.long aI_thunder_0							# "I_thunder"
+	.long aI_cloud_0							# "I_cloud"
+
+teresa:
+	.string "teresa"
 	.byte 0
 	.byte 0
