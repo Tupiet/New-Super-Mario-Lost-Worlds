@@ -135,7 +135,8 @@ class dWMShop_c : public dActor_c {
 
 #endif
 
-
+extern int PtrToWM_CS_SEQ_MNG;
+extern "C" bool FUN_801017c0(int, int, int, int, int);
 
 CREATE_STATE(dWMShop_c, Hidden);
 CREATE_STATE(dWMShop_c, ShowWait);
@@ -215,22 +216,22 @@ void dWMShop_c::ShopModel_c::setupLakitu(int id) {
 
 	scaleFactor = 1.0f;
 	scaleEase = 0.0f;
-	//this->isLakitu = true;
+	this->isLakitu = true;
 
-	/*allocator.link(-1, GameHeaps[0], 0, 0x20);
+	allocator.link(-1, GameHeaps[0], 0, 0x20);
 
-	res.data = getResource("lakitu", models[id]);
-	nw4r::g3d::ResMdl mdlRes = res.GetResMdl("lakitu");
+	res.data = getResource("Rosalina", "g3d/rosalina.brres"/*models[id]*/);
+	nw4r::g3d::ResMdl mdlRes = res.GetResMdl("rosalina");
 	model.setup(mdlRes, &allocator, 0x224, 1, 0);
 	SetupTextures_Enemy(&model, 1);
 
-	nw4r::g3d::ResAnmChr anmChr = res.GetResAnmChr("idle");
+	nw4r::g3d::ResAnmChr anmChr = res.GetResAnmChr("wait");
 	animation.setup(mdlRes, anmChr, &allocator, 0);
 
-	playAnim("idle", 1.0f, 0);
+	playAnim("wait", 1.0f, 0);
 	playingNotEnough = false;
 
-	allocator.unlink();*/
+	allocator.unlink();
 }
 
 void dWMShop_c::ShopModel_c::playAnim(const char *name, float rate, char loop) {
@@ -247,7 +248,7 @@ void dWMShop_c::ShopModel_c::execute() {
 		OSReport("Animaiton Complete");
 		if (this->isLakitu) {
 			OSReport("Setting animation to idle");
-			playAnim("idle", 1.0f, 0);
+			playAnim("wait", 1.0f, 0);
 			this->animation.setCurrentFrame(0.0);
 			if (playingNotEnough) {
 				OSReport("Detected Not Enough animation as being over\n");
@@ -290,7 +291,6 @@ dWMShop_c::dWMShop_c() : state(this, &StateID_Hidden) {
 
 int dWMShop_c::onCreate() {
 	if (!layoutLoaded) {
-		DVD_LoadFile(GetDVDClass(), "Object", "lakitu", 0);
 		bool gotFile = layout.loadArc("shop.arc", false);
 		if (!gotFile)
 			return false;
@@ -386,7 +386,6 @@ int dWMShop_c::onCreate() {
 
 		layoutLoaded = true;
 	}
-	state.setState(&StateID_ShowWait);
 
 	return true;
 }
@@ -394,17 +393,16 @@ int dWMShop_c::onCreate() {
 
 int dWMShop_c::onDelete() {
 	deleteModels();
-	DVD_FreeFile(GetDVDClass2(), "lakitu");
 	return layout.free();
 }
 
 
 int dWMShop_c::onExecute() {
-	OSReport("Shop state: %s\n", this->state.getCurrentState()->getName());
+	//OSReport("Shop state: %s\n", this->state.getCurrentState()->getName());
 	state.execute();
 
 	if (visible) {
-		//lakituModel->execute();
+		lakituModel->execute();
 
 		for (int i = 0; i < 12; i++)
 			itemModels[i].execute();
@@ -425,8 +423,8 @@ int dWMShop_c::onDraw() {
 
 void dWMShop_c::specialDraw1() {
 	if (visible) {
-		//lakituModel->scaleEase = scaleEase;
-		//lakituModel->draw();
+		lakituModel->scaleEase = scaleEase * 2.5f;
+		lakituModel->draw();
 		for (int i = 0; i < 12; i++) {
 			itemModels[i].scaleEase = scaleEase;
 			itemModels[i].draw();
@@ -449,7 +447,16 @@ void dWMShop_c::show(int shopNumber) {
 
 // Hidden
 void dWMShop_c::beginState_Hidden() { }
-void dWMShop_c::executeState_Hidden() { }
+void dWMShop_c::executeState_Hidden() {
+	int nowPressed = Remocon_GetPressed(GetActiveRemocon());
+
+	if (nowPressed & WPAD_B) {
+		state.setState(&StateID_ShowWait);
+		FUN_801017c0(PtrToWM_CS_SEQ_MNG, 0x35, 0, 0, 0x80);
+		dActor_c* csMng = (dActor_c*)fBase_c::search(COURSE_SELECT_MANAGER);
+		*(u8*)((int)(csMng) + 0x53C) = 0;
+	}
+}
 void dWMShop_c::endState_Hidden() { }
 
 // ShowWait
@@ -506,6 +513,7 @@ void dWMShop_c::executeState_Wait() {
 
 	if (nowPressed & WPAD_ONE) {
 		// Hide the thing
+		FUN_801017c0(PtrToWM_CS_SEQ_MNG, 0x36, 0, 0, 0x80);
 		state.setState(&StateID_HideWait);
 
 	} else if (nowPressed & WPAD_UP) {
@@ -571,6 +579,9 @@ void dWMShop_c::executeState_HideWait() {
 		scaleEase = -((cos(timer * 3.14 /13.5)-0.9)/timer*10)+1;
 		if (scaleEase < 0.0f)
 			scaleEase = 0.0f;
+	} else {
+		dActor_c* csMng = (dActor_c*)fBase_c::search(COURSE_SELECT_MANAGER);
+		*(u8*)((int)(csMng) + 0x53C) = 1;
 	}
 
 	if (!layout.isAnimOn(HIDE_ALL))

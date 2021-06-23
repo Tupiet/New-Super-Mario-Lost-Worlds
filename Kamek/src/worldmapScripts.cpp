@@ -846,58 +846,87 @@ ScriptCommand Z_GameStart[] = {
     {5, 0},
 };
 
+ScriptCommand Z_Shop_Menu_Open[] = {
+	{154, 1},
+	{92, 0},
+    {134, 0},
+    {114, 0},
+    {123, 0},
+    //{132, 0},
+    //{122, 0},
+    //{130, 0},
+    //{115, 0},
+    //{154, 0},
+	
+	{5, 0},
+};
+
+ScriptCommand Z_Shop_Menu_Close[] = {
+	//{154, 0},
+	
+    {122, 0},
+    {130, 0},
+    {115, 0},
+    {154, 0},
+	{5, 0},
+};
+
 ScriptCommand *custom_world_map_scripts_table[] = {
-    Z_default_clr,
-    Z_default_fail,
-    Z_enemy_clr,
-    Z_enemy_fail,
-    Z_toride_in,
-    Z_toride_clr,
-    Z_toride_fail,
-    Z_toride_fail2,
-    Z_castle_in,
-    Z_castle_clr,
-    Z_castle_fail,
-    Z_castle_fail2,
-    Z_ghost_in,
-    Z_ghost_clr,
-    Z_ghost_fail,
-    Z_ghost_fail2,
-    Z_cannon,
-    script_0x11,
-    Z_dokan,
-    Z_dokan_warp,
-    Z_dokan_start,
-    Z_W_Walking_in,
-    Z_W_Walking_in_Normal,
-    Z_W_Flying_in,
-    Z_W_Cannon_in,
-    Z_W_Cannon_in_Normal,
-    script_0x1a,
-    script_0x1b,
-    Z_wSign_koopaCastle_in,
-    script_0x1d,
-    Z_view_world,
-    Z_course_in,
-    Z_kinoko_out,
-    Z_airship_course_in,
-    Z_airship_course_out,
-    Z_start_kinoko_in,
-    script_0x24,
-    script_0x25,
-    Z_null,
-    Z_antlion,
-    Z_killer,
-    Z_start_battle,
-    Z_Switch,
-    Z_KoopaCastleAppear,
-    Z_KinopioStart,
-    script_0x2d,
-    script_0x2e,
-    Z_Pause_Menu,
-    Z_airship_clear,
-    Z_Stock_Menu,
-    Z_WorldSelect_Menu,
-    Z_antlion_star,
-    Z_GameStart,
+    Z_default_clr,					//0x00
+    Z_default_fail,					//0x01
+    Z_enemy_clr,					//0x02
+    Z_enemy_fail,					//0x03
+    Z_toride_in,					//0x04
+    Z_toride_clr,					//0x05
+    Z_toride_fail,					//0x06
+    Z_toride_fail2,					//0x07
+    Z_castle_in,					//0x08
+    Z_castle_clr,					//0x09
+    Z_castle_fail,					//0x0A
+    Z_castle_fail2,					//0x0B
+    Z_ghost_in,						//0x0C
+    Z_ghost_clr,					//0x0D
+    Z_ghost_fail,					//0x0E
+    Z_ghost_fail2,					//0x0F
+    Z_cannon,						//0x10
+    script_0x11,					//0x11
+    Z_dokan,						//0x12
+    Z_dokan_warp,					//0x13
+    Z_dokan_start,					//0x14
+    Z_W_Walking_in,					//0x15
+    Z_W_Walking_in_Normal,			//0x16
+    Z_W_Flying_in,					//0x17
+    Z_W_Cannon_in,					//0x18
+    Z_W_Cannon_in_Normal,			//0x19
+    script_0x1a,					//0x1A
+    script_0x1b,					//0x1B
+    Z_wSign_koopaCastle_in,			//0x1C
+    script_0x1d,					//0x1D
+    Z_view_world,					//0x1E
+    Z_course_in,					//0x1F
+    Z_kinoko_out,					//0x20
+    Z_airship_course_in,			//0x21
+    Z_airship_course_out,			//0x22
+    Z_start_kinoko_in,				//0x23
+    script_0x24,					//0x24
+    script_0x25,					//0x25
+    Z_null,							//0x26
+    Z_antlion,						//0x27
+    Z_killer,						//0x28
+    Z_start_battle,					//0x29
+    Z_Switch,						//0x2A
+    Z_KoopaCastleAppear,			//0x2B
+    Z_KinopioStart,					//0x2C
+    script_0x2d,					//0x2D
+    script_0x2e,					//0x2E
+    Z_Pause_Menu,					//0x2F
+    Z_airship_clear,				//0x30
+    Z_Stock_Menu,					//0x31
+    Z_WorldSelect_Menu,				//0x32
+    Z_antlion_star,					//0x33
+    Z_GameStart,					//0x34
+	
+	// new scripts
+	Z_Shop_Menu_Open,				//0x35
+	Z_Shop_Menu_Close,				//0x36
 };

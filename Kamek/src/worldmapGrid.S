@@ -95,6 +95,7 @@ newAlwaysLoadedList:
 	.long aCobkinopio_1
 	.long cobGrid
 	.long I_kinoko_bundle
+	.long Rosalina
 
 .global cobGrid
 cobGrid:
@@ -104,3 +105,6 @@ cobGrid:
 
 I_kinoko_bundle:
 	.string "I_kinoko_bundle"
+
+Rosalina:
+	.string "Rosalina"

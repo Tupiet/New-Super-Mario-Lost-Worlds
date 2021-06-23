@@ -2,6 +2,9 @@ SECTIONS {
 	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
 
 
+	PtrToWM_CS_SEQ_MNG = 0x8042A1AC;
+	FUN_801017c0 = 0x801016B0;
+
 	aLightMainscene = 0x8098D548;
 	aLightChikascen = 0x8098D560;
 	aLightWaterscen = 0x8098D578;
@@ -1343,6 +1346,10 @@ SECTIONS {
 	SetViewportJitter__Q34nw4r3g3d6CameraFUi = 0x80253E20;
 	SetPosture__Q34nw4r3g3d6CameraFRCQ44nw4r3g3d6Camera11PostureInfo = 0x802539C0;
 	SetPosition__Q34nw4r3g3d6CameraFRC4VEC3 = 0x80253950;
+	SetPosition__Q34nw4r3g3d6CameraFRC7Point3d = 0x80253950;
+	GetPosition__Q34nw4r3g3d6CameraCFP7Point3d = 0x80253990;
+	GetViewport__Q34nw4r3g3d6CameraCFPfPfPfPfPfPf = 0x80253E60;
+	SetViewportZRange__Q34nw4r3g3d6CameraFff = 0x80253E00;
 	SetCameraMtxDirectly__Q34nw4r3g3d6CameraFRA3_A4_Cf = 0x80253BE0;
 	GetCameraMtx__Q34nw4r3g3d6CameraCFPA3_A4_f = 0x802540B0;
 
