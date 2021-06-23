@@ -800,14 +800,15 @@ void dWMShop_c::buyItem(int item) {
 	for (int i = 0; i < invCount; i++)
 		appliedItems[(int)Inventory[shopKind][invStartIndex+i]]++;
 
+	dStockItem_c* stockItemPtr = (dStockItem_c*)fBase_c::search(STOCK_ITEM);
 	for (int i = 0; i < 14; i++) {
 		block->powerups_available[i] += appliedItems[i];
 
 		if (block->powerups_available[i] > 99)
 			block->powerups_available[i] = 99;
 
-		//no Koopatlas!
-		//dScKoopatlas_c::instance->stockItem->newCounts[i] = block->powerups_available[i];
+		stockItemPtr->newCounts[i] = block->powerups_available[i];
+
 	}
 
 	// Apply lives to everyone
