@@ -733,9 +733,16 @@ void dWMShop_c::loadInfo() {
 	SaveBlock *save = GetSaveFile()->GetBlock(-1);
 
 	//missing color information in original save file!
+	s16 hue        = 138;
+	s8  saturation = 50;
+	s8  lightness  = 30;
+	
 	//leftCol.colourise(save->hudHintH, save->hudHintS, save->hudHintL);
 	//midCol.colourise(save->hudHintH, save->hudHintS, save->hudHintL);
 	//rightCol.colourise(save->hudHintH, save->hudHintS, save->hudHintL);
+	leftCol.colourise(hue, saturation, lightness);
+	midCol.colourise(hue, saturation, lightness);
+	rightCol.colourise(hue, saturation, lightness);
 
 	// find out the shop name
 	dLevelInfo_c::entry_s *shopNameEntry =
@@ -802,12 +809,12 @@ void dWMShop_c::buyItem(int item) {
 
 	dStockItem_c* stockItemPtr = (dStockItem_c*)fBase_c::search(STOCK_ITEM);
 	for (int i = 0; i < 14; i++) {
-		block->powerups_available[i] += appliedItems[i];
+		block->new_powerups_available[i] += appliedItems[i];
 
-		if (block->powerups_available[i] > 99)
-			block->powerups_available[i] = 99;
+		if (block->new_powerups_available[i] > 99)
+			block->new_powerups_available[i] = 99;
 
-		stockItemPtr->newCounts[i] = block->powerups_available[i];
+		stockItemPtr->newCounts[i] = block->new_powerups_available[i];
 
 	}
 

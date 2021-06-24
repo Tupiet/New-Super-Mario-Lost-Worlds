@@ -76,7 +76,7 @@ extern int goToSpecificWorld(int world, int supworld, int node);
 
 
 u8 getActualLevelNum(u8 level) {
-	if(GetSaveFile()->GetBlock(-1)->addToLevelNum == 10) {
+	/*if(GetSaveFile()->GetBlock(-1)->addToLevelNum == 10) {
 		switch(level) {
 			case 0:
 			case 1:
@@ -101,7 +101,7 @@ u8 getActualLevelNum(u8 level) {
 			default:
 				break;
 		}
-	}
+	}*/
 	return level;
 }
 
