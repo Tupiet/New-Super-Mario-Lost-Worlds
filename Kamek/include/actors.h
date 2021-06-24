@@ -803,7 +803,8 @@ enum Actors {
 	BusuBusu = 793,
 	TikiTongBody = 794,
 	TikiTongHand = 795,
-	TikiTongCrown = 796
+	TikiTongCrown = 796,
+	StatsMenu = 797
 };
 
 struct Actor {

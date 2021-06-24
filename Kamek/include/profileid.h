@@ -549,6 +549,7 @@ enum
 	TikiTongBody = 527,
 	TikiTongHand = 528,
 	TikiTongCrown = 529,
+	StatsMenu = 530,
 
 	Num
 };
@@ -1360,6 +1361,7 @@ enum
 	TikiTongBody = 794,
 	TikiTongHand = 795,
 	TikiTongCrown = 796,
+	StatsMenu = 797,
 
 	Num
 };

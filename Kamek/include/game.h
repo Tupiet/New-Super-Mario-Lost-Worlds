@@ -235,7 +235,7 @@ public:
 	u8 field_06;				// 0x06
 	u8 switch_on;				// 0x07
 	u8 field_08;				// 0x08
-	u8 powerups_available[7];	// 0x09
+	u8 powerups_available[7];	// 0x09 - unused: now uses new_powerups_available
 	u8 toad_level_idx[10];		// 0x10
 	u8 player_continues[4];		// 0x1A
 	u8 player_coins[4];			// 0x1E

@@ -129,3 +129,4 @@ modules:
   - processed/goombaTower.yaml
   - processed/busuBusu.yaml
   - processed/tiki.yaml
+  - processed/statsMenu.yaml
