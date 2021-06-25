@@ -26,6 +26,8 @@ class dStatsMenu_c : public dStageActor_c {
 		float scaleEase;
 		int timer;
 
+		int count;
+
 		int selected, lastTopRowChoice;
 
 		nw4r::lyt::TextBox
@@ -97,12 +99,13 @@ int finalNumber;
 /*****************************************************************************/
 // Events
 
-dStatsMenu_c::dStatsMenu_c() : state(this, &StateID_ShowWait) {
+dStatsMenu_c::dStatsMenu_c() : state(this, &StateID_Hidden) {
 	layoutLoaded = false;
 	visible = false;
 }
 
 int dStatsMenu_c::onCreate() {
+	count = 180;
 	if (!layoutLoaded) {
 		OSReport("1\n");
 		bool gotFile = layout.loadArc("statsMenu.arc", false);
@@ -248,7 +251,10 @@ int dStatsMenu_c::onDelete() {
 
 // Hidden
 void dStatsMenu_c::beginState_Hidden() { }
-void dStatsMenu_c::executeState_Hidden() { }
+void dStatsMenu_c::executeState_Hidden() { 
+	if (count <= 0) state.setState(&StateID_ShowWait);
+	else count--;
+}
 void dStatsMenu_c::endState_Hidden() { }
 
 // ShowWait
@@ -259,7 +265,7 @@ void dStatsMenu_c::beginState_ShowWait() {
 	OSReport("10\n");
 
 	layout.disableAllAnimations();
-	layout.enableNonLoopAnim(ANIM_WINDOW_APPEAR);
+	layout.enableNonLoopAnim(ANIM_WINDOW_IN);
 	OSReport("11\n");
 	visible = true;
 	scaleEase = 0.0;
@@ -267,7 +273,7 @@ void dStatsMenu_c::beginState_ShowWait() {
 }
 void dStatsMenu_c::executeState_ShowWait() {
 	OSReport("12\n");
-	if (!layout.isAnimOn(ANIM_WINDOW_APPEAR)) {
+	if (!layout.isAnimOn(ANIM_WINDOW_IN)) {
 		selected = 1;
 		OSReport("13\n");
 		layout.enableNonLoopAnim(ANIM_BUTTON_ON);
