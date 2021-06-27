@@ -59,6 +59,17 @@ GetInfoFromDumbTable:
 	blr
 
 
+.global spikeAShroom
+spikeAShroom:
+	beq return_1
+	cmplwi r0, 7
+	bne return_0
+return_1:
+	li r3, 1
+	blr
+return_0:
+	li r3, 0
+	blr
 
 
 .global FukidashiFix

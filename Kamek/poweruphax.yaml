@@ -75,6 +75,18 @@ hooks:
 
 #==========================================================#
 
+#====================make spike a shroom===================#
+
+  - name: makeSpikeAShroom
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80a2c0e8
+    target_func: 'spikeAShroom'
+
+#==========================================================#
+
+
+
 #  - name: FixVanillaWM_ITEM1
 #    type: branch_insn
 #    branch_type: bl
