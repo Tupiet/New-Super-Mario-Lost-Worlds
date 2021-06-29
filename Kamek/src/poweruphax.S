@@ -22,6 +22,8 @@
 .extern ActiveWiimoteID
 .extern it_is_right
 .extern not_right
+.extern it_is_right2
+.extern not_right2
 .extern dStockItem__manipulateItemID
 
 .global DisableHatForHammer
@@ -3369,11 +3371,12 @@ new_not_right:
     rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
 	beq        not_up
 
-    li         r0,0x3
+    li         r0,0x1
     stw        r0,0x314(r30)
     or         r3,r30,r30
     addi       r4,r1,0x8
     bl         dStockItem__manipulateItemID
+	b          not_right_it_was
 
 
 .global not_up
@@ -3387,7 +3390,7 @@ not_up:
     rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
 	beq        not_right_it_was
 
-    li         r0,0x4
+    li         r0,0x0
     stw        r0,0x314(r30)
     or         r3,r30,r30
     addi       r4,r1,0x8
@@ -3397,6 +3400,57 @@ not_up:
 .global not_right_it_was
 not_right_it_was:
 	b          not_right
+	
+
+
+
+
+.global is_it_right2
+is_it_right2:
+	beq        new_not_right2
+	b          it_is_right2
+
+
+.global new_not_right2
+new_not_right2:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
+	beq        not_up2
+
+    li         r0,0x1
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+	b          not_right_it_was2
+
+
+.global not_up2
+not_up2:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
+	beq        not_right_it_was2
+
+    li         r0,0x0
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+
+
+.global not_right_it_was2
+not_right_it_was2:
+	b          not_right2
 
 #=========================up down select for SI menu=========================#
 

@@ -3,6 +3,8 @@ SECTIONS {
 
 	it_is_right = 0x807B0DC0;
 	not_right = 0x807B0DD4;
+	it_is_right2 = 0x807B1014;
+	not_right2 = 0x807B1028;
 	dStockItem__manipulateItemID = 0x807B0680;
 
 	PtrToWM_CS_SEQ_MNG = 0x80429ECC;

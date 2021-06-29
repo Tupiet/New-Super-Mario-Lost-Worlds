@@ -97,7 +97,7 @@ hooks:
     type: branch_insn
     branch_type: b
     src_addr_pal: 0x807b1270
-    target_func: 'is_it_right'
+    target_func: 'is_it_right2'
 
 #==========================================================#
 
