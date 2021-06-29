@@ -19,6 +19,10 @@
 .extern doneSettingThePowerupTexture2
 .extern returnFromPowerupSoundChange
 
+.extern ActiveWiimoteID
+.extern it_is_right
+.extern not_right
+.extern dStockItem__manipulateItemID
 
 .global DisableHatForHammer
 DisableHatForHammer:
@@ -3344,6 +3348,59 @@ NewENITEMPowerupTable:
 	lis r4, ENITEMPowerupTable@h
 	ori r4, r4, ENITEMPowerupTable@l
 	blr
+
+
+#=========================up down select for SI menu=========================#
+
+.global is_it_right
+is_it_right:
+	beq        new_not_right
+	b          it_is_right
+
+
+.global new_not_right
+new_not_right:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
+	beq        not_up
+
+    li         r0,0x3
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+
+
+.global not_up
+not_up:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
+	beq        not_right_it_was
+
+    li         r0,0x4
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+
+
+.global not_right_it_was
+not_right_it_was:
+	b          not_right
+
+#=========================up down select for SI menu=========================#
+
+
 
 
 .data

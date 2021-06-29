@@ -1,6 +1,9 @@
 SECTIONS {
 	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
 
+	it_is_right = 0x807b1020;
+	not_right = 0x807b1034;
+	dStockItem__manipulateItemID = 0x807b08e0;
 
 	PtrToWM_CS_SEQ_MNG = 0x8042A48C;
 	FUN_801017c0 = 0x801017c0;

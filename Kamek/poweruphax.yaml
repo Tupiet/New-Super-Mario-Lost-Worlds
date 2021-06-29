@@ -85,6 +85,22 @@ hooks:
 
 #==========================================================#
 
+#=====================up down selection====================#
+
+  - name: addUpDownSelect1
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b101c
+    target_func: 'is_it_right'
+
+  - name: addUpDownSelect2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b1270
+    target_func: 'is_it_right'
+
+#==========================================================#
+
 
 
 #  - name: FixVanillaWM_ITEM1
