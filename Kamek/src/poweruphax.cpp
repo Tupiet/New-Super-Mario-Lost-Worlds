@@ -46,7 +46,6 @@ void dHammerSuitRenderer_c::setup(dPlayerModelHandler_c *handler, int sceneID) {
 	nw4r::g3d::ResFile hammer(getResource("hammerM", "g3d/suit.brres"));
 	nw4r::g3d::ResFile boomer(getResource("boomerangM", "g3d/suit.brres"));
 	nw4r::g3d::ResFile spike(getResource("spikeM", "g3d/suit.brres"));
-	nw4r::g3d::ResFile bomb(getResource("bobombM", "g3d/suit.brres"));
 	nw4r::g3d::ResFile cloud(getResource("cloudM", "g3d/suit.brres"));
 	nw4r::g3d::ResFile frog(getResource("frogM", "g3d/suit.brres"));
 
@@ -69,12 +68,6 @@ void dHammerSuitRenderer_c::setup(dPlayerModelHandler_c *handler, int sceneID) {
 		nw4r::g3d::ResMdl rmspike = spike.GetResMdl((victim->player_id_2 == 0) ? "marioHelmet" : "luigiHelmet");
 		spikeHelmet.setup(rmspike, &allocator, 0, 1, 0);
 		SetupTextures_MapObj(&spikeHelmet, sceneID);
-		/*********/
-		/*Bob-Omb*/
-		/*********/
-		nw4r::g3d::ResMdl rmbomb = bomb.GetResMdl((victim->player_id_2 == 0) ? "marioHelmet" : "luigiHelmet");
-		bombHelmet.setup(rmbomb, &allocator, 0, 1, 0);
-		SetupTextures_MapObj(&bombHelmet, sceneID);
 		/*******/
 		/*Cloud*/
 		/*******/
@@ -107,11 +100,6 @@ void dHammerSuitRenderer_c::setup(dPlayerModelHandler_c *handler, int sceneID) {
 	/*******/
 	spikeShell.setup(spike.GetResMdl(shellNames[victim->player_id_2]), &allocator, 0, 1, 0);
 	SetupTextures_MapObj(&spikeShell, sceneID);
-	/*********/
-	/*Bob-Omb*/
-	/*********/
-	bombShell.setup(bomb.GetResMdl(shellNames[victim->player_id_2]), &allocator, 0, 1, 0);
-	SetupTextures_MapObj(&bombShell, sceneID);
 
 	allocator.unlink();
 
@@ -131,7 +119,7 @@ void dHammerSuitRenderer_c::setup(dPlayerModelHandler_c *handler, int sceneID) {
 }
 
 void dHammerSuitRenderer_c::draw() {
-	if (victim->powerup_id < 7 || victim->powerup_id == 12) {
+	if (victim->powerup_id < 7 || victim->powerup_id == 8 || victim->powerup_id == 13) {
 		return;
 	}
 
@@ -158,30 +146,6 @@ void dHammerSuitRenderer_c::draw() {
 		hammerShell.calcWorld(false);
 	
 		hammerShell.scheduleForDrawing();
-	}
-	if(victim->powerup_id == 8) {
-		if (victim->player_id_2 <= 1) {
-			// Materials: 2=hair 3=hat; Modes: BACK=visible ALL=invisible
-			SetCullModeForMaterial(&victim->getCurrentModel()->head, 3, GX_CULL_ALL);
-	
-			Mtx headMtx;
-			victimModel->getMatrixForNode(headNodeID, headMtx);
-	
-			boomerHelmet.setDrawMatrix(headMtx);
-			boomerHelmet.setScale(1.0f, 1.0f, 1.0f);
-			boomerHelmet.calcWorld(false);
-	
-			boomerHelmet.scheduleForDrawing();
-		}
-	
-		Mtx rootMtx;
-		victimModel->getMatrixForNode(rootNodeID, rootMtx);
-	
-		boomerShell.setDrawMatrix(rootMtx);
-		boomerShell.setScale(1.0f, 1.0f, 1.0f);
-		boomerShell.calcWorld(false);
-	
-		boomerShell.scheduleForDrawing();
 	}
 	if(victim->powerup_id == 9) {
 		if (victim->player_id_2 <= 1) {
@@ -215,21 +179,21 @@ void dHammerSuitRenderer_c::draw() {
 			Mtx headMtx;
 			victimModel->getMatrixForNode(headNodeID, headMtx);
 	
-			bombHelmet.setDrawMatrix(headMtx);
-			bombHelmet.setScale(1.0f, 1.0f, 1.0f);
-			bombHelmet.calcWorld(false);
+			boomerHelmet.setDrawMatrix(headMtx);
+			boomerHelmet.setScale(1.0f, 1.0f, 1.0f);
+			boomerHelmet.calcWorld(false);
 	
-			bombHelmet.scheduleForDrawing();
+			boomerHelmet.scheduleForDrawing();
 		}
 	
 		Mtx rootMtx;
 		victimModel->getMatrixForNode(rootNodeID, rootMtx);
 	
-		bombShell.setDrawMatrix(rootMtx);
-		bombShell.setScale(1.0f, 1.0f, 1.0f);
-		bombShell.calcWorld(false);
+		boomerShell.setDrawMatrix(rootMtx);
+		boomerShell.setScale(1.0f, 1.0f, 1.0f);
+		boomerShell.calcWorld(false);
 	
-		bombShell.scheduleForDrawing();
+		boomerShell.scheduleForDrawing();
 	}
 	if(victim->powerup_id == 11) {
 		if (victim->player_id_2 <= 1) {
@@ -249,7 +213,7 @@ void dHammerSuitRenderer_c::draw() {
 		Mtx rootMtx;
 		victimModel->getMatrixForNode(rootNodeID, rootMtx);
 	}
-	if(victim->powerup_id == 13) {
+	if(victim->powerup_id == 12) {
 		if (victim->player_id_2 <= 1) {
 			// Materials: 2=hair 3=hat; Modes: BACK=visible ALL=invisible
 			SetCullModeForMaterial(&victim->getCurrentModel()->head, 3, GX_CULL_ALL);
@@ -358,7 +322,7 @@ void dStockItem_c::setScalesOfSomeThings() {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= 246;
 		}
-		if(i == 12) {
+		if(i == 8) {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= 164;
 		}
@@ -366,7 +330,7 @@ void dStockItem_c::setScalesOfSomeThings() {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= 82;
 		}
-		if(i == 8) {
+		if(i == 10) {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= 0;
 		}
@@ -374,11 +338,11 @@ void dStockItem_c::setScalesOfSomeThings() {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= -82;
 		}
-		if(i == 13) {
+		if(i == 12) {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= -164;
 		}
-		if(i == 10) {
+		if(i == 13) {
 			out.y = shdRoot->trans.y + 235;
 			out.x -= -246;
 		}

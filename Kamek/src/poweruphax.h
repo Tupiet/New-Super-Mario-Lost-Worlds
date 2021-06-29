@@ -5,7 +5,7 @@ class dHammerSuitRenderer_c {
 	public:
 		mHeapAllocator_c allocator;
 
-		m3d::mdl_c hammerHelmet, hammerShell, boomerHelmet, boomerShell, spikeHelmet, spikeShell, bombHelmet, bombShell, cloudHelmet, frogHead;
+		m3d::mdl_c hammerHelmet, hammerShell, boomerHelmet, boomerShell, spikeHelmet, spikeShell, cloudHelmet, frogHead;
 
 		m3d::mdl_c *victimModel;
 		u32 headNodeID, rootNodeID;
