@@ -3488,7 +3488,7 @@ upLoop:
     blt        tryAndMoveUp
     rlwinm     r0,r0,0x2,0x0,0x1d
     add        r5,r3,r0
-    lwz        r0,0x8b4(r5)
+    lwz        r0,0x918(r5)
     cmpwi      r0,0x0
     bnelr
 
@@ -3496,7 +3496,7 @@ upLoop:
 .global tryAndMoveDown
 tryAndMoveDown:
 	lwz        r0,0x0(r4)
-	cmpwi      r0,0xe
+	cmpwi      r0,0xE
 	blt        downLoop
 	b          cantChange
 
@@ -3505,10 +3505,10 @@ downLoop:
 	lwz        r5,0x0(r4)
     addi       r0,r5,0x7
     stw        r0,0x0(r4)
-    blt        tryAndMoveDown
+    bge        tryAndMoveDown
     rlwinm     r0,r0,0x2,0x0,0x1d
     add        r5,r3,r0
-    lwz        r0,0x8b4(r5)
+    lwz        r0,0x918(r5)
     cmpwi      r0,0x0
     bnelr
 
