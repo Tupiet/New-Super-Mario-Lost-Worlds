@@ -3473,18 +3473,10 @@ tryAndMoveRight_:
 tryAndMoveLeft_:
 	b          tryAndMoveLeft
 
-.global tryAndMoveUp
-tryAndMoveUp:
-	li         r0,0x1
-    stw        r0,0x314(r3)
-	lwz        r0,0x0(r4)
-	cmpwi      r0,0x0
-	bge        upLoop
-	b          cantChange
 
 .global upLoop
 upLoop:
-	lwz        r5,0x0(r4)
+    lwz        r5,0x0(r4)
     subic.     r0,r5,0x7
     stw        r0,0x0(r4)
     blt        tryAndMoveUp
@@ -3494,6 +3486,29 @@ upLoop:
     cmpwi      r0,0x0
     bnelr
 
+.global tryAndMoveUp
+tryAndMoveUp:
+	li         r0,0x1
+    stw        r0,0x314(r3)
+	lwz        r0,0x0(r4)
+	cmpwi      r0,0x0
+	bge        upLoop
+	b          cantChange
+
+
+
+.global downLoop
+downLoop:
+    lwz        r5,0x0(r4)
+    addi       r0,r5,0x7
+    stw        r0,0x0(r4)
+    cmpwi      r0,0xe
+	bgt        tryAndMoveDown
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r5,r3,r0
+    lwz        r0,0x918(r5)
+    cmpwi      r0,0x0
+    bnelr
 
 .global tryAndMoveDown
 tryAndMoveDown:
@@ -3501,20 +3516,8 @@ tryAndMoveDown:
     stw        r0,0x314(r3)
 	lwz        r0,0x0(r4)
 	cmpwi      r0,0x7
-	ble        downLoop
+	blt        downLoop
 	b          cantChange
-
-.global downLoop
-downLoop:
-	lwz        r5,0x0(r4)
-    addi       r0,r5,0x7
-    stw        r0,0x0(r4)
-    bge        tryAndMoveDown
-    rlwinm     r0,r0,0x2,0x0,0x1d
-    add        r5,r3,r0
-    lwz        r0,0x918(r5)
-    cmpwi      r0,0x0
-    bnelr
 
 
 
