@@ -3475,6 +3475,8 @@ tryAndMoveLeft_:
 
 .global tryAndMoveUp
 tryAndMoveUp:
+	li         r0,0x1
+    stw        r0,0x314(r3)
 	lwz        r0,0x0(r4)
 	cmpwi      r0,0x0
 	bge        upLoop
@@ -3495,9 +3497,11 @@ upLoop:
 
 .global tryAndMoveDown
 tryAndMoveDown:
+	li         r0,0x1
+    stw        r0,0x314(r3)
 	lwz        r0,0x0(r4)
-	cmpwi      r0,0xE
-	blt        downLoop
+	cmpwi      r0,0x7
+	ble        downLoop
 	b          cantChange
 
 .global downLoop
