@@ -6,6 +6,9 @@ SECTIONS {
 	it_is_right2 = 0x807B1274;
 	not_right2 = 0x807B1288;
 	dStockItem__manipulateItemID = 0x807B08E0;
+	tryAndMoveRight = 0x807B0950;
+	tryAndMoveLeft = 0x807B0914;
+	cantChange = 0x807B095C;
 
 	PtrToWM_CS_SEQ_MNG = 0x8042A1AC;
 	FUN_801017c0 = 0x801016B0;

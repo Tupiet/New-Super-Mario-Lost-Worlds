@@ -25,6 +25,9 @@
 .extern it_is_right2
 .extern not_right2
 .extern dStockItem__manipulateItemID
+.extern tryAndMoveRight
+.extern tryAndMoveLeft
+.extern cantChange
 
 .global DisableHatForHammer
 DisableHatForHammer:
@@ -3371,7 +3374,7 @@ new_not_right:
     rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
 	beq        not_up
 
-    li         r0,0x1
+    li         r0,0x3
     stw        r0,0x314(r30)
     or         r3,r30,r30
     addi       r4,r1,0x8
@@ -3390,7 +3393,7 @@ not_up:
     rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
 	beq        not_right_it_was
 
-    li         r0,0x0
+    li         r0,0x4
     stw        r0,0x314(r30)
     or         r3,r30,r30
     addi       r4,r1,0x8
@@ -3422,7 +3425,7 @@ new_not_right2:
     rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
 	beq        not_up2
 
-    li         r0,0x1
+    li         r0,0x3
     stw        r0,0x314(r30)
     or         r3,r30,r30
     addi       r4,r1,0x8
@@ -3441,7 +3444,7 @@ not_up2:
     rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
 	beq        not_right_it_was2
 
-    li         r0,0x0
+    li         r0,0x4
     stw        r0,0x314(r30)
     or         r3,r30,r30
     addi       r4,r1,0x8
@@ -3451,6 +3454,65 @@ not_up2:
 .global not_right_it_was2
 not_right_it_was2:
 	b          not_right2
+
+
+
+.global selectNewActionsForButtons
+selectNewActionsForButtons:
+	beq        tryAndMoveLeft_
+	cmpwi      r0,0x3
+	blt        tryAndMoveRight_
+	beq        tryAndMoveUp
+	b          tryAndMoveDown
+
+.global tryAndMoveRight_
+tryAndMoveRight_:
+	b          tryAndMoveRight
+
+.global tryAndMoveLeft_
+tryAndMoveLeft_:
+	b          tryAndMoveLeft
+
+.global tryAndMoveUp
+tryAndMoveUp:
+	lwz        r0,0x0(r4)
+	cmpwi      r0,0x0
+	bge        upLoop
+	b          cantChange
+
+.global upLoop
+upLoop:
+	lwz        r5,0x0(r4)
+    subic.     r0,r5,0x7
+    stw        r0,0x0(r4)
+    blt        tryAndMoveUp
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r5,r3,r0
+    lwz        r0,0x8b4(r5)
+    cmpwi      r0,0x0
+    bnelr
+
+
+.global tryAndMoveDown
+tryAndMoveDown:
+	lwz        r0,0x0(r4)
+	cmpwi      r0,0xe
+	blt        downLoop
+	b          cantChange
+
+.global downLoop
+downLoop:
+	lwz        r5,0x0(r4)
+    addi       r0,r5,0x7
+    stw        r0,0x0(r4)
+    blt        tryAndMoveDown
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r5,r3,r0
+    lwz        r0,0x8b4(r5)
+    cmpwi      r0,0x0
+    bnelr
+
+
 
 #=========================up down select for SI menu=========================#
 

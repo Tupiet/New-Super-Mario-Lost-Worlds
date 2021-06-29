@@ -99,6 +99,12 @@ hooks:
     src_addr_pal: 0x807b1270
     target_func: 'is_it_right2'
 
+  - name: addUpDownSelect3
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b08e8
+    target_func: 'selectNewActionsForButtons'
+
 #==========================================================#
 
 
