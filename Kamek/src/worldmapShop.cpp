@@ -184,12 +184,12 @@ void dWMShop_c::ShopModel_c::setupItem(float x, float y, ItemTypes type) {
 		{ "I_kinoko_bundle","g3d/I_mini_kinoko.brres", 		"I_mini_kinoko", 		"wait2" },
 		{ "I_star", 		"g3d/I_star.brres", 			"I_star", 				"wait2" },
 		{ "I_hammer", 		"g3d/I_fireflower.brres",		"I_fireflower",			"wait2" },
-		{ "I_thunder",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_gold",			"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_spike",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_boomerang",	"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_frog",			"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_cloud",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
-		{ "I_bobomb",		"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
+		{ "I_wand",			"g3d/I_fireflower.brres",		"I_fireflower", 		"wait2" },
 		{ "I_kinoko_bundle","g3d/I_life_kinoko.brres", 		"I_life_kinoko", 		"wait2" },
 		
 	};
