@@ -1,6 +1,67 @@
 SECTIONS {
 	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
 
+	__dt_17daFireBall_Base_cFv = 0x80041400;
+	__vt__17daFireBall_Base_c = 0x80306D20;
+
+	StateID_Move__17daFireBall_Base_cFv = 0x8035420C;
+	StateID_Kill__17daFireBall_Base_cFv = 0x8035424C;
+	StateID_EatIn__17daFireBall_Base_cFv = 0x8035428C;
+	StateID_EatNow__17daFireBall_Base_cFv = 0x803542CC;
+
+	onCreate__17daFireBall_Base_cFv = 0x80040960;
+	willBeDeleted__17daFireBall_Base_cFv = 0x80040DC0;
+	onDelete__17daFireBall_Base_cFv = 0x80040DD0;
+	beforeExecute__17daFireBall_Base_cFv = 0x80040B00;
+	onExecute__17daFireBall_Base_cFv = 0x80040BD0;
+	onDraw__17daFireBall_Base_cFv = 0x80040D90;
+
+	updateSpawnLimits__17daFireBall_Base_cFv = 0x80040AD0;
+	calledInOnCreate_b__17daFireBall_Base_cFv = 0x80040AE0;
+	calledInOnCreate_c__17daFireBall_Base_cFv = 0x80040AF0;
+	sub_80040BC0__17daFireBall_Base_cFv = 0x80040BC0;
+	setZOrder_maybe__17daFireBall_Base_cFv = 0x80040D70;
+	playFireballEffect__17daFireBall_Base_cFv = 0x80040D80;
+	killIfOutOfZone_maybe__17daFireBall_Base_cFv = 0x80040DE0;
+	setUpCollSensor__17daFireBall_Base_cFv = 0x80040E70;
+	playFireballHitEffect__17daFireBall_Base_cFv = 0x80040EC0;
+	eatIn__17daFireBall_Base_cFv = 0x80040F10;
+	updateLights__17daFireBall_Base_cFv = 0x80040F70;
+	getSizeOfLight__17daFireBall_Base_cFv = 0x80040FF0;
+	doFireSplash__17daFireBall_Base_cFv = 0x80041000;
+	doLavaSplash__17daFireBall_Base_cFv = 0x800410F0;
+	doPoisonSplash__17daFireBall_Base_cFv = 0x800411D0;
+	disableEatIn__17daFireBall_Base_cFv = 0x800413F0;
+
+	beginState_Move__17daFireBall_Base_cFv = 0x800412B0;
+	executeState_Move__17daFireBall_Base_cFv = 0x800412C0;
+	endState_Move__17daFireBall_Base_cFv = 0x800412D0;
+	beginState_EatIn__17daFireBall_Base_cFv = 0x800412E0;
+	executeState_EatIn__17daFireBall_Base_cFv = 0x800412F0;
+	endState_EatIn__17daFireBall_Base_cFv = 0x80041300;
+	beginState_EatNow__17daFireBall_Base_cFv = 0x80041330;
+	executeState_EatNow__17daFireBall_Base_cFv = 0x80041340;
+	endState_EatNow__17daFireBall_Base_cFv = 0x80041350;
+	beginState_Kill__17daFireBall_Base_cFv = 0x80041360;
+	executeState_Kill__17daFireBall_Base_cFv = 0x800413A0;
+	endState_Kill__17daFireBall_Base_cFv = 0x800413B0;
+	
+	Move_Begin__17daFireBall_Base_cFv = 0x800412B0;
+	Move_Execute__17daFireBall_Base_cFv = 0x800412C0;
+	Move_End__17daFireBall_Base_cFv = 0x800412D0;
+	eatIn_Begin__17daFireBall_Base_cFv = 0x800412E0;
+	eatIn_Execute__17daFireBall_Base_cFv = 0x800412F0;
+	eatIn_End__17daFireBall_Base_cFv = 0x80041300;
+	eatNow_Begin__17daFireBall_Base_cFv = 0x80041330;
+	eatNow_Execute__17daFireBall_Base_cFv = 0x80041340;
+	eatNow_End__17daFireBall_Base_cFv = 0x80041350;
+	Kill_Begin__17daFireBall_Base_cFv = 0x80041360;
+	Kill_Execute__17daFireBall_Base_cFv = 0x800413A0;
+	Kill_End__17daFireBall_Base_cFv = 0x800413B0;
+
+	vf138__17daFireBall_Base_cFv = 0x800413E0;
+	vf13C__17daFireBall_Base_cFv = 0x800413D0;
+
 	it_is_right = 0x807b1020;
 	not_right = 0x807b1034;
 	it_is_right2 = 0x807b1274;
@@ -9,6 +70,8 @@ SECTIONS {
 	tryAndMoveRight = 0x807b0950;
 	tryAndMoveLeft = 0x807b0914;
 	cantChange = 0x807b095c;
+	continueRightLoop = 0x807b093c;
+	continueLeftLoop = 0x807b0900;
 
 	PtrToWM_CS_SEQ_MNG = 0x8042A48C;
 	FUN_801017c0 = 0x801017c0;

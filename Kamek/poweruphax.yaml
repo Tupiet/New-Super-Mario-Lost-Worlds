@@ -111,6 +111,18 @@ hooks:
     src_addr_pal: 0x807b08e8
     target_func: 'selectNewActionsForButtons'
 
+  - name: addInfiniteRightScroll
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b0938
+    target_func: 'goBackTo0'
+
+  - name: addInfiniteLeftScroll
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b08fc
+    target_func: 'goForthToD'
+
 #==========================================================#
 
 

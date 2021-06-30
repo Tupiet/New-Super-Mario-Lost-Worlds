@@ -28,6 +28,8 @@
 .extern tryAndMoveRight
 .extern tryAndMoveLeft
 .extern cantChange
+.extern continueRightLoop
+.extern continueLeftLoop
 
 .global DisableHatForHammer
 DisableHatForHammer:
@@ -3507,6 +3509,30 @@ tryAndMoveDown:
 	cmpwi      r0,0x7
 	blt        downLoop
 	b          cantChange
+
+
+
+.global goBackTo0
+goBackTo0:
+	bge		   setTo0
+	b          continueRightLoop
+
+.global setTo0
+setTo0:
+	li         r0, 0x0
+	stw        r0,0x0(r4)
+	b          continueRightLoop
+
+.global goForthToD
+goForthToD:
+	blt		   setToD
+	b          continueLeftLoop
+
+.global setToD
+setToD:
+	li         r0, 0xD
+	stw        r0,0x0(r4)
+	b          continueLeftLoop
 
 
 
