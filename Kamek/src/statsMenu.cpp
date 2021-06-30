@@ -2,6 +2,8 @@
 #include <game.h>
 #include "sfx.h"
 
+extern int globalCoins;
+
 class dStatsMenu_c : public dStageActor_c {
 	public:
 		static dActor_c *build();
@@ -33,25 +35,23 @@ class dStatsMenu_c : public dStageActor_c {
 		int count;
 		int autoselectCountdown;
 
+		int* structWithWorldData;
+
 		int selected;
+		
+		int coinsAtStart;
 
 		nw4r::lyt::TextBox
-			*T_numberS_00, *T_number_00,
-			*T_one_00, *T_one_01,
-			*T_two_00, *T_two_01,
-			*T_three_00, *T_three_01,
-			*T_four_00, *T_four_01,
-			*T_five_00, *T_five_01,
-			*T_six_00, *T_six_01,
-			*T_seven_00, *T_seven_01,
-			*T_eight_00, *T_eight_01,
-			*T_nine_00, *T_nine_01;
+			*coinCount;
 
 		nw4r::lyt::TextBox
 			*Countdown;
 
 		nw4r::lyt::Picture
 			*BtnLeft[3], *BtnMid[3], *BtnRight[3];
+		
+		nw4r::lyt::Picture
+			*starCoinCircle, *starCoin;
 
 		nw4r::lyt::Pane
 			*Buttons[3];
@@ -111,6 +111,9 @@ dStatsMenu_c::dStatsMenu_c() : state(this, &StateID_Hidden) {
 int dStatsMenu_c::onCreate() {
 	count = 180;
 	autoselectCountdown = 180;
+
+	coinsAtStart = globalCoins;
+	
 	if (!layoutLoaded) {
 		OSReport("1\n");
 		bool gotFile = layout.loadArc("statsMenu.arc", false);
@@ -173,7 +176,7 @@ int dStatsMenu_c::onCreate() {
 		layout.drawOrder = 140;
 		OSReport("6\n");
 
-		static const char *tbNames[] = {
+		/*static const char *tbNames[] = {
 			"T_numberS_00", "T_number_00",
 			"T_one_00", "T_one_01",
 			"T_two_00", "T_two_01",
@@ -185,7 +188,7 @@ int dStatsMenu_c::onCreate() {
 			"T_eight_00", "T_eight_01",
 			"T_nine_00", "T_nine_01",
 		};
-		layout.getTextBoxes(tbNames, &T_numberS_00, 20);
+		layout.getTextBoxes(tbNames, &T_numberS_00, 20);*/
 
 		OSReport("7\n");
 		/*for (int i = 1; i < 10; i++) {
@@ -213,13 +216,14 @@ int dStatsMenu_c::onCreate() {
 		BtnRight[2] = layout.findPictureByName("Btn2_Right_00");
 		
 		Countdown = layout.findTextBoxByName("Countdown");
+		coinCount = layout.findTextBoxByName("coinCount");
 		
 		OSReport("8\n");
 		//Buttons[0] = layout.findPaneByName("W_SButton_0");
 		//Buttons[1] = layout.findPaneByName("W_SButton_2");
 		//Buttons[2] = layout.findPaneByName("W_SButton_00");
 		//OSReport("Found buttons: %p, %p, %p, %p, %p, %p, %p, %p, %p\n", Buttons[0], Buttons[1], Buttons[2], Buttons[3], Buttons[4], Buttons[5], Buttons[6], Buttons[7], Buttons[8]);
-
+		
 		layoutLoaded = true;
 	}
 
@@ -295,6 +299,45 @@ void dStatsMenu_c::endState_ShowWait() {
 	OSReport("15\n");
 	nw4r::snd::SoundHandle handle;
 	// PlaySoundWithFunctionB4(SoundRelatedClass, &handle, SE_OBJ_CLOUD_BLOCK_TO_JUGEM, 1);
+	
+	//SaveBlock *save = GetSaveFile()->GetBlock(-1);
+	//structWithWorldData = (int*)&(save->completions[0][0]);
+	//OSReport("structWithWorldData: %x, %p", structWithWorldData, structWithWorldData);
+	//OSReport("Star Coins: %d, %d, %d\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", CheckIfWeHaveASpecificStarCoin(structWithWorldData, CurrentWorld, CurrentLevel, COND_COIN1), CheckIfWeHaveASpecificStarCoin(structWithWorldData, CurrentWorld, CurrentLevel, COND_COIN2), CheckIfWeHaveASpecificStarCoin(structWithWorldData, CurrentWorld, CurrentLevel, COND_COIN3));
+	//u32 conds = save->GetLevelCondition(CurrentWorld, CurrentLevel);
+	if (dGameDisplay_c::instance->layout.findPictureByName("P_collection_00")->flag == 1) {
+		starCoinCircle = layout.findPictureByName("starCoinCircle1");
+		starCoin = layout.findPictureByName("starCoin1");
+		starCoinCircle->SetVisible(false);
+		starCoin->SetVisible(true);
+	}
+	if (dGameDisplay_c::instance->layout.findPictureByName("P_collection_01")->flag == 1) {
+		starCoinCircle = layout.findPictureByName("starCoinCircle2");
+		starCoin = layout.findPictureByName("starCoin2");
+		starCoinCircle->SetVisible(false);
+		starCoin->SetVisible(true);
+	}
+	if (dGameDisplay_c::instance->layout.findPictureByName("P_collection_02")->flag == 1) {
+		starCoinCircle = layout.findPictureByName("starCoinCircle3");
+		starCoin = layout.findPictureByName("starCoin3");
+		starCoinCircle->SetVisible(false);
+		starCoin->SetVisible(true);
+	}
+	
+	int collectedCoins = globalCoins-coinsAtStart;
+	wchar_t textCount[9];
+	sprintf((char*)textCount, "% 9d", collectedCoins);
+	//wchar_t wchar_tCount;
+	int digits = 0;
+    while (collectedCoins != 0)
+    {
+        collectedCoins = collectedCoins / 10;
+        digits++;
+    }
+	OSReport("digits: %d\n\n\n", digits);
+	OSReport("textCount: %s\n\n\n", textCount);
+	coinCount->SetString(textCount, 0, 9);
+	
 	timer = 1;
 }
 

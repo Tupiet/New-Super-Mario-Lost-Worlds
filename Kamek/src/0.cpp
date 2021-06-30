@@ -122,46 +122,41 @@ u8 SetLevelIdentifier(u8 world,u8 level,u8 *world_ptr,u8 *level_ptr) {
 
 
 
-void SetConditionInWorldDataForWorldAndLevel(int structWithWorldData, int world, int level, unsigned int condition) {
+void SetConditionInWorldDataForWorldAndLevel(int* structWithWorldData, int world, int level, unsigned int condition) {
 	//OSReport("SetConditionInWorldDataForWorldAndLevel: %p, %p, %p, %p\n\n", structWithWorldData, world, level, condition);
 	
-	level = getActualLevelNum(level);
+	//level = getActualLevelNum(level);
 	
-	int iVar1;
-	iVar1 = structWithWorldData + world * 0xa8 + level * 4;
-	*(unsigned int *)(iVar1 + 0x6c) = *(unsigned int *)(iVar1 + 0x6c) | condition;
+	(structWithWorldData + world * 0x2a + level)[0x1b] |= condition;
 	return;
 }
 
-unsigned int CheckIfConditionIsCompletedForWorldAndLevel(int structWithWorldData,int world,int level,unsigned int condition) {
-	OSReport("CheckIfConditionIsCompletedForWorldAndLevel: %p, %p, %p, %p\n\n", structWithWorldData, world, level, condition);
-	condition = condition & *(unsigned int *)(structWithWorldData + world * 0xa8 + level * 4 + 0x6c);
-	return (-condition | condition) >> 0x1f;
+unsigned int CheckIfConditionIsCompletedForWorldAndLevel(int* structWithWorldData, int world, int level, unsigned int condition) {
+	//OSReport("CheckIfConditionIsCompletedForWorldAndLevel: %p, %p, %p, %p\n\n", structWithWorldData, world, level, condition);
+	return (-(condition & structWithWorldData[world * 0x2a + level + 0x1b]) | condition & structWithWorldData[world * 0x2a + level + 0x1b]) >> 0x1f;
 }
 
 
 
 
 
-void SetSpecificStarCoinToCollected(int structWithWorldData, int world, int level, unsigned int condition) {
+void SetSpecificStarCoinToCollected(int* structWithWorldData, int world, int level, unsigned int starCoin) {
 	//OSReport("SetSpecificStarCoinToCollected: %p, %p, %p, %p\n\n", structWithWorldData, world, level, condition);
 
 	
-	level = getActualLevelNum(level);
+	//level = getActualLevelNum(level);
 
-	int iVar1;
-	iVar1 = structWithWorldData + world * 0xa8 + level * 4;
-	*(unsigned int *)(iVar1 + 0x6c) = *(unsigned int *)(iVar1 + 0x6c) | condition & 7;
+    (structWithWorldData + world * 0x2a + level)[0x1b] |= starCoin & 7;
 	return;
 }
 
 
-unsigned int CheckIfWeHaveASpecificStarCoin(int structWithWorldData, int world, int level, int starCoin) {
+unsigned int CheckIfWeHaveASpecificStarCoin(int* structWithWorldData, int world, int level, unsigned int starCoin) {
 	//OSReport("CheckIfWeHaveASpecificStarCoin: %p, %p, %p, %p\n\n", structWithWorldData, world, level, starCoin);
 
-	level = getActualLevelNum(level);
+	//level = getActualLevelNum(level);
 
-	return 1 << starCoin & *(unsigned int *)(structWithWorldData + world * 0xa8 + level * 4 + 0x6c) & 0xff;
+	return 1 << starCoin & structWithWorldData[world * 0x2a + level + 0x1b] & 0xff;
 }
 
 /*
