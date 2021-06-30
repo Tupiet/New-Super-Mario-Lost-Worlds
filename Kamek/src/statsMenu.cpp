@@ -19,6 +19,10 @@ class dStatsMenu_c : public dStageActor_c {
 		int beforeDraw() { return true; }
 		int afterDraw(int) { return true; }
 
+		void GoMap();
+		void GoAgain();
+		void GoReplay();
+
 		m2d::EmbedLayout_c layout;
 		bool layoutLoaded;
 
@@ -27,8 +31,9 @@ class dStatsMenu_c : public dStageActor_c {
 		int timer;
 
 		int count;
+		int autoselectCountdown;
 
-		int selected, lastTopRowChoice;
+		int selected;
 
 		nw4r::lyt::TextBox
 			*T_numberS_00, *T_number_00,
@@ -42,20 +47,20 @@ class dStatsMenu_c : public dStageActor_c {
 			*T_eight_00, *T_eight_01,
 			*T_nine_00, *T_nine_01;
 
+		nw4r::lyt::TextBox
+			*Countdown;
+
 		nw4r::lyt::Picture
 			*BtnLeft[3], *BtnMid[3], *BtnRight[3];
 
 		nw4r::lyt::Pane
 			*Buttons[3];
 
-
-
-		void selectNumber(int num);
-
 		dStateWrapper_c<dStatsMenu_c> state;
 
 		USING_STATES(dStatsMenu_c);
 		DECLARE_STATE(Hidden);
+		DECLARE_STATE(CountdownWait);
 		DECLARE_STATE(ShowWait);
 		DECLARE_STATE(ButtonActivateWait);
 		DECLARE_STATE(Wait);
@@ -63,6 +68,7 @@ class dStatsMenu_c : public dStageActor_c {
 };
 
 CREATE_STATE(dStatsMenu_c, Hidden);
+CREATE_STATE(dStatsMenu_c, CountdownWait);
 CREATE_STATE(dStatsMenu_c, ShowWait);
 CREATE_STATE(dStatsMenu_c, ButtonActivateWait);
 CREATE_STATE(dStatsMenu_c, Wait);
@@ -96,8 +102,6 @@ int num2 = -1;
 int num3 = -1;
 int finalNumber;
 
-/*****************************************************************************/
-// Events
 
 dStatsMenu_c::dStatsMenu_c() : state(this, &StateID_Hidden) {
 	layoutLoaded = false;
@@ -106,6 +110,7 @@ dStatsMenu_c::dStatsMenu_c() : state(this, &StateID_Hidden) {
 
 int dStatsMenu_c::onCreate() {
 	count = 180;
+	autoselectCountdown = 180;
 	if (!layoutLoaded) {
 		OSReport("1\n");
 		bool gotFile = layout.loadArc("statsMenu.arc", false);
@@ -113,7 +118,6 @@ int dStatsMenu_c::onCreate() {
 			return false;
 
 		selected = 1;
-		lastTopRowChoice = 1;
 
 		layout.build("statsMenu.brlyt");
 
@@ -208,6 +212,8 @@ int dStatsMenu_c::onCreate() {
 		BtnMid[2]   = layout.findPictureByName("Btn2_Middle_00");
 		BtnRight[2] = layout.findPictureByName("Btn2_Right_00");
 		
+		Countdown = layout.findTextBoxByName("Countdown");
+		
 		OSReport("8\n");
 		//Buttons[0] = layout.findPaneByName("W_SButton_0");
 		//Buttons[1] = layout.findPaneByName("W_SButton_2");
@@ -282,7 +288,7 @@ void dStatsMenu_c::executeState_ShowWait() {
 		OSReport("13.66\n");
 		layout.enableNonLoopAnim(ANIM_BUTTON_ON+2);
 		OSReport("14\n");
-		state.setState(&StateID_ButtonActivateWait);
+		state.setState(&StateID_CountdownWait);
 	}
 }
 void dStatsMenu_c::endState_ShowWait() {
@@ -291,6 +297,59 @@ void dStatsMenu_c::endState_ShowWait() {
 	// PlaySoundWithFunctionB4(SoundRelatedClass, &handle, SE_OBJ_CLOUD_BLOCK_TO_JUGEM, 1);
 	timer = 1;
 }
+
+void dStatsMenu_c::beginState_CountdownWait() { }
+void dStatsMenu_c::executeState_CountdownWait() { 
+	wchar_t textCount[1];
+	int nowPressed = Remocon_GetPressed(GetActiveRemocon());
+	if(nowPressed == WPAD_TWO) {
+		GoMap();
+	} else if(nowPressed == WPAD_RIGHT) {
+		//set new selected Button and go to Wait State
+		textCount[0] = ' ';
+		Countdown->SetString(textCount, 0, 3);
+		layout.enableNonLoopAnim(ANIM_BUTTON_OFF);
+		selected++;
+		layout.enableNonLoopAnim(ANIM_BUTTON_HIT+1);
+		state.setState(&StateID_Wait);
+	} else if(nowPressed != 0) {
+		textCount[0] = ' ';
+		Countdown->SetString(textCount, 0, 3);
+		state.setState(&StateID_Wait);
+	}
+
+	if (autoselectCountdown % 60 == 0) {
+		textCount[0] = '0'+autoselectCountdown/60;
+		Countdown->SetString(textCount, 0, 3);
+		if (autoselectCountdown / 60 == 0) GoMap();
+	}
+	autoselectCountdown--;
+}
+void dStatsMenu_c::endState_CountdownWait() { }
+
+
+void dStatsMenu_c::GoMap() { 
+	ExitStage(WORLD_MAP, 0, BEAT_LEVEL, MARIO_WIPE);
+}
+
+void dStatsMenu_c::GoAgain() { 
+	/*RESTART_CRSIN_LevelStartStruct.purpose = 0;
+	RESTART_CRSIN_LevelStartStruct.world1 = CurrentWorld;
+	RESTART_CRSIN_LevelStartStruct.world2 = CurrentWorld;
+	RESTART_CRSIN_LevelStartStruct.level1 = CurrentLevel;
+	RESTART_CRSIN_LevelStartStruct.level2 = CurrentLevel;
+	RESTART_CRSIN_LevelStartStruct.areaMaybe = 0;
+	RESTART_CRSIN_LevelStartStruct.entrance = 0xFF;
+	RESTART_CRSIN_LevelStartStruct.unk4 = 0; // load replay
+	DoSceneChange(RESTART_CRSIN, 0, 0);*/
+	DontShowPreGame = true;
+	ExitStage(RESTART_CRSIN, 0, BEAT_LEVEL, MARIO_WIPE);
+}
+
+void dStatsMenu_c::GoReplay() { 
+
+}
+
 
 // ButtonActivateWait
 void dStatsMenu_c::beginState_ButtonActivateWait() { }
@@ -311,17 +370,35 @@ void dStatsMenu_c::executeState_Wait() {
 	}
 
 	int nowPressed = Remocon_GetPressed(GetActiveRemocon());
-	int newSelection = -1;
-
-	if (nowPressed & WPAD_ONE) {
+	
+	if (nowPressed & WPAD_ONE) {														//remove this later
 		// Hide the thing
 		state.setState(&StateID_HideWait);
 	} else if (nowPressed & WPAD_RIGHT) {
-		
+		if(selected < 3) {
+			layout.enableNonLoopAnim(ANIM_BUTTON_OFF+selected-1);
+			selected++;
+			layout.enableNonLoopAnim(ANIM_BUTTON_HIT+selected-1);
+		}
 	} else if (nowPressed & WPAD_LEFT) {
+		if(selected > 1) {
+			layout.enableNonLoopAnim(ANIM_BUTTON_OFF+selected-1);
+			selected--;
+			layout.enableNonLoopAnim(ANIM_BUTTON_HIT+selected-1);
+		}
+	} else if (nowPressed & WPAD_TWO) {
+		switch(selected) {
+			case 1:
+				GoMap();
+				break;
+			case 2:
+				GoAgain();
+				break;
+			case 3:
+				GoReplay();
+				break;
+		}
 		
-	} else if (nowPressed != 0) {
-		//stop countdown
 	}
 
 }
@@ -352,16 +429,4 @@ void dStatsMenu_c::executeState_HideWait() {
 }
 void dStatsMenu_c::endState_HideWait() {
 	visible = false;
-}
-
-void dStatsMenu_c::selectNumber(int num) {
-	OSReport("num is %d\n", num);
-	char str[3];
-	sprintf(str, "%03d", num1);
-	wchar_t numToShow[3];
-	numToShow[0] = str[0];
-	numToShow[1] = str[1];
-	numToShow[2] = str[2];
-	T_number_00->SetString(numToShow, 0, 3);
-	T_numberS_00->SetString(numToShow, 0, 3);
 }
