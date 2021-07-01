@@ -550,6 +550,10 @@ enum
 	TikiTongHand = 528,
 	TikiTongCrown = 529,
 	StatsMenu = 530,
+	
+	// Besti's Stuff
+	GreenRing = 531,
+	GreenCoin = 532,
 
 	Num
 };
@@ -1362,6 +1366,9 @@ enum
 	TikiTongHand = 795,
 	TikiTongCrown = 796,
 	StatsMenu = 797,
+	
+	GreenRing = 798,
+	GreenCoin = 799,
 
 	Num
 };
