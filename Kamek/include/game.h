@@ -235,7 +235,7 @@ public:
 	u8 field_06;				// 0x06
 	u8 switch_on;				// 0x07
 	u8 field_08;				// 0x08
-	u8 powerups_available[7];	// 0x09
+	u8 powerups_available[7];	// 0x09 - unused: now uses new_powerups_available
 	u8 toad_level_idx[10];		// 0x10
 	u8 player_continues[4];		// 0x1A
 	u8 player_coins[4];			// 0x1E
@@ -258,11 +258,17 @@ public:
 		struct {
 			// ALL Newer additions should go here
 			// This array has been verified as safe to replace
-			u8 addToLevelNum;
-			u8 collected;
-			u8 secret_worlds_available[10];
-			u8 SIHammer;
-			char additional[50];
+			u8 secretGems;						//0x6FC
+			u8 new_powerups_available[14];		//0x6FD
+			char additional[55];
+
+
+
+			//u8 addToLevelNum;
+			//u8 collected;
+			//u8 secret_worlds_available[10];
+			//u8 SIHammer;
+			//char additional[49];
 		/*
 			char newerWorldName[32]; // 0x6FC
 			GXColor fsTextColours[2]; // 0x71C
@@ -2184,6 +2190,7 @@ public:
 	void UpdateObjectPosBasedOnSpeedValuesReal();
 	void HandleXSpeed();
 	void HandleYSpeed();
+	static dActor_c* create(Actors type, u32 settings, VEC3 *pos, void *rot);
 };
 
 class dStageActor_c : public dActor_c {
@@ -2423,6 +2430,8 @@ class daPlBase_c : public dStageActor_c {
 		void setFlag(int flag);
 		void clearFlag(int flag);
 		bool testFlag(int flag);
+
+		//bool sub_8004DD00(int unk); //maybe isPlayerStunned ???
 
 		static daPlBase_c *findByID(int id);
 };
@@ -4400,7 +4409,7 @@ class dAcPy_c : public daPlBase_c {
 		u32 _vf28C(); // 801400B0
 		void dealsWithGoalPutonCapAnimation(); // 80140440
 		u32 _vf290(); // 801406D0
-		u32 _vf134(); // 80140720
+		u32 cannonShot(int framesToWait, short rotX, short rotY); // 80140720
 		u32 _vf128(); // 80140B70
 		u32 _vf27C(); // 80140C30
 		u32 _vf280(); // 80140D70
@@ -4455,6 +4464,7 @@ class dAcPy_c : public daPlBase_c {
 		u32 patch_thing(u32 powerup_id); // Over setPowerup
 		u32 _vf3FC(); // 80146A10
 		u32 _vf400(); // 80146B10
+		bool pipeCannonShot(int unk, float x, float y); //80146f60
 		u32 _vf410(); // 80146FD0
 		bool canWePropelOurselves(int effectivePowerup); // 801470E0
 		void sub_80147390(); // 80147390
@@ -4568,7 +4578,7 @@ class dStockItemShadow_c : public dBase_c {
 	nw4r::lyt::TextBox *textBoxes[14];
 	nw4r::lyt::Picture *buttonBases[7];
 	bool layoutLoaded, visible, needsUpdate;
-	int values[8];
+	int values[14];
 	nw4r::lyt::TextBox *hammerValue, *hammerX;
 	nw4r::lyt::Picture *hammerButtonBase;
 	nw4r::lyt::TextBox *boomerValue, *boomerX;
@@ -4628,11 +4638,11 @@ class dStockItem_c : public dBase_c {
 	int someAnimID;
 	bool isPlayerActive[4], layoutLoaded, show, _8DE;
 
-	/*daWMItem_c*/void *newItemPtr[8];
-	int newCounts[8];
-	nw4r::lyt::Picture *newButtonBase[8];
-	nw4r::lyt::Pane *newIconPanes[8];
-	nw4r::lyt::Picture *newIconPictures[8];
+	/*daWMItem_c*/void *newItemPtr[14];
+	int newCounts[14];
+	nw4r::lyt::Picture *newButtonBase[14];
+	nw4r::lyt::Pane *newIconPanes[14];
+	nw4r::lyt::Picture *newIconPictures[14];
 
 	void setScalesOfSomeThings();
 	int getIconPictureIDforPlayer(int i);

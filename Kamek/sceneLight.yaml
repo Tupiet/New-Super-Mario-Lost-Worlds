@@ -1,0 +1,20 @@
+---
+source_files: [../src/sceneLight.S]
+hooks:
+  - name: useNewLightList
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80926354
+    target_func: 'useNewLightList'
+
+  - name: useNewLightMapList
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80926388
+    target_func: 'useNewLightMapList'
+
+  - name: useNewFogList
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x809263b8
+    target_func: 'useNewFogList'

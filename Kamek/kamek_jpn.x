@@ -1,4 +1,185 @@
 SECTIONS {
+	/* instance__14dWorldCamera_c = 0x8156d728; /* wrong??? */
+
+	__dt_17daFireBall_Base_cFv = 0x80041400;
+	__vt__17daFireBall_Base_c = 0x80306840;
+
+	StateID_Move__17daFireBall_Base_cFv = 0x80353C8C;
+	StateID_Kill__17daFireBall_Base_cFv = 0x80353CCC;
+	StateID_EatIn__17daFireBall_Base_cFv = 0x80353D0C;
+	StateID_EatNow__17daFireBall_Base_cFv = 0x80353D4C;
+
+	onCreate__17daFireBall_Base_cFv = 0x80040960;
+	willBeDeleted__17daFireBall_Base_cFv = 0x80040DC0;
+	onDelete__17daFireBall_Base_cFv = 0x80040DD0;
+	beforeExecute__17daFireBall_Base_cFv = 0x80040B00;
+	onExecute__17daFireBall_Base_cFv = 0x80040BD0;
+	onDraw__17daFireBall_Base_cFv = 0x80040D90;
+
+	updateSpawnLimits__17daFireBall_Base_cFv = 0x80040AD0;
+	calledInOnCreate_b__17daFireBall_Base_cFv = 0x80040AE0;
+	calledInOnCreate_c__17daFireBall_Base_cFv = 0x80040AF0;
+	sub_80040BC0__17daFireBall_Base_cFv = 0x80040BC0;
+	setZOrder_maybe__17daFireBall_Base_cFv = 0x80040D70;
+	playFireballEffect__17daFireBall_Base_cFv = 0x80040D80;
+	killIfOutOfZone_maybe__17daFireBall_Base_cFv = 0x80040DE0;
+	setUpCollSensor__17daFireBall_Base_cFv = 0x80040E70;
+	playFireballHitEffect__17daFireBall_Base_cFv = 0x80040EC0;
+	eatIn__17daFireBall_Base_cFv = 0x80040F10;
+	updateLights__17daFireBall_Base_cFv = 0x80040F70;
+	getSizeOfLight__17daFireBall_Base_cFv = 0x80040FF0;
+	doFireSplash__17daFireBall_Base_cFv = 0x80041000;
+	doLavaSplash__17daFireBall_Base_cFv = 0x800410F0;
+	doPoisonSplash__17daFireBall_Base_cFv = 0x800411D0;
+	disableEatIn__17daFireBall_Base_cFv = 0x800413F0;
+
+	beginState_Move__17daFireBall_Base_cFv = 0x800412B0;
+	executeState_Move__17daFireBall_Base_cFv = 0x800412C0;
+	endState_Move__17daFireBall_Base_cFv = 0x800412D0;
+	beginState_EatIn__17daFireBall_Base_cFv = 0x800412E0;
+	executeState_EatIn__17daFireBall_Base_cFv = 0x800412F0;
+	endState_EatIn__17daFireBall_Base_cFv = 0x80041300;
+	beginState_EatNow__17daFireBall_Base_cFv = 0x80041330;
+	executeState_EatNow__17daFireBall_Base_cFv = 0x80041340;
+	endState_EatNow__17daFireBall_Base_cFv = 0x80041350;
+	beginState_Kill__17daFireBall_Base_cFv = 0x80041360;
+	executeState_Kill__17daFireBall_Base_cFv = 0x800413A0;
+	endState_Kill__17daFireBall_Base_cFv = 0x800413B0;
+
+	Move_Begin__17daFireBall_Base_cFv = 0x800412B0;
+	Move_Execute__17daFireBall_Base_cFv = 0x800412C0;
+	Move_End__17daFireBall_Base_cFv = 0x800412D0;
+	eatIn_Begin__17daFireBall_Base_cFv = 0x800412E0;
+	eatIn_Execute__17daFireBall_Base_cFv = 0x800412F0;
+	eatIn_End__17daFireBall_Base_cFv = 0x80041300;
+	eatNow_Begin__17daFireBall_Base_cFv = 0x80041330;
+	eatNow_Execute__17daFireBall_Base_cFv = 0x80041340;
+	eatNow_End__17daFireBall_Base_cFv = 0x80041350;
+	Kill_Begin__17daFireBall_Base_cFv = 0x80041360;
+	Kill_Execute__17daFireBall_Base_cFv = 0x800413A0;
+	Kill_End__17daFireBall_Base_cFv = 0x800413B0;
+
+	vf138__17daFireBall_Base_cFv = 0x800413E0;
+	vf13C__17daFireBall_Base_cFv = 0x800413D0;
+
+	it_is_right = 0x807B0DB0;
+	not_right = 0x807B0DC4;
+	it_is_right2 = 0x807B1004;
+	not_right2 = 0x807B1018;
+	dStockItem__manipulateItemID = 0x807B0670;
+	tryAndMoveRight = 0x807B06E0;
+	tryAndMoveLeft = 0x807B06A4;
+	cantChange = 0x807B06EC;
+	continueRightLoop = 0x807B06CC;
+	continueLeftLoop = 0x807B0690;
+
+	PtrToWM_CS_SEQ_MNG = 0x80429ECC;
+	FUN_801017c0 = 0x80101630;
+	dCourseSelectGuide_c__loadLives = 0x80010800;
+	continueFromShopCheck = 0x809149C0;
+
+	aLightMainscene = 0x8098CE30;
+	aLightChikascen = 0x8098CE48;
+	aLightWaterscen = 0x8098CE60;
+	aLightFirescene = 0x8098CE78;
+	aLightSabakusce = 0x8098CE90;
+	aLightKaigansce = 0x8098CEAC;
+	aLightDaishizen = 0x8098CEC8;
+	aLightYukidaysc = 0x8098CEE4;
+	aLightSorascene = 0x8098CF00;
+	aLightIwabascen = 0x8098CF18;
+	aLightToridesce = 0x8098CF30;
+	aLightShiroscen = 0x8098CF50;
+	aLightObakescen = 0x8098CF68;
+	aLightKurayamic = 0x8098CF80;
+	aLightObakeouts = 0x8098CFA0;
+	aLightShinkaisc = 0x8098CFBC;
+	aLightSabakuchi = 0x8098CFD8;
+	aLightKorichika = 0x8098CFF8;
+	aLightFire2scen = 0x8098D018;
+	aLightKoopascen = 0x8098D030;
+	aLightFire3scen = 0x8098D048;
+	aLightKumorisor = 0x8098D060;
+	aLightToride2sc = 0x8098D080;
+
+	aLightMainsce_0 = 0x8098D09C;
+	aLightChikasc_0 = 0x8098D0B4;
+	aLightWatersc_0 = 0x8098D0CC;
+	aLightFiresce_0 = 0x8098D0E4;
+	aLightSabakus_0 = 0x8098D100;
+	aLightKaigans_0 = 0x8098D118;
+	aLightDaishiz_0 = 0x8098D130;
+	aLightYukiday_0 = 0x8098D14C;
+	aLightSorasce_0 = 0x8098D168;
+	aLightIwabasc_0 = 0x8098D180;
+	aLightTorides_0 = 0x8098D198;
+	aLightShirosc_0 = 0x8098D1B0;
+	aLightObakesc_0 = 0x8098D1C8;
+	aLightKurayam_0 = 0x8098D1E0;
+	aLightObakeou_0 = 0x8098D200;
+	aLightShinkai_0 = 0x8098D21C;
+	aLightSabakuc_0 = 0x8098D238;
+	aLightKorichi_0 = 0x8098D258;
+	aLightFire2sc_0 = 0x8098D274;
+	aLightKoopasc_0 = 0x8098D28C;
+	aLightFire3sc_0 = 0x8098D2A4;
+	aLightKumoris_0 = 0x8098D2BC;
+	aLightToride2_0 = 0x8098D2D8;
+
+	aFogMainscene_b = 0x8098D2F4;
+	aFogChikascene_ = 0x8098D308;
+	aFogWaterscene_ = 0x8098D31C;
+	aFogFirescene_b = 0x8098D330;
+	aFogSabakuscene = 0x8098D344;
+	aFogKaiganscene = 0x8098D35C;
+	aFogDaishizensc = 0x8098D378;
+	aFogYukidayscen = 0x8098D390;
+	aFogSorascene_b = 0x8098D3A8;
+	aFogIwabascene_ = 0x8098D3BC;
+	aFogToridescene = 0x8098D3D0;
+	aFogShiroscene_ = 0x8098D3E8;
+	aFogObakescene_ = 0x8098D3FC;
+	aFogKurayamichi = 0x8098D410;
+	aFogObakeoutsce = 0x8098D42C;
+	aFogShinkaiscen = 0x8098D444;
+	aFogSabakuchika = 0x8098D45C;
+	aFogKorichikasc = 0x8098D478;
+	aFogFire2scene_ = 0x8098D490;
+	aFogKoopascene_ = 0x8098D4A4;
+	aFogFire3scene_ = 0x8098D4B8;
+	aFogKumorisoras = 0x8098D4CC;
+	aFogToride2scen = 0x8098D4E8;
+
+
+	aRouteinfo_1 = 0x8098D66C;
+	aCollectioncoincoursesort = 0x8098D678;
+	aCobcastle_1 = 0x8098D694;
+	aCobcourse_0 = 0x8098D6A0;
+	aCobkinokored_3 = 0x8098D580;
+	aCobkinoko1up_4 = 0x8098D590;
+	aCobkinokosta_3 = 0x8098D5A0;
+	aCobstart_0 = 0x8098D6AC;
+	aCobanchor_0 = 0x8098D6B8;
+	aCobtoride_1 = 0x8098D6C4;
+	aCobghost_1 = 0x8098D6D0;
+	aCobcannon_1 = 0x8098D6DC;
+	aCobkoopaship_5 = 0x8098D5B0;
+	aCharacter_s_12 = 0x8098D6E8;
+	aCobsurrender_0 = 0x8098D6F8;
+	aCobkinopio_1 = 0x8098D708;
+	create__8dActor_cF6ActorsUiP7Point3dPv = 0x8006CA80;
+
+	returnToOriginalScriptCode = 0x8010153C;
+
+	destroyBarrel = 0x807C1B50; /* extern "C" void destroyBarrel(dStageActor_c *); */
+
+	StateID_FoolMove__14daEnGakeNoko_c = 0x80B144C0;
+	StateID_Move__14daEnGakeNoko_c = 0x80B14500;
+
+	pipeCannonShot__7dAcPy_cFiff = 0x80146C30;
+
+	dealsWithGoalPutonCapAnimation__7dAcPy_cFv = 0x80140110;
+	cannonShot__7dAcPy_cFiss = 0x801403F0;
 
 	getZoneByID__9dCourse_cFUcP5mRect = 0x8008E410;
 
@@ -1238,6 +1419,10 @@ SECTIONS {
 	SetViewportJitter__Q34nw4r3g3d6CameraFUi = 0x80253C30;
 	SetPosture__Q34nw4r3g3d6CameraFRCQ44nw4r3g3d6Camera11PostureInfo = 0x802537D0;
 	SetPosition__Q34nw4r3g3d6CameraFRC4VEC3 = 0x80253760;
+	SetPosition__Q34nw4r3g3d6CameraFRC7Point3d = 0x80253760;
+	GetPosition__Q34nw4r3g3d6CameraCFP7Point3d = 0x802537A0;
+	GetViewport__Q34nw4r3g3d6CameraCFPfPfPfPfPfPf = 0x80253C70;
+	SetViewportZRange__Q34nw4r3g3d6CameraFff = 0x80253C10;
 	SetCameraMtxDirectly__Q34nw4r3g3d6CameraFRA3_A4_Cf = 0x802539F0;
 	GetCameraMtx__Q34nw4r3g3d6CameraCFPA3_A4_f = 0x80253EC0;
 
@@ -2126,6 +2311,29 @@ SECTIONS {
 	SI_Penguin = 0x8098D988;
 	SI_Star = 0x8098D998;
 
+	aSi_kinoko_0 = 0x8098D94C;
+	aSi_fireflowe_0 = 0x8098D958;
+	aSi_propeller_0 = 0x8098D968;
+	aSi_iceflower_0 = 0x8098D978;
+	aSi_penguin_0 = 0x8098D988;
+	aSi_star_0 = 0x8098D998;
+
+	aSi_kinoko = 0x80982C4C;
+	aSi_fireflower = 0x80982C58;
+	aSi_propeller = 0x80982C68;
+	aSi_iceflower = 0x80982C78;
+	aSi_penguin = 0x80982C88;
+	aSi_kinoko = 0x80982C4C;
+	aSi_star = 0x80982C98;
+
+	aI_kinoko_6 = 0x80982BB8;
+	aI_fireflower_1 = 0x80982BC4;
+	aI_propeller_4 = 0x80982BD4;
+	aI_iceflower_4 = 0x80982BE0;
+	aI_penguin_4 = 0x80982AEC;
+	aI_kinoko_6 = 0x80982BB8;
+	aI_star_4 = 0x80982BF8;
+	aI_propeller_model_2 = 0x80982C1C;
 
 	goToSpecificWorld__Fiii = 0x80102610;
 	AssembleScWorldMapSettings__FUcii = 0x801029E0;

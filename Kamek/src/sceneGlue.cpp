@@ -4,7 +4,8 @@
 extern char CurrentLevel, CurrentWorld;
 extern u8 MaybeFinishingLevel[2];
 extern "C" void ExitStageReal(int scene, int sceneParams, int powerupStoreType, int wipe);
-
+extern bool secretGemCollected;
+extern bool secretGemAfterMidwayFlag;
 
 extern "C" void ExitStageWrapper(int scene, int sceneParams, int powerupStoreType, int wipe) {
 	// TO RE-ENABLE CUTSCENES, UNCOMMENT THIS
@@ -18,16 +19,41 @@ extern "C" void ExitStageWrapper(int scene, int sceneParams, int powerupStoreTyp
 	// 	}
 	// }
 	
-	bool noCasualities = true;
+	bool noCasualties = true;
 	for(int i = 0; i < 4; i++) {
 		//OSReport("Lives %p: %p\n", i, Player_Lives[i]);
 		if(Player_Lives[i] == 0) {
-			noCasualities = false;
+			noCasualties = false;
 			break;
 		}
 	}
 	
-	if(!(Remocon_GetButtons(GetActiveRemocon()) & WPAD_B) && noCasualities && scene == WORLD_MAP && powerupStoreType == LOSE_LEVEL) {
+	
+	SaveBlock* save = GetSaveFile()->GetBlock(-1);
+	//if(powerupStoreType == LOSE_LEVEL)	if(!secretGemAfterMidwayFlag) secretGemCollected = false;
+	//if (secretGemCollected)				
+	//secretGemCollected = false;
+	
+	OSReport("GMgrP: %d\n", GameMgrP->eight.checkpointEntranceID);
+	
+	if(powerupStoreType == LOSE_LEVEL) {
+		if(secretGemAfterMidwayFlag) {
+			secretGemCollected = false;
+		} else {
+			if(GameMgrP->eight.checkpointEntranceID == 255) {
+				secretGemCollected = false;
+			}
+		}
+	} else if(powerupStoreType == BEAT_LEVEL) {
+		if(secretGemCollected) {
+			secretGemAfterMidwayFlag = false;
+			secretGemCollected = false;
+			save->secretGems++;
+		}
+	}
+	
+	
+	if(!(Remocon_GetButtons(GetActiveRemocon()) & WPAD_B) && noCasualties && scene == WORLD_MAP && powerupStoreType == LOSE_LEVEL) {
 		RESTART_CRSIN_LevelStartStruct.purpose = 0;
 		RESTART_CRSIN_LevelStartStruct.world1 = CurrentWorld;
 		RESTART_CRSIN_LevelStartStruct.world2 = CurrentWorld;

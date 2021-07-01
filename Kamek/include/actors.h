@@ -782,7 +782,31 @@ enum Actors {
 	PumpkinGoomba = 773,
 	Ballon = 774,
 	TripleBlock = 775,
-	NewActorSpawner = 776
+	NewActorSpawner = 776,
+	GreatGoalPole = 777,
+	WATER_LIFT_NEW = 778,
+	Sidestepper = 779,
+	MiniSidestepper = 780,
+	BoomBoom = 781,
+	CutsceneMgr = 782,
+	SecretGem = 783,
+
+	ShroobUfo = 784,
+	StarChip = 785,
+	ShyCart = 786,
+	Rail = 787,
+	WhereAmIGoing = 788,
+	WarpBox = 789,
+	Boshi = 790,
+	CloudPlattform = 791,
+	GoombaTower = 792,
+	BusuBusu = 793,
+	TikiTongBody = 794,
+	TikiTongHand = 795,
+	TikiTongCrown = 796,
+	StatsMenu = 797,
+	GreenRing = 798,
+	GreenCoin = 799
 };
 
 struct Actor {

@@ -1,6 +1,7 @@
 .text
 .align 4
-.set sp, 1
+
+#include <asm_setup.S>
 
 .extern returnFromGPSFASixth
 .extern daEnItem_c__GetWhetherPlayerCanGetPowerupOrNot
@@ -18,16 +19,17 @@
 .extern doneSettingThePowerupTexture2
 .extern returnFromPowerupSoundChange
 
-#ifndef __MWERKS__
-.set r0,0;   .set r1,1;   .set r2,2; .set r3,3;   .set r4,4
-.set r5,5;   .set r6,6;   .set r7,7;   .set r8,8;   .set r9,9
-.set r10,10; .set r11,11; .set r12,12; .set r13,13; .set r14,14
-.set r15,15; .set r16,16; .set r17,17; .set r18,18; .set r19,19
-.set r20,20; .set r21,21; .set r22,22; .set r23,23; .set r24,24
-.set r25,25; .set r26,26; .set r27,27; .set r28,28; .set r29,29
-.set r30,30; .set r31,31; .set f0,0; .set f2,2; .set f3,3
-.set f1,1;   .set f30,30; .set f31,31
-#endif
+.extern ActiveWiimoteID
+.extern it_is_right
+.extern not_right
+.extern it_is_right2
+.extern not_right2
+.extern dStockItem__manipulateItemID
+.extern tryAndMoveRight
+.extern tryAndMoveLeft
+.extern cantChange
+.extern continueRightLoop
+.extern continueLeftLoop
 
 .global DisableHatForHammer
 DisableHatForHammer:
@@ -37,17 +39,11 @@ DisableHatForHammer:
 	lbz r0, 0x152(r31)	#r0 = this->powerup
 	cmpwi r0, 7			#if it's 7 (hammer), don't draw the hat
 	beq DontDrawTheFuckingHat_
-	lbz r0, 0x152(r31)	#r0 = this->powerup
-	cmpwi r0, 8			#if it's 8 (boomerang), don't draw the hat
-	beq DontDrawTheFuckingHat_
-	lbz r0, 0x152(r31)	#r0 = this->powerup
 	cmpwi r0, 9			#if it's 9 (spike), don't draw the hat
 	beq DontDrawTheFuckingHat_
-	lbz r0, 0x152(r31)	#r0 = this->powerup
-	cmpwi r0, 10		#if it's 10 (bob-omb), don't draw the hat
+	cmpwi r0, 10		#if it's 10 (boomerang), don't draw the hat
 	beq DontDrawTheFuckingHat_
-	lbz r0, 0x152(r31)	#r0 = this->powerup
-	cmpwi r0, 13		#if it's 13 (cloud), don't draw the hat
+	cmpwi r0, 12		#if it's 12 (cloud), don't draw the hat
 	beq DontDrawTheFuckingHat_
 	b DrawTheFuckingHat	#Else, draw it
 DontDrawTheFuckingHat_:
@@ -68,6 +64,17 @@ GetInfoFromDumbTable:
 	blr
 
 
+.global spikeAShroom
+spikeAShroom:
+	beq return_1
+	cmplwi r0, 7
+	bne return_0
+return_1:
+	li r3, 1
+	blr
+return_0:
+	li r3, 0
+	blr
 
 
 .global FukidashiFix
@@ -270,22 +277,22 @@ PlumberSetPowerupFix:
 	beq doHammerTex
 	
 	cmpwi r0, 8
-	beq doBoomerangTex
+	beq doGoldTex
 	
 	cmpwi r0, 9
 	beq doSpikeTex
 	
 	cmpwi r0, 10
-	beq doBobombTex
+	beq doBoomerangTex
 	
 	cmpwi r0, 11
 	beq doFrogTex
 	
 	cmpwi r0, 12
-	beq doThunderTex
+	beq doCloudTex
 	
 	cmpwi r0, 13
-	beq doCloudTex
+	beq doWandTex
 	
 	li r4, 0
 	b gotTexID
@@ -310,7 +317,7 @@ doSpikeTex:
 	li r4, 5	#These are Pat0 frame ID
 	b gotTexID
 	
-doBobombTex:
+doWandTex:
 	li r4, 6	#These are Pat0 frame ID
 	b gotTexID
 	
@@ -318,7 +325,7 @@ doFrogTex:
 	li r4, 7	#These are Pat0 frame ID
 	b gotTexID
 	
-doThunderTex:
+doGoldTex:
 	li r4, 8	#These are Pat0 frame ID
 	b gotTexID
 	
@@ -348,22 +355,22 @@ PlumberSetPowerupFix2:
 	beq doHammerTex2
 
 	cmpwi r31, 8
-	beq doBoomerangTex2
+	beq doGoldTex2
 	
 	cmpwi r31, 9
 	beq doSpikeTex2
 	
 	cmpwi r31, 10
-	beq doBobombTex2
+	beq doBoomerangTex2
 	
 	cmpwi r31, 11
 	beq doFrogTex2
 	
 	cmpwi r31, 12
-	beq doThunderTex2
+	beq doCloudTex2
 	
 	cmpwi r31, 13
-	beq doCloudTex2
+	beq doWandTex2
 	
 	li r4, 0
 	b gotTexID2
@@ -388,7 +395,7 @@ doSpikeTex2:
 	li r4, 5	#These are Pat0 frame ID
 	b gotTexID2
 	
-doBobombTex2:
+doWandTex2:
 	li r4, 6	#These are Pat0 frame ID
 	b gotTexID2
 	
@@ -396,7 +403,7 @@ doFrogTex2:
 	li r4, 7	#These are Pat0 frame ID
 	b gotTexID2
 	
-doThunderTex2:
+doGoldTex2:
 	li r4, 8	#These are Pat0 frame ID
 	b gotTexID2
 	
@@ -483,16 +490,16 @@ DontSetSpike:
 
 
 
-.global SetBobombToEnItemDCA
-SetBobombToEnItemDCA:
+.global SetWandToEnItemDCA
+SetWandToEnItemDCA:
 	bl daEnItem_c__GetWhetherPlayerCanGetPowerupOrNot
 	cmpwi r3, 1
-	bne DontSetBobomb
+	bne DontSetWand
 	
 	li r0, 8
 	sth r0, 0xDCA(r31)
 	
-DontSetBobomb:
+DontSetWand:
 	lwz r0, 0x14(sp)
 	lwz r31, 0xC(sp)
 	mtlr r0
@@ -519,16 +526,16 @@ DontSetFrog:
 
 
 
-.global SetThunderToEnItemDCA
-SetThunderToEnItemDCA:
+.global SetGoldToEnItemDCA
+SetGoldToEnItemDCA:
 	bl daEnItem_c__GetWhetherPlayerCanGetPowerupOrNot
 	cmpwi r3, 1
-	bne DontSetThunder
+	bne DontSetGold
 	
 	li r0, 0xA
 	sth r0, 0xDCA(r31)
 	
-DontSetThunder:
+DontSetGold:
 	lwz r0, 0x14(sp)
 	lwz r31, 0xC(sp)
 	mtlr r0
@@ -589,18 +596,18 @@ notBoomerEither:
 	bne notSpikeEither		#then got to notSpikeEither
 	b doHammerBoomerCheck	#Otherwise, go to doHammerBoomerCheck
 notSpikeEither:
-	cmplwi r4, 0x12			#if the current DCB isn't 0x12 (Bobomb) either
-	bne notBobombEither		#then got to notBobombEither
+	cmplwi r4, 0x12			#if the current DCB isn't 0x12 (Wand) either
+	bne notWandEither		#then got to notWandEither
 	b doHammerBoomerCheck	#Otherwise, go to doHammerBoomerCheck
-notBobombEither:
+notWandEither:
 	cmplwi r4, 0x13			#if the current DCB isn't 0x13 (Frog) either
 	bne notFrogEither		#then got to notFrogEither
 	b doHammerBoomerCheck	#Otherwise, go to doHammerBoomerCheck
 notFrogEither:
-	cmplwi r4, 0x14			#if the current DCB isn't 0x14 (Thunder) either
-	bne notThunderEither	#then got to notThunderEither
+	cmplwi r4, 0x14			#if the current DCB isn't 0x14 (Gold) either
+	bne notGoldEither	#then got to notGoldEither
 	b doHammerBoomerCheck	#Otherwise, go to doHammerBoomerCheck
-notThunderEither:
+notGoldEither:
 	cmplwi r4, 0x16			#if the current DCB isn't 0x16 (Cloud) either
 	bnelr					#then return
 	b doHammerBoomerCheck	#Otherwise, go to doHammerBoomerCheck
@@ -611,12 +618,12 @@ doHammerBoomerCheck:
 	beq setDCABoomerang		#Then go to setDCABoomerang
 	cmplwi r4, 0x10			#If the current DCB is 0x10 (Spike)
 	beq setDCASpike			#Then go to setDCASpike
-	cmplwi r4, 0x12			#If the current DCB is 0x12 (Bobomb)
-	beq setDCABobomb		#Then go to setDCABobomb
+	cmplwi r4, 0x12			#If the current DCB is 0x12 (Wand)
+	beq setDCAWand			#Then go to setDCAWand
 	cmplwi r4, 0x13			#If the current DCB is 0x13 (Frog)
 	beq setDCAFrog			#Then go to setDCAFrog
-	cmplwi r4, 0x14			#If the current DCB is 0x14 (Thunder)
-	beq setDCAThunder		#Then go to setDCAThunder
+	cmplwi r4, 0x14			#If the current DCB is 0x14 (Gold)
+	beq setDCAGold			#Then go to setDCAGold
 	cmplwi r4, 0x16			#If the current DCB is 0x16 (Cloud)
 	beq setDCACloud			#Then go to setDCACloud
 setDCAHammer:
@@ -631,7 +638,7 @@ setDCASpike:
 	li r0, 7				#Store 7 into r0
 	sth r0, 0xDCA(r3)		#Store r0 in the DCA
 	blr
-setDCABobomb:
+setDCAWand:
 	li r0, 8				#Store 8 into r0
 	sth r0, 0xDCA(r3)		#Store r0 in the DCA
 	blr
@@ -639,7 +646,7 @@ setDCAFrog:
 	li r0, 9				#Store 9 into r0
 	sth r0, 0xDCA(r3)		#Store r0 in the DCA
 	blr
-setDCAThunder:
+setDCAGold:
 	li r0, 0xA				#Store 0xA into r0
 	sth r0, 0xDCA(r3)		#Store r0 in the DCA
 	blr
@@ -725,11 +732,11 @@ WeirdAnimLoadHack:
 	beqlr
 	cmplwi r4, 7   #spike
 	beqlr
-	cmplwi r4, 8   #bobomb
+	cmplwi r4, 8   #wand
 	beqlr
 	cmplwi r4, 9   #frog
 	beqlr
-	cmplwi r4, 0xA #thunder
+	cmplwi r4, 0xA #gold
 	beqlr
 	cmplwi r4, 0xC #cloud
 	beqlr
@@ -788,11 +795,11 @@ checkPow:
 	cmplwi r3, 7				#If it's 7
 	beq doCheckForSpike			#Then do the check for the spike suit
 	cmplwi r3, 8				#If it's 8
-	beq doCheckForBobomb		#Then do the check for the bobomb suit
+	beq doCheckForWand			#Then do the check for rosalina's wand
 	cmplwi r3, 9				#If it's 9
 	beq doCheckForFrog			#Then do the check for the frog suit
 	cmplwi r3, 0xA				#If it's 0xA
-	beq doCheckForThunder		#Then do the check for the thunder suit
+	beq doCheckForGold			#Then do the check for the gold flower
 	cmplwi r3, 0xC				#If it's 0xC
 	beq doCheckForCloud			#Then do the check for the cloud suit
 	b IsntGettingAnySuit		#Otherwise, No suit getting so go to IsntGettingAnySuit
@@ -806,10 +813,10 @@ doCheckForHammer:
 	li r29, 2
 	b ReturnFromTTGMHS
 
-doCheckForBoomerang:
+doCheckForGold:
 	# check the current player powerup
 	cmplwi r4, 8				#If the current powerup isn't 8
-	bne DontHaveBoomerangSuit	#then we don't have the boomerang yet, so go to DontHaveBoomerangSuit
+	bne DontHaveGold			#then we don't have the thunder yet, so go to DontHaveGold
 	
 	li r28, 0					#Otherwise, set some shit and ReturnFromTTGMHS
 	li r29, 2
@@ -824,10 +831,10 @@ doCheckForSpike:
 	li r29, 2
 	b ReturnFromTTGMHS
 
-doCheckForBobomb:
+doCheckForBoomerang:
 	# check the current player powerup
 	cmplwi r4, 10				#If the current powerup isn't 10
-	bne DontHaveBobombSuit		#then we don't have the bobomb yet, so go to DontHaveBobombSuit
+	bne DontHaveBoomerangSuit	#then we don't have the boomerang yet, so go to DontHaveBoomerangSuit
 	
 	li r28, 0					#Otherwise, set some shit and ReturnFromTTGMHS
 	li r29, 2
@@ -842,22 +849,22 @@ doCheckForFrog:
 	li r29, 2
 	b ReturnFromTTGMHS
 
-doCheckForThunder:
-	# check the current player powerup
-	cmplwi r4, 12				#If the current powerup isn't 12
-	bne DontHaveThunderSuit		#then we don't have the thunder yet, so go to DontHaveThunderSuit
-	
-	li r28, 0					#Otherwise, set some shit and ReturnFromTTGMHS
-	li r29, 2
-	b ReturnFromTTGMHS
-
 doCheckForCloud:
 	# check the current player powerup
-	cmplwi r4, 13				#If the current powerup isn't 13
+	cmplwi r4, 12				#If the current powerup isn't 12
 	bne DontHaveCloudSuit		#then we don't have the cloud yet, so go to DontHaveCloudSuit
 	
 	bl doCleanClouds__11placeholderFv
 
+	li r28, 0					#Otherwise, set some shit and ReturnFromTTGMHS
+	li r29, 2
+	b ReturnFromTTGMHS
+
+doCheckForWand:
+	# check the current player powerup
+	cmplwi r4, 13				#If the current powerup isn't 13
+	bne DontHaveWand			#then we don't have the bobomb yet, so go to DontHaveWand
+	
 	li r28, 0					#Otherwise, set some shit and ReturnFromTTGMHS
 	li r29, 2
 	b ReturnFromTTGMHS
@@ -873,7 +880,7 @@ DontHaveHammerSuit:
 	li r29, 1
 	b ReturnFromTTGMHS
 	
-DontHaveBoomerangSuit:
+DontHaveGold:
 	mr r3, r30								#move this into r3
 	li r4, 8								#set the first param to 8 (well the first one is 'this' actually but shhhht)
 	bl dAcPy_c__ChangePowerupWithAnimation	#change the current powerup to 8 (with a cute animation owo)
@@ -895,7 +902,7 @@ DontHaveSpikeSuit:
 	li r29, 1
 	b ReturnFromTTGMHS
 	
-DontHaveBobombSuit:
+DontHaveBoomerangSuit:
 	mr r3, r30								#move this into r3
 	li r4, 10								#set the first param to 10 (well the first one is 'this' actually but shhhht)
 	bl dAcPy_c__ChangePowerupWithAnimation	#change the current powerup to 10 (with a cute animation owo)
@@ -917,23 +924,23 @@ DontHaveFrogSuit:
 	li r29, 1
 	b ReturnFromTTGMHS
 	
-DontHaveThunderSuit:
+DontHaveCloudSuit:
+	bl doCleanClouds__11placeholderFv
 	mr r3, r30								#move this into r3
 	li r4, 12								#set the first param to 12 (well the first one is 'this' actually but shhhht)
 	bl dAcPy_c__ChangePowerupWithAnimation	#change the current powerup to 12 (with a cute animation owo)
-	
+
 	cmpwi r3, 0
 	beq ReturnFromTTGMHS
 	
 	li r29, 1
 	b ReturnFromTTGMHS
 	
-DontHaveCloudSuit:
-	bl doCleanClouds__11placeholderFv
+DontHaveWand:
 	mr r3, r30								#move this into r3
 	li r4, 13								#set the first param to 13 (well the first one is 'this' actually but shhhht)
 	bl dAcPy_c__ChangePowerupWithAnimation	#change the current powerup to 13 (with a cute animation owo)
-
+	
 	cmpwi r3, 0
 	beq ReturnFromTTGMHS
 	
@@ -961,24 +968,22 @@ ThrowHammer:
 	cmplwi r3, 7				#If the current powerup is 7, DoHammer
 	beq DoHammer
 
-	cmplwi r3, 8				#If the current powerup is 8, DoBoomerang
-	beq DoBoomerang
-
-	#TOCHANGE
+	cmplwi r3, 8				#If the current powerup is 8, DoGold
+	beq DoGold
 
 	cmplwi r3, 9				#If the current powerup is 9, DoSpike
 	beq DoSpike
 
-	cmplwi r3, 10				#If the current powerup is 10, DoBobOmb
-	beq DoBobOmb
+	cmplwi r3, 10				#If the current powerup is 10, DoBoomerang
+	beq DoBoomerang
 
 	cmplwi r3, 11				#If the current powerup is 11, DoFrog
 	beq DoFrog
 
-	cmplwi r3, 12				#If the current powerup is 12, DoThunder
-	beq DoThunder
-
 	#No need of the cloud
+
+	cmplwi r3, 13				#If the current powerup is 13, DoWand
+	beq DoWand
 
 	b ReturnFromThrowHammer		#Otherwise, return
 
@@ -1102,7 +1107,7 @@ DoSpike:	#Basically, spawning a spikeball
 	bctrl
 	b ReturnFromThrowHammer
 
-DoBobOmb:	#Basically, spawning a bob-omb
+DoWand:	#Basically, i didn't make it yet
 	mr r3, r30
 	li r4, 498
 	li r5, 0
@@ -1114,7 +1119,7 @@ DoBobOmb:	#Basically, spawning a bob-omb
 	bl PlayPlayerSound
 	
 
-	li r3, 0x176			# Custom Bob-Omb
+	li r3, 0x176			# Custom Shit
 
 	lwz r4, 0x38D(r30)		# Settings => dStageActor_c->associatedPlayerID (in nybble 6 for some reasons) + 2 (in nybble 12 because yes) + 2 (in nybble 11)
 	addi r4, r4, 34
@@ -1196,7 +1201,7 @@ DoFrog:	#Basically, spawning a bubble
 	bctrl
 	b ReturnFromThrowHammer
 
-DoThunder:	#Basically, triggering some things
+DoGold:	#Basically, triggering some things
 	mr r3, r30
 	li r4, 498
 	li r5, 0
@@ -1261,7 +1266,7 @@ MoreProjectileStuff_Fix:
 	lwz r3, 0x1090(r31)		#r3 = this->powerup
 	cmplwi r3, 7			#if it's <7
 	blt ReturnFromMPSFix	#then ReturnFromMPSFix
-	cmplwi r3, 13			#if it's 13 (Cloud)
+	cmplwi r3, 12			#if it's 12 (Cloud)
 	beq ReturnFromMPSFix
 	
 	mr r3, r31				#Otherwise, move and set some things, then PlayerProjectileShooting
@@ -1282,30 +1287,30 @@ ProjectileShootCheck_Fix:
 	lwz r3, 0x1090(r31)		#r3 = this->powerup
 	cmplwi r3, 7			#if it's less than 7
 	blt Return0fromPSCFix	#then Return0fromPSCFix
-	cmplwi r3, 13			#if it 13 (cloud)
+	cmplwi r3, 12			#if it 12 (cloud)
 	beq Return0fromPSCFix	#then Return0fromPSCFix
 	
 	cmplwi r3, 7			#If it's 7 (hammer), then do the hammer checking
 	beq DoHammerFromProjectileShootCheck_Fix
 
-	cmplwi r3, 8			#If it's 8 (boomerang), then do the boomerang checking
+	cmplwi r3, 8			#If it's 8 (gold), then do the boomerang checking
 	beq DoBoomerangFromProjectileShootCheck_Fix
-
-	#TOCHANGE
 
 	cmplwi r3, 9			#If it's 9 (spike), then do the spike checking
 	beq DoBoomerangFromProjectileShootCheck_Fix
 
-	cmplwi r3, 10			#If it's 10 (bob-omb), then do the bob-omb checking
+	cmplwi r3, 10			#If it's 10 (boomerang), then do the bob-omb checking
 	beq DoBoomerangFromProjectileShootCheck_Fix
 
 	cmplwi r3, 11			#If it's 11 (frog), then do the frog checking
 	beq DoBoomerangFromProjectileShootCheck_Fix
 
-	cmplwi r3, 12			#If it's 12 (thunder), then do the thunder checking
+	#No need of the cloud
+
+	cmplwi r3, 13			#If it's 13 (wand), then do the thunder checking
 	beq DoBoomerangFromProjectileShootCheck_Fix
 
-	#No need of the cloud
+	blr
 
 DoHammerFromProjectileShootCheck_Fix:
 	lbz r3, 0x38D(r31)
@@ -1950,14 +1955,14 @@ SI_boomerang: .string "SI_boomerang"
 .global SI_spike
 SI_spike: .string "SI_spike"
 
-.global SI_bobomb
-SI_bobomb: .string "SI_bobomb"
+.global SI_wand
+SI_wand: .string "SI_wand"
 
 .global SI_frog
 SI_frog: .string "SI_frog"
 
-.global SI_thunder
-SI_thunder: .string "SI_thunder"
+.global SI_gold
+SI_gold: .string "SI_gold"
 
 .global SI_cloud
 SI_cloud: .string "SI_cloud"
@@ -1974,17 +1979,17 @@ I_boomerangArcFilename:
 I_spikeArcFilename:
 	.string "I_spike"
 
-.global I_bobombArcFilename
-I_bobombArcFilename:
-	.string "I_bobomb"
+.global I_wandArcFilename
+I_wandArcFilename:
+	.string "I_wand"
 
 .global I_frogArcFilename
 I_frogArcFilename:
 	.string "I_frog"
 
-.global I_thunderArcFilename
-I_thunderArcFilename:
-	.string "I_thunder"
+.global I_goldArcFilename
+I_goldArcFilename:
+	.string "I_gold"
 
 .global I_cloudArcFilename
 I_cloudArcFilename:
@@ -2114,12 +2119,12 @@ SLGBtn4: .string "B04_itemButton"
 SLGBtn5: .string "B05_itemButton"
 SLGBtn6: .string "B06_itemButton"
 SLGBtn7: .string "HammerGroup"
-SLGBtn8: .string "BoomerGroup"
+SLGBtn8: .string "GoldenGroup"
 SLGBtn9: .string "SpikyGroup"
-SLGBtn10: .string "BombGroup"
+SLGBtn10: .string "BoomerGroup"
 SLGBtn11: .string "FroggyGroup"
-SLGBtn12: .string "ThunderGroup"
-SLGBtn13: .string "CloudyGroup"
+SLGBtn12: .string "CloudyGroup"
+SLGBtn13: .string "WandGroup"
 SLButtonBase00: .string "P_buttonBase_00"
 SLButtonBase01: .string "P_buttonBase_01"
 SLButtonBase02: .string "P_buttonBase_02"
@@ -2142,12 +2147,12 @@ SLIcon4: .string "P_iconPen_00"
 SLIcon5: .string "P_mameKinoko_00"
 SLIcon6: .string "P_iconStar_00"
 SLIcon7: .string "P_iconHammer_00"
-SLIcon8: .string "P_iconBoomer_00"
+SLIcon8: .string "P_iconGold_00"
 SLIcon9: .string "P_iconSpike_00"
-SLIcon10: .string "P_iconBobomb_00"
+SLIcon10: .string "P_iconBoomer_00"
 SLIcon11: .string "P_iconFrog_00"
-SLIcon12: .string "P_iconThunder_00"
-SLIcon13: .string "P_iconCloud_00"
+SLIcon12: .string "P_iconCloud_00"
+SLIcon13: .string "P_iconWand_00"
 SLIconPane0: .string "N_iconKinoko_00"
 SLIconPane1: .string "N_iconFlower_00"
 SLIconPane2: .string "N_iconPro_00"
@@ -2156,12 +2161,12 @@ SLIconPane4: .string "N_iconPen_00"
 SLIconPane5: .string "N_mameKinoko_00"
 SLIconPane6: .string "N_iconStar_00"
 SLIconPane7: .string "N_iconHammer_00"
-SLIconPane8: .string "N_iconBoomer_00"
+SLIconPane8: .string "N_iconGold_00"
 SLIconPane9: .string "N_iconSpike_00"
-SLIconPane10: .string "N_iconBobomb_00"
+SLIconPane10: .string "N_iconBoomer_00"
 SLIconPane11: .string "N_iconFrog_00"
-SLIconPane12: .string "N_iconThunder_00"
-SLIconPane13: .string "N_iconCloud_00"
+SLIconPane12: .string "N_iconCloud_00"
+SLIconPane13: .string "N_iconWand_00"
 .align 4
 SILayoutGroupNames:
 .long SLGWindow
@@ -2439,38 +2444,38 @@ ChooseOldButtonOffAnim:
 	cmpwi r4, 7
 	beq useHammerOffAnim
 	cmpwi r4, 8
-	beq useBoomerangOffAnim
+	beq useGoldOffAnim
 	cmpwi r4, 9
 	beq useSpikeOffAnim
 	cmpwi r4, 10
-	beq useBobombOffAnim
+	beq useBoomerangOffAnim
 	cmpwi r4, 11
 	beq useFrogOffAnim
 	cmpwi r4, 12
-	beq useThunderOffAnim
-	cmpwi r4, 13
 	beq useCloudOffAnim
+	cmpwi r4, 13
+	beq useWandOffAnim
 	addi r4, r4, 0x16
 	blr
 useHammerOffAnim:
 	li r4, 0x20
 	blr
-useBoomerangOffAnim:
+useGoldOffAnim:
 	li r4, 0x23
 	blr
 useSpikeOffAnim:
 	li r4, 0x26
 	blr
-useBobombOffAnim:
+useBoomerangOffAnim:
 	li r4, 0x29
 	blr
 useFrogOffAnim:
 	li r4, 0x2C
 	blr
-useThunderOffAnim:
+useCloudOffAnim:
 	li r4, 0x2F
 	blr
-useCloudOffAnim:
+useWandOffAnim:
 	li r4, 0x32
 	blr
 
@@ -2479,38 +2484,38 @@ ChooseOldButtonOffAnim2:
 	cmpwi r3, 7
 	beq useHammerOffAnim2
 	cmpwi r3, 8
-	beq useBoomerangOffAnim2
+	beq useGoldOffAnim2
 	cmpwi r4, 9
 	beq useSpikeOffAnim2
 	cmpwi r4, 10
-	beq useBobombOffAnim2
+	beq useBoomerangOffAnim2
 	cmpwi r4, 11
 	beq useFrogOffAnim2
 	cmpwi r4, 12
-	beq useThunderOffAnim2
-	cmpwi r4, 13
 	beq useCloudOffAnim2
+	cmpwi r4, 13
+	beq useWandOffAnim2
 	addi r0, r3, 0x16
 	blr
 useHammerOffAnim2:
 	li r0, 0x20
 	blr
-useBoomerangOffAnim2:
+useGoldOffAnim2:
 	li r0, 0x23
 	blr
 useSpikeOffAnim2:
 	li r0, 0x26
 	blr
-useBobombOffAnim2:
+useBoomerangOffAnim2:
 	li r0, 0x29
 	blr
 useFrogOffAnim2:
 	li r0, 0x2C
 	blr
-useThunderOffAnim2:
+useCloudOffAnim2:
 	li r0, 0x2F
 	blr
-useCloudOffAnim2:
+useWandOffAnim2:
 	li r0, 0x32
 	blr
 
@@ -2519,38 +2524,38 @@ ChooseButtonOnAnim:
 	cmpwi r4, 7
 	beq useHammerOnAnim
 	cmpwi r4, 8
-	beq useBoomerangOnAnim
+	beq useGoldOnAnim
 	cmpwi r4, 9
 	beq useSpikeOnAnim
 	cmpwi r4, 10
-	beq useBobombOnAnim
+	beq useBoomerangOnAnim
 	cmpwi r4, 11
 	beq useFrogOnAnim
 	cmpwi r4, 12
-	beq useThunderOnAnim
-	cmpwi r4, 13
 	beq useCloudOnAnim
+	cmpwi r4, 13
+	beq useWandOnAnim
 	addi r4, r4, 1
 	blr
 useHammerOnAnim:
 	li r4, 0x1E
 	blr
-useBoomerangOnAnim:
+useGoldOnAnim:
 	li r4, 0x21
 	blr
 useSpikeOnAnim:
 	li r4, 0x24
 	blr
-useBobombOnAnim:
+useBoomerangOnAnim:
 	li r4, 0x27
 	blr
 useFrogOnAnim:
 	li r4, 0x2A
 	blr
-useThunderOnAnim:
+useCloudOnAnim:
 	li r4, 0x2D
 	blr
-useCloudOnAnim:
+useWandOnAnim:
 	li r4, 0x30
 	blr
 
@@ -2570,38 +2575,38 @@ ChooseHitButtonAnim:
 	cmpwi r4, 7
 	beq useHammerHitAnim
 	cmpwi r4, 8
-	beq useBoomerangHitAnim
+	beq useGoldHitAnim
 	cmpwi r4, 9
 	beq useSpikeHitAnim
 	cmpwi r4, 10
-	beq useBobombHitAnim
+	beq useBoomerangHitAnim
 	cmpwi r4, 11
 	beq useFrogHitAnim
 	cmpwi r4, 12
-	beq useThunderHitAnim
-	cmpwi r4, 13
 	beq useCloudHitAnim
+	cmpwi r4, 13
+	beq useWandHitAnim
 	addi r4, r4, 0xF
 	blr
 useHammerHitAnim:
 	li r4, 0x1F
 	blr
-useBoomerangHitAnim:
+useGoldHitAnim:
 	li r4, 0x22
 	blr
 useSpikeHitAnim:
 	li r4, 0x25
 	blr
-useBobombHitAnim:
+useBoomerangHitAnim:
 	li r4, 0x28
 	blr
 useFrogHitAnim:
 	li r4, 0x2B
 	blr
-useThunderHitAnim:
+useCloudHitAnim:
 	li r4, 0x2E
 	blr
-useCloudHitAnim:
+useWandHitAnim:
 	li r4, 0x31
 	blr
 
@@ -2613,23 +2618,23 @@ UpdateCalcPowerupResult:
 	cmpwi r3, 7
 	beq cprIsDoneHammer
 	cmpwi r3, 8
-	beq cprIsDoneBoomerang
+	beq cprIsDoneGold
 	cmpwi r3, 9
 	beq cprIsDoneSpike
 	cmpwi r3, 10
-	beq cprIsDoneBobomb
+	beq cprIsDoneBoomerang
 	cmpwi r3, 11
 	beq cprIsDoneFrog
 	cmpwi r3, 12
-	beq cprIsDoneThunder
-	cmpwi r3, 13
 	beq cprIsDoneCloud
+	cmpwi r3, 13
+	beq cprIsDoneWand
 	b ContinueFromCalcPowerupResult
 cprIsDoneHammer:
 	li r6, 7
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
-cprIsDoneBoomerang:
+cprIsDoneGold:
 	li r6, 8
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
@@ -2637,7 +2642,7 @@ cprIsDoneSpike:
 	li r6, 9
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
-cprIsDoneBobomb:
+cprIsDoneBoomerang:
 	li r6, 10
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
@@ -2645,11 +2650,11 @@ cprIsDoneFrog:
 	li r6, 11
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
-cprIsDoneThunder:
+cprIsDoneCloud:
 	li r6, 12
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
-cprIsDoneCloud:
+cprIsDoneWand:
 	li r6, 13
 	stb r0, 0xF(r1)
 	b ContinueFromCalcPowerupResult
@@ -2666,24 +2671,24 @@ FixCalcPowerupResultForMushroom:
 # - 0x29C: Hammer value textbox 	#Old: 0x288
 # - 0x2A0: Hammer X textbox 		#Old: 0x28C
 # - 0x2A4: Hammer shadow 			#Old: 0x290
-# - 0x2A8: Boomerang value textbox 	#Old: 0x294
-# - 0x2AC: Boomerang X textbox 		#Old: 0x298
-# - 0x2B0: Boomerang shadow 		#Old: 0x29C
+# - 0x2A8: Gold value textbox 	#Old: 0x294
+# - 0x2AC: Gold X textbox 		#Old: 0x298
+# - 0x2B0: Gold shadow 		#Old: 0x29C
 # - 0x2B4: Spike value textbox
 # - 0x2B8: Spike X textbox
 # - 0x2BC: Spike shadow
-# - 0x2C0: Bob-Omb value textbox
-# - 0x2C4: Bob-Omb X textbox
-# - 0x2C8: Bob-Omb shadow
+# - 0x2C0: Boomerang value textbox
+# - 0x2C4: Boomerang X textbox
+# - 0x2C8: Boomerang shadow
 # - 0x2CC: Frog value textbox
 # - 0x2D0: Frog X textbox
 # - 0x2D4: Frog shadow
-# - 0x2D8: Thunder value textbox
-# - 0x2DC: Thunder X textbox
-# - 0x2E0: Thunder shadow
-# - 0x2E4: Cloud value textbox
-# - 0x2E8: Cloud X textbox
-# - 0x2EC: Cloud shadow
+# - 0x2D8: Cloud value textbox
+# - 0x2DC: Cloud X textbox
+# - 0x2E0: Cloud shadow
+# - 0x2E4: Wand value textbox
+# - 0x2E8: Wand X textbox
+# - 0x2EC: Wand shadow
 .global SISLayoutExtraStuffs
 .extern ContinueFromSISLayoutExtraStuffs
 .extern findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc
@@ -2710,19 +2715,19 @@ SISLayoutExtraStuffs:
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_16@h
 	ori r4, r4, t_itemRest_16@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Boomerang Value Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Gold Value Textbox
 	stw r3, 0x2A8(r30)
 
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_17@h
 	ori r4, r4, t_itemRest_17@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Boomerang X Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Gold X Textbox
 	stw r3, 0x2AC(r30)
 
 	addi r3, r30, 0x70
 	lis r4, p_buttonBaseS_08@h
 	ori r4, r4, p_buttonBaseS_08@l
-	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Boomerang Shadow
+	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Gold Shadow
 	stw r3, 0x2B0(r30)
 
 	addi r3, r30, 0x70
@@ -2746,19 +2751,19 @@ SISLayoutExtraStuffs:
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_20@h
 	ori r4, r4, t_itemRest_20@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Bob-Omb Value Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Boomerang Value Textbox
 	stw r3, 0x2C0(r30)
 
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_21@h
 	ori r4, r4, t_itemRest_21@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Bob-Omb X Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Boomerang X Textbox
 	stw r3, 0x2C4(r30)
 
 	addi r3, r30, 0x70
 	lis r4, p_buttonBaseS_10@h
 	ori r4, r4, p_buttonBaseS_10@l
-	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Bob-Omb Shadow
+	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Boomerang Shadow
 	stw r3, 0x2C8(r30)
 
 	addi r3, r30, 0x70
@@ -2782,37 +2787,37 @@ SISLayoutExtraStuffs:
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_24@h
 	ori r4, r4, t_itemRest_24@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Thunder Value Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Cloud Value Textbox
 	stw r3, 0x2D8(r30)
 
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_25@h
 	ori r4, r4, t_itemRest_25@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Thunder X Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Cloud X Textbox
 	stw r3, 0x2DC(r30)
 
 	addi r3, r30, 0x70
 	lis r4, p_buttonBaseS_12@h
 	ori r4, r4, p_buttonBaseS_12@l
-	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Thunder Shadow
+	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Cloud Shadow
 	stw r3, 0x2E0(r30)
 
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_26@h
 	ori r4, r4, t_itemRest_26@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Cloud Value Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Wand Value Textbox
 	stw r3, 0x2E4(r30)
 
 	addi r3, r30, 0x70
 	lis r4, t_itemRest_27@h
 	ori r4, r4, t_itemRest_27@l
-	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Cloud X Textbox
+	bl findTextBoxByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Wand X Textbox
 	stw r3, 0x2E8(r30)
 
 	addi r3, r30, 0x70
 	lis r4, p_buttonBaseS_13@h
 	ori r4, r4, p_buttonBaseS_13@l
-	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Cloud Shadow
+	bl findPictureByName__Q23m2d17EmbedLayoutBase_cCFPCc	#Wand Shadow
 	stw r3, 0x2EC(r30)
 	
 	li r3, 1
@@ -2823,7 +2828,7 @@ t_itemRest_14: .string "T_itemRest_14"			#Hammer
 t_itemRest_15: .string "T_itemRest_15"
 p_buttonBaseS_07: .string "P_buttonBaseS_07"
 
-t_itemRest_17: .string "T_itemRest_17"			#Boomerang
+t_itemRest_17: .string "T_itemRest_17"			#Gold
 t_itemRest_16: .string "T_itemRest_16"
 p_buttonBaseS_08: .string "P_buttonBaseS_08"
 
@@ -2831,7 +2836,7 @@ t_itemRest_19: .string "T_itemRest_19"			#Spike
 t_itemRest_18: .string "T_itemRest_18"
 p_buttonBaseS_09: .string "P_buttonBaseS_09"
 
-t_itemRest_21: .string "T_itemRest_21"			#Bob-Omb
+t_itemRest_21: .string "T_itemRest_21"			#Boomerang
 t_itemRest_20: .string "T_itemRest_20"
 p_buttonBaseS_10: .string "P_buttonBaseS_10"
 
@@ -2839,11 +2844,11 @@ t_itemRest_23: .string "T_itemRest_23"			#Frog
 t_itemRest_22: .string "T_itemRest_22"
 p_buttonBaseS_11: .string "P_buttonBaseS_11"
 
-t_itemRest_25: .string "T_itemRest_25"			#Thunder
+t_itemRest_25: .string "T_itemRest_25"			#Cloud
 t_itemRest_24: .string "T_itemRest_24"
 p_buttonBaseS_12: .string "P_buttonBaseS_12"
 
-t_itemRest_27: .string "T_itemRest_27"			#Cloud
+t_itemRest_27: .string "T_itemRest_27"			#Wand
 t_itemRest_26: .string "T_itemRest_26"
 p_buttonBaseS_13: .string "P_buttonBaseS_13"
 
@@ -2923,12 +2928,12 @@ changedBase1:
 	cmpwi r0, 0
 	lwz r3, 0x2B0(r25)
 	lbz r0, 0xBB(r3)
-	beq theresNoBoomerang
+	beq theresNoGold
 
 	li r4, 1
 	rlwinm r0, r0, 0,24,30
 	b changedBase2
-theresNoBoomerang:
+theresNoGold:
 	li r4, 0
 	ori r0, r0, 1
 changedBase2:
@@ -3049,12 +3054,12 @@ changedBase3:
 	cmpwi r0, 0
 	lwz r3, 0x2C8(r25)
 	lbz r0, 0xBB(r3)
-	beq theresNoBomb
+	beq theresNoBoomerang
 
 	li r4, 1
 	rlwinm r0, r0, 0,24,30
 	b changedBase4
-theresNoBomb:
+theresNoBoomerang:
 	li r4, 0
 	ori r0, r0, 1
 changedBase4:
@@ -3175,12 +3180,12 @@ changedBase5:
 	cmpwi r0, 0
 	lwz r3, 0x2E0(r25)
 	lbz r0, 0xBB(r3)
-	beq theresNoThunder
+	beq theresNoCloud
 
 	li r4, 1
 	rlwinm r0, r0, 0,24,30
 	b changedBase6
-theresNoThunder:
+theresNoCloud:
 	li r4, 0
 	ori r0, r0, 1
 changedBase6:
@@ -3238,12 +3243,12 @@ changedBase6:
 	cmpwi r0, 0
 	lwz r3, 0x2EC(r25)
 	lbz r0, 0xBB(r3)
-	beq theresNoCloud
+	beq theresNoWand
 
 	li r4, 1
 	rlwinm r0, r0, 0,24,30
 	b changedBase7
-theresNoCloud:
+theresNoWand:
 	li r4, 0
 	ori r0, r0, 1
 changedBase7:
@@ -3341,6 +3346,201 @@ NewENITEMPowerupTable:
 	blr
 
 
+#=========================up down select for SI menu=========================#
+
+.global is_it_right
+is_it_right:
+	beq        new_not_right
+	b          it_is_right
+
+
+.global new_not_right
+new_not_right:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
+	beq        not_up
+
+    li         r0,0x3
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+	b          not_right_it_was
+
+
+.global not_up
+not_up:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
+	beq        not_right_it_was
+
+    li         r0,0x4
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+
+
+.global not_right_it_was
+not_right_it_was:
+	b          not_right
+	
+
+
+
+
+.global is_it_right2
+is_it_right2:
+	beq        new_not_right2
+	b          it_is_right2
+
+
+.global new_not_right2
+new_not_right2:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1e,0x1e                   #r0 = r0 & 2
+	beq        not_up2
+
+    li         r0,0x3
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+	b          not_right_it_was2
+
+
+.global not_up2
+not_up2:
+	lis        r3, ActiveWiimoteID@h
+	ori        r3, r3, ActiveWiimoteID@l
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r3,r29,r0
+	lwz        r3,0x4(r3)
+    lwz        r0,0x1c(r3)
+    rlwinm.    r0,r0,0x0,0x1f,0x1f                   #r0 = r0 & 1
+	beq        not_right_it_was2
+
+    li         r0,0x4
+    stw        r0,0x314(r30)
+    or         r3,r30,r30
+    addi       r4,r1,0x8
+    bl         dStockItem__manipulateItemID
+
+
+.global not_right_it_was2
+not_right_it_was2:
+	b          not_right2
+
+
+
+.global selectNewActionsForButtons
+selectNewActionsForButtons:
+	beq        tryAndMoveLeft_
+	cmpwi      r0,0x3
+	blt        tryAndMoveRight_
+	beq        tryAndMoveUp
+	b          tryAndMoveDown
+
+.global tryAndMoveRight_
+tryAndMoveRight_:
+	b          tryAndMoveRight
+
+.global tryAndMoveLeft_
+tryAndMoveLeft_:
+	b          tryAndMoveLeft
+
+
+.global upLoop
+upLoop:
+    lwz        r5,0x0(r4)
+    subic.     r0,r5,0x7
+    stw        r0,0x0(r4)
+    blt        tryAndMoveUp
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r5,r3,r0
+    lwz        r0,0x918(r5)
+    cmpwi      r0,0x0
+    bnelr
+
+.global tryAndMoveUp
+tryAndMoveUp:
+	li         r0,0x1
+    stw        r0,0x314(r3)
+	lwz        r0,0x0(r4)
+	cmpwi      r0,0x0
+	bge        upLoop
+	b          cantChange
+
+
+
+.global downLoop
+downLoop:
+    lwz        r5,0x0(r4)
+    addi       r0,r5,0x7
+    stw        r0,0x0(r4)
+    cmpwi      r0,0xe
+	bgt        tryAndMoveDown
+    rlwinm     r0,r0,0x2,0x0,0x1d
+    add        r5,r3,r0
+    lwz        r0,0x918(r5)
+    cmpwi      r0,0x0
+    bnelr
+
+.global tryAndMoveDown
+tryAndMoveDown:
+	li         r0,0x1
+    stw        r0,0x314(r3)
+	lwz        r0,0x0(r4)
+	cmpwi      r0,0x7
+	blt        downLoop
+	b          cantChange
+
+
+
+.global goBackTo0
+goBackTo0:
+	bge		   setTo0
+	b          continueRightLoop
+
+.global setTo0
+setTo0:
+	li         r0, 0x0
+	stw        r0,0x0(r4)
+	b          continueRightLoop
+
+.global goForthToD
+goForthToD:
+	blt		   setToD
+	b          continueLeftLoop
+
+.global setToD
+setToD:
+	li         r0, 0xD
+	stw        r0,0x0(r4)
+	b          continueLeftLoop
+
+
+
+#=========================up down select for SI menu=========================#
+
+
+
+
 .data
 .align 4
 ptrToTwo: .long 2
@@ -3387,12 +3587,12 @@ PowerupArcTable:
 	.long aI_kinoko_6
 	.long aI_star_4
 	.long I_hammerArcFilename2
-	.long I_boomerangArcFilename2
+	.long I_goldArcFilename2
 	.long I_spikeArcFilename2
-	.long I_bobombArcFilename2
+	.long I_boomerangArcFilename2
 	.long I_frogArcFilename2
-	.long I_thunderArcFilename2
 	.long I_cloudArcFilename2
+	.long I_wandArcFilename2
 
 ENITEMPowerupTable:
 	.long aI_kinoko_6
@@ -3404,10 +3604,10 @@ ENITEMPowerupTable:
 	.long aI_kinoko_6
 	.long aI_kinoko_6
 	.long I_spikeArcFilename2
-	.long I_bobombArcFilename2
+	.long I_wandArcFilename2
 	.long I_frogArcFilename2
 	.long aI_propeller_4
-	.long I_thunderArcFilename2
+	.long I_goldArcFilename2
 	.long aI_kinoko_6
 	.long aI_penguin_4
 	.long I_boomerangArcFilename2
@@ -3453,23 +3653,23 @@ aI_star_4:
 I_hammerArcFilename2:
 	.string "I_hammer"
 
-I_boomerangArcFilename2:
-	.string "I_boomerang"
+I_goldArcFilename2:
+	.string "I_gold"
 
 I_spikeArcFilename2:
 	.string "I_spike"
 
-I_bobombArcFilename2:
-	.string "I_bobomb"
+I_boomerangArcFilename2:
+	.string "I_boomerang"
 
 I_frogArcFilename2:
 	.string "I_frog"
 
-I_thunderArcFilename2:
-	.string "I_thunder"
-
 I_cloudArcFilename2:
 	.string "I_cloud"
+
+I_wandArcFilename2:
+	.string "I_wand"
 
 aObj_coin_5:
 	.string "obj_coin"

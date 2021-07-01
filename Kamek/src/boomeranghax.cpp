@@ -72,23 +72,12 @@ class daBoomerangHax_c : public dEn_c {
 	/*******/
 	StandOnTopCollider sotCollider;
 
-	/*********/
-	/*Thunder*/
-	/*********/
 	const char *brresName;
 	daPlBase_c *player;
-	int distToPlayerY;
-	int distToPlayerX;
 	pointSensor_s below;
-	float leader;
-	mEf::es2 bolt;
-	int lightningtimer;
-	ActivePhysics Lightning;
-	VEC3 currentPPos;
 	void dieFall_Begin();
 	void dieFall_Execute();
 	void dieFall_End();
-	void lightningStrike();
 
 	static daBoomerangHax_c *build();
 
@@ -118,7 +107,6 @@ class daBoomerangHax_c : public dEn_c {
 	DECLARE_STATE(Spike_Die);
 	DECLARE_STATE(Frog_Thrown);
 	DECLARE_STATE(Cloud_Thrown);
-	DECLARE_STATE(Thunder_Attack);
 };
 
 daBoomerangHax_c *daBoomerangHax_c::build() {
@@ -127,19 +115,10 @@ daBoomerangHax_c *daBoomerangHax_c::build() {
 }
 
 void daBoomerangHax_c::dieFall_Begin() {
-	if(this->variation == 5) {
-		doStateChange(&StateID_Thunder_Attack);
-	}
 }
 void daBoomerangHax_c::dieFall_Execute() {
-	if(this->variation == 5) {
-		doStateChange(&StateID_Thunder_Attack);
-	}
 }
 void daBoomerangHax_c::dieFall_End() {
-	if(this->variation == 5) {
-		doStateChange(&StateID_Thunder_Attack);
-	}
 }
 
 ///////////////////////
@@ -153,7 +132,6 @@ void daBoomerangHax_c::dieFall_End() {
 	CREATE_STATE(daBoomerangHax_c, Spike_Die);
 	CREATE_STATE(daBoomerangHax_c, Frog_Thrown);
 	CREATE_STATE(daBoomerangHax_c, Cloud_Thrown);
-	CREATE_STATE(daBoomerangHax_c, Thunder_Attack);
 
 
 ////////////////////////
@@ -233,6 +211,10 @@ void daBoomerangHax_c::dieFall_End() {
 					}
 				}
 			}
+			else
+			{
+				this->Delete(1);
+			}
 		}
 	}
 
@@ -259,6 +241,15 @@ void daBoomerangHax_c::dieFall_End() {
 				this->Delete(1);
 			}
 		}
+		if (this->variation == 4)
+		{
+			daPlBase_c* player = (daPlBase_c*)apOther->owner;
+
+			if (CheckExistingPowerup(player) != 12 && CheckExistingPowerup(player) != 3)
+			{
+				this->Delete(1);
+			}
+		}
 	}
 
 	void daBoomerangHax_c::yoshiCollision(ActivePhysics *apThis, ActivePhysics *apOther) {
@@ -272,6 +263,15 @@ void daBoomerangHax_c::dieFall_End() {
 		if(this->variation == 3) {
 			this->playerCollision(apThis, apOther);
 		}
+		if (this->variation == 4)
+		{
+			daPlBase_c* player = (daPlBase_c*)apOther->owner;
+
+			if (CheckExistingPowerup(player) != 12 && CheckExistingPowerup(player) != 3)
+			{
+				this->Delete(1);
+			}
+		}
 	}
 
 	bool daBoomerangHax_c::collisionCatD_Drill(ActivePhysics *apThis, ActivePhysics *apOther) {
@@ -282,7 +282,7 @@ void daBoomerangHax_c::dieFall_End() {
 			doStateChange(&StateID_Spike_Die);
 			return true;
 		}
-		if(this->variation == 3 || this->variation == 4 || this->variation == 5) {
+		if(this->variation == 3 || this->variation == 4) {
 			return false;
 		}
 		return true;
@@ -297,7 +297,7 @@ void daBoomerangHax_c::dieFall_End() {
 			}
 			return false;
 		}
-		if(this->variation == 1 || this->variation == 3 || this->variation == 5) {
+		if(this->variation == 1 || this->variation == 3) {
 			return false;
 		}
 		if(this->variation == 4) {
@@ -316,7 +316,7 @@ void daBoomerangHax_c::dieFall_End() {
 			}
 			return false;
 		}
-		if(this->variation == 1 || this->variation == 3 || this->variation == 5) {
+		if(this->variation == 1 || this->variation == 3) {
 			return false;
 		}
 		if(this->variation == 4) {
@@ -334,7 +334,7 @@ void daBoomerangHax_c::dieFall_End() {
 			doStateChange(&StateID_Spike_Die);
 			return true;
 		}
-		if(this->variation == 3 || this->variation == 4 || this->variation == 5) {
+		if(this->variation == 3 || this->variation == 4) {
 			return false;
 		}
 		return true;
@@ -349,7 +349,7 @@ void daBoomerangHax_c::dieFall_End() {
 			}
 			return false;
 		}
-		if(this->variation == 1 || this->variation == 3 || this->variation == 4 || this->variation == 5) {
+		if(this->variation == 1 || this->variation == 3 || this->variation == 4) {
 			return false;
 		}
 		return true;
@@ -368,7 +368,7 @@ void daBoomerangHax_c::dieFall_End() {
 			}
 			return false;
 		}
-		if(this->variation == 1 || this->variation == 3 || this->variation == 4 || this->variation == 5) {
+		if(this->variation == 1 || this->variation == 3 || this->variation == 4) {
 			return false;
 		}
 		return true;
@@ -405,7 +405,7 @@ int daBoomerangHax_c::onCreate() {
 	this->alreadyOnTop = 0;
 	this->canI = false;
 	this->variation = (this->settings >> 12) & 0xF;
-	OSReport("daBoomerangHax_c::onCreate()!!!");
+	OSReport("daBoomerangHax_c::onCreate()!!!\n");
 	if(this->variation == 0) { //Boomerang
 		this->deleteForever = true;
 
@@ -599,7 +599,7 @@ int daBoomerangHax_c::onCreate() {
 		HitMeBaby.yDistToCenter = 0.0;
 
 		HitMeBaby.xDistToEdge = 7.5;
-		HitMeBaby.yDistToEdge = 7.5;
+		HitMeBaby.yDistToEdge = 7.5;		
 
 		HitMeBaby.category1 = 0x3;
 		HitMeBaby.category2 = 0x0;
@@ -688,31 +688,6 @@ int daBoomerangHax_c::onCreate() {
 		this->onExecute();
 		return true;
 	}
-	if(this->variation == 5) { //Thunder
-		allocator.link(-1, GameHeaps[0], 0, 0x20);
-
-		this->resFile.data = getResource("thunderM", "g3d/target.brres");
-		nw4r::g3d::ResMdl mdl = this->resFile.GetResMdl("target");
-		bodyModel.setup(mdl, &allocator, 0x224, 1, 0);
-
-		allocator.unlink();
-
-		this->scale = (Vec){0.5, 0.5, 0.5};
-		this->rot.x = 0; // X is vertical axis
-		this->rot.y = 0; // Y is horizontal axis
-		this->rot.z = 0; // Z is ... an axis >.>
-		this->direction = 1; // Heading left.
-
-		below.x = 0;
-		below.y = 0;
-		collMgr.init(this, &below, 0, 0);
-
-
-		doStateChange(&StateID_Thunder_Attack);
-
-		this->onExecute();
-		return true;
-	}
 	return true;
 }
 
@@ -738,6 +713,7 @@ int daBoomerangHax_c::onExecute() {
 	}
 	if(this->variation == 1) {
 		this->rot.z += (this->direction == 1) ? 2000 : -2000; //Rotating it depending of its spawning direction
+		OSReport("Rotating spikeball: %d, %d / 0x%X\n", this->direction, this->rot.z, this->rot.z);
 		PlaySound(this, SE_PLY_WALK_METAL);                  //Play SFX
 	}
 	if(this->variation == 3) {
@@ -770,47 +746,6 @@ int daBoomerangHax_c::onExecute() {
 	}
 	if(this->variation == 4) {
 		sotCollider.update();
-	}
-	if(this->variation == 5) {
-		if(!istherelightning) {
-			VEC3 newPos = {player->pos.x + this->distToPlayerX, this->pos.y, player->pos.z + 100};
-			this->pos = newPos;
-		}
-		if(istherelightning) {
-			this->lightningtimer++;
-		}
-		if(this->lightningtimer > 180) {
-			this->Lightning.removeFromList();
-			istherelightning = false;
-			this->lightningtimer = 0;
-			this->distToPlayerX = 0;
-			this->distToPlayerY = 0;
-		}
-		if(!istherelightning){
-			this->pos.y += 0x100;
-			u32 result = 0;
-			while (result == 0 && below.y > (-30 << 16)) {
-				below.y -= 0x4000;
-
-				result = collMgr.calculateBelowCollisionWithSmokeEffect();
-				if (result == 0) {
-					u32 tb1 = collMgr.getTileBehaviour1At(this->pos.x, this->pos.y + (below.y >> 12), 0);
-					if (tb1 & 0x8000 && !(tb1 & 0x20))
-						result = 1;
-				}
-			}
-
-			if (result == 0) {
-				this->pos = player->pos;
-			} else {
-				this->pos.y += (below.y>>12);
-			}
-			below.y = 0;
-		}
-		int p = CheckExistingPowerup(player);
-		if (p != 12) {
-			this->Delete(1);
-		}
 	}
 
 	return true;
@@ -896,30 +831,6 @@ bool daBoomerangHax_c::calculateTileCollisions() {
 		return true;                                     //returns true duh
 	}
 	return false;                                        //if didn't hit a wall
-}
-
-void daBoomerangHax_c::lightningStrike() {
-	PlaySound(this, SE_OBJ_KAZAN_ERUPTION);
-
-	float boltsize = (leader-14.0)/2;
-	float boltpos = -boltsize - 14.0;
-
-	ActivePhysics::Info Shock;
-	Shock.xDistToCenter = 0.0;
-	Shock.yDistToCenter = boltpos;
-	Shock.category1 = 0x3;
-	Shock.category2 = 0x9;
-	Shock.bitfield1 = 0x4D;
-
-	Shock.bitfield2 = 0x420;
-	Shock.xDistToEdge = 12.0;
-	Shock.yDistToEdge = boltsize;
-
-	Shock.unkShort1C = 0;
-	Shock.callback = &dEn_c::collisionCallback;
-
-	this->Lightning.initWithStruct(this, &Shock);
-	this->Lightning.addToList();
 }
 
 ///////////////
@@ -1100,74 +1011,6 @@ void daBoomerangHax_c::endState_Cloud_Thrown() {
 }
 
 
-///////////////
-// Thunder_Attack State
-///////////////
-void daBoomerangHax_c::beginState_Thunder_Attack() {
-	player = GetPlayerOrYoshi(0);
-	this->pos = player->pos;
-}
-
-void daBoomerangHax_c::executeState_Thunder_Attack() {
-	if((player->input.heldButtons & WPAD_B) && !istherelightning) {
-		if (player->input.heldButtons & WPAD_UP) { // B + UP
-			this->distToPlayerY += 2;
-		}
-		if (player->input.heldButtons & WPAD_DOWN) { // B + DOWN
-			this->distToPlayerY -= 2;
-		}
-		if (player->input.heldButtons & WPAD_LEFT) { // B + LEFT
-			this->distToPlayerX -= 2;
-		}
-		if (player->input.heldButtons & WPAD_RIGHT) { // B + RIGHT
-			this->distToPlayerX += 2;
-		}
-		OSReport("holding B\n");
-	}
-	if((justspawnedit == 1) && !(istherelightning)) {
-		this->pos.y = player->pos.y + 288;
-		u32 result = 0;
-		while (result == 0 && below.y > (-30 << 16)) {
-			below.y -= 0x4000;
-
-			result = collMgr.calculateBelowCollisionWithSmokeEffect();
-			if (result == 0) {
-				u32 tb1 = collMgr.getTileBehaviour1At(this->pos.x, this->pos.y + (below.y >> 12), 0);
-				if (tb1 & 0x8000 && !(tb1 & 0x20))
-					result = 1;
-			}
-			OSReport("below %d\n", below.y);
-		}
-
-		if (result == 0) {
-			OSReport("Couldn't find any ground, falling back to 13 tiles distance");
-
-			leader = 13 * 16;
-		} else {
-			OSReport("Lightning strikes at %d\n", below.y>>12);
-
-			leader = -(below.y >> 12);
-		}
-		below.y = 0;
-		lightningStrike();
-		istherelightning = true;
-		justspawnedit = 0;
-	}
-	if(istherelightning) {
-		float boltsize = (leader-14.0)/2;
-		float boltpos = -boltsize - 14.0;
-
-		S16Vec nullRot = {0,0,0};
-		Vec efPos = {this->pos.x, this->pos.y + boltpos, 5750.0f};
-		Vec otherEfScale = {1.0f, boltsize/36.0f, 1.0f};
-		bolt.spawn("Wm_jr_electricline", 0, &efPos, &nullRot, &otherEfScale);
-	}
-}
-void daBoomerangHax_c::endState_Thunder_Attack() {
-
-}
-
-
 
 
 /*****************************************************/
@@ -1175,14 +1018,14 @@ void daBoomerangHax_c::endState_Thunder_Attack() {
 /*Don't ask me how does it work, because i don't know*/
 /*****************************************************/
 
-int daGabonRock_c::getsettings() {									 //I know bleh bleh bleh that's not optimised, but lemme ask something: Do I care ? The answer is no.
+int daGabonRock_c::getsettings() {									 //I know bleh bleh bleh that's not optimised, but lemme ask you something: Do I care ? The answer is no.
 	int orig_val = this->onCreate_orig();
 	if(getNybbleValue(this->settings, 12, 12) > 1) {
 		int playerID = getNybbleValue(this->settings, 6, 6);
 		dAcPy_c *player = dAcPy_c::findByID(playerID);
 		int variation = getNybbleValue(this->settings, 11, 11);
 		if(variation < 2) {
-			if(variation == 1) {
+			if(variation == 1) { //Spike
 				nw4r::snd::SoundHandle spikyHandle;
 				PlaySoundWithFunctionB4(SoundRelatedClass, &spikyHandle, SE_EMY_GABON_ROCK_THROW, 1);
 			}
@@ -1190,14 +1033,11 @@ int daGabonRock_c::getsettings() {									 //I know bleh bleh bleh that's not o
 			CreateActor(555, settings, player->pos, 0, 0);
 			doWait = 60;
 		}
-		if(variation == 2) {
-			VEC3 bombpos = {player->pos.x + ((player->direction == 1) ? -3 : 3), player->pos.y + 2, player->pos.z};
-			daEnBomhei_c *bombToThrow = (daEnBomhei_c *)CreateActor(133, (player->direction + 1), bombpos, 0, 0);
-			bombToThrow->direction = player->direction;
-			bombToThrow->doThrowing();
+		if(variation == 2) { //Wand
+
 			doWait = 60;
 		}
-		if(variation == 3) {
+		if(variation == 3) { //Frog
 			nw4r::snd::SoundHandle froggyHandle;
 			PlaySoundWithFunctionB4(SoundRelatedClass, &froggyHandle, SE_EMY_KANIBO_THROW, 1);
 			VEC3 actorpos = {player->pos.x + ((player->direction == 1) ? -10 : 10), player->pos.y + 16, player->pos.z};
@@ -1205,8 +1045,8 @@ int daGabonRock_c::getsettings() {									 //I know bleh bleh bleh that's not o
 			CreateActor(555, bubbleSettings, actorpos, 0, 0);
 			doWait = 30;
 		}
-		if(variation == 5) {
-			justspawnedit = 1;
+		if(variation == 5) { //Gold
+
 			doWait = 180;
 		}
 	}
@@ -1299,55 +1139,7 @@ int dGameDisplay_c::doWaitCheck() {
 	}
 	// OSReport("globalIceShoot = %d\n", globalIceShoot);
 	// OSReport("globalPropeller = %d\n", globalPropeller);
-	if(LastLevelPlayed[0] == 1 && LastLevelPlayed[1] == 3 && !doneWithGreenStars) { //02-04.arc
-		doneWithGreenStars = true;
-		nw4r::lyt::Picture *P_collection_00;
-		nw4r::lyt::Picture *P_collectOff_00;
-		nw4r::lyt::Picture *P_collection_01;
-		nw4r::lyt::Picture *P_collectOff_01;
-		nw4r::lyt::Picture *P_collection_02;
-		nw4r::lyt::Picture *P_collectOff_02;
-		P_collection_00 = layout.findPictureByName("P_collection_00");
-		P_collectOff_00 = layout.findPictureByName("P_collectOff_00");
-		P_collection_01 = layout.findPictureByName("P_collection_01");
-		P_collectOff_01 = layout.findPictureByName("P_collectOff_01");
-		P_collection_02 = layout.findPictureByName("P_collection_02");
-		P_collectOff_02 = layout.findPictureByName("P_collectOff_02");
 
-		char greenOff[64];
-		char greenOn[64];
-		sprintf(greenOff, "/LevelSamples/greenOff.tpl");
-		sprintf(greenOn, "/LevelSamples/greenOn.tpl");
-		static File tplOFF;
-		static File tplON;
-		if(tplOFF.open(greenOff)) {
-			P_collectOff_00->material->texMaps[0].ReplaceImage((TPLPalette*)tplOFF.ptr(), 0);
-			P_collectOff_01->material->texMaps[0].ReplaceImage((TPLPalette*)tplOFF.ptr(), 0);
-			P_collectOff_02->material->texMaps[0].ReplaceImage((TPLPalette*)tplOFF.ptr(), 0);
-		}
-		if(tplON.open(greenOn)) {
-			P_collection_00->material->texMaps[0].ReplaceImage((TPLPalette*)tplON.ptr(), 0);
-			P_collection_01->material->texMaps[0].ReplaceImage((TPLPalette*)tplON.ptr(), 0);
-			P_collection_02->material->texMaps[0].ReplaceImage((TPLPalette*)tplON.ptr(), 0);
-		}
-	}
-	if(!(LastLevelPlayed[0] == 1 && LastLevelPlayed[1] == 4) && !doneWithPurpleCoins) { //!02-05.arc
-		doneWithPurpleCoins = true;
-
-		nw4r::lyt::Pane *P_purpleIcon_00;
-		nw4r::lyt::Pane *T_times_00;
-		nw4r::lyt::Pane *T_purpleCount_00;
-		nw4r::lyt::Pane *T_slash100_00;
-		P_purpleIcon_00 = layout.findPaneByName("P_purpleIcon_00");
-		T_times_00 = layout.findPaneByName("T_times_00");
-		T_purpleCount_00 = layout.findPaneByName("T_purpleCount_00");
-		T_slash100_00 = layout.findPaneByName("T_slash100_00");
-
-		P_purpleIcon_00->SetVisible(false);
-		T_times_00->SetVisible(false);
-		T_purpleCount_00->SetVisible(false);
-		T_slash100_00->SetVisible(false);
-	}
 	dAcPy_c *player = dAcPy_c::findByID(0);
 	int p = CheckExistingPowerup(player);
 	if(player->input.nowPressed & WPAD_B) {
@@ -1356,7 +1148,7 @@ int dGameDisplay_c::doWaitCheck() {
 	/*******/
 	/*Cloud*/
 	/*******/
-	if(p == 13 && doWait == 0) {
+	if(p == 12 && doWait == 0) {
 		if (player->input.areWeShaking() && cloudSpawned < 3) {
 			int isPlayerMoving = 1;
 			if(!(player->input.heldButtons & WPAD_LEFT) && !(player->input.heldButtons & WPAD_RIGHT) && (player->collMgr.isOnTopOfTile())) {
@@ -1373,13 +1165,13 @@ int dGameDisplay_c::doWaitCheck() {
 			doWait = 30;
 		}
 	}
-	if(p == 13) {
+	if(p == 12) {
 		if(amIinCloud == 0) {
 			amIinCloud = 1;
 			imDoneDoingVisibility = false;
 		}
 	}
-	if(p != 13) {
+	if(p != 12) {
 		if(amIinCloud == 1) {
 			amIinCloud = 0;
 			imDoneDoingVisibility = false;
@@ -1398,7 +1190,7 @@ int dGameDisplay_c::doWaitCheck() {
 		P_cloudOff_00 = layout.findPictureByName("P_cloudOff_00");
 		P_cloudOff_01 = layout.findPictureByName("P_cloudOff_01");
 		P_cloudOff_02 = layout.findPictureByName("P_cloudOff_02");
-		if(p == 13) {
+		if(p == 12) {
 			if(cloudSpawned == 0) {
 				P_cloud_00->SetVisible(true);
 				P_cloud_01->SetVisible(true);
@@ -1442,14 +1234,7 @@ int dGameDisplay_c::doWaitCheck() {
 		}
 		imDoneDoingVisibility = true;
 	}
-	/*********/
-	/*Thunder*/
-	/*********/
-	if ((p == 12) && (!isTargetSpawned)) {
-		int targetSettings = 0 | (5 << 12);
-		CreateActor(555, targetSettings, player->pos, 0, 0);
-		isTargetSpawned = true;
-	}
+
 	return orig_val;
 }
 

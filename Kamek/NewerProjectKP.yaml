@@ -105,3 +105,28 @@ modules:
   - processed/ballon.yaml
   - processed/pinkKoopa.yaml
   - processed/ActorSpawner.yaml
+  - processed/theGreatGoalPole.yaml
+#  - processed/poisontex.yaml
+  - processed/gakenoko.yaml
+  - processed/removeMapAmbushes.yaml
+  - processed/sidestepper.yaml
+  - processed/minisidestepper.yaml
+  - processed/waterlift.yaml
+  - processed/texmapcolouriser.yaml
+  - processed/worldmapScripts.yaml
+  - processed/worldmapGrid.yaml
+  - processed/worldmapShop.yaml
+  - processed/sceneLight.yaml
+  - processed/cutsceneMgr.yaml
+  - processed/secretGem.yaml
+  
+  # - processed/shroobUfo.yaml
+  - processed/shyCart.yaml
+  - processed/whereAmIGoing.yaml
+  - processed/warpBox.yaml
+  - processed/boshi.yaml
+  - processed/cloudPlattform.yaml
+  - processed/goombaTower.yaml
+  - processed/busuBusu.yaml
+  - processed/tiki.yaml
+  - processed/statsMenu.yaml

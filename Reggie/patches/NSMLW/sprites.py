@@ -2074,7 +2074,58 @@ class SpriteImage_NewerBowserSwitchLg(SLib.SpriteImage_StaticMultiple):  # 479
 
 
         super().dataChanged()
+        
+class SpriteImage_LaunchStar(SLib.SpriteImage_Static):  # 495
+    def __init__(self, parent):
+        super().__init__(
+            parent,
+            1.5,
+            ImageCache['LaunchStar'],
+        )
 
+    @staticmethod
+    def loadImages():
+        SLib.loadIfNotInImageCache('LaunchStar', 'launchstar.png')
+    
+    
+class SpriteImage_StarChip(SLib.SpriteImage_Static):  # 517
+    def __init__(self, parent):
+        super().__init__(
+            parent,
+            1.5,
+            ImageCache['StarChip'],
+        )
+
+    @staticmethod
+    def loadImages():
+        SLib.loadIfNotInImageCache('StarChip', 'starChip.png')
+        
+
+class SpriteImage_CloudPlattform(SLib.SpriteImage_Static):  # 523
+    def __init__(self, parent):
+        super().__init__(
+            parent,
+            1.5,
+            ImageCache['CloudPlattform'],
+        )
+
+    @staticmethod
+    def loadImages():
+        SLib.loadIfNotInImageCache('CloudPlattform', 'cloudPlattform.png')
+     
+  
+class SpriteImage_GoombaTower(SLib.SpriteImage_Static):  # 524
+    def __init__(self, parent):
+        super().__init__(
+            parent,
+            1.5,
+            ImageCache['GoombaTower'],
+        )
+
+    @staticmethod
+    def loadImages():
+        SLib.loadIfNotInImageCache('GoombaTower', 'goombaTower.png')
+        
 
 ImageClasses = {
     12: SpriteImage_StarCollectable,
@@ -2154,5 +2205,9 @@ ImageClasses = {
     491: SpriteImage_TopmanBoss,
     492: SpriteImage_ElectricLine,
     493: SpriteImage_ActorSpawner,
-    494: SpriteImage_ActorMultiSpawner
+    494: SpriteImage_ActorMultiSpawner,
+    495: SpriteImage_LaunchStar,
+    518: SpriteImage_StarChip,
+    524: SpriteImage_CloudPlattform,
+    525: SpriteImage_GoombaTower
 }

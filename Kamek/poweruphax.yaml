@@ -32,8 +32,113 @@ hooks:
   - name: FixVanillaMap6
     type: branch_insn
     branch_type: bl
-    src_addr_pal: 0x808d4d5c
+    src_addr_pal: 0x808d4d5c #0x808d4d68
     target_func: 'StockItemHackR3'
+
+  - name: FixVanillaMap7 #New (RSM)
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80926C28
+    target_func: 'ItemNamesHack'
+
+  - name: FixVanillaMap8 #New (RSM)
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x80927918
+    target_func: 'ItemNamesHackR26'
+
+  - name: FixVanillaMap9 #New (RSM)
+    type: patch
+    addr_pal: 0x80926C4C
+    data: '281c000E' #Orig: 281c0007
+
+  - name: FixVanillaMap10 #New (RSM)
+    type: patch
+    addr_pal: 0x809272CC
+    data: '907a08e0' #Orig: 907a02f4
+
+#==================new_powerups_available==================#
+
+  - name: FixVanillaMap11
+    type: patch
+    addr_pal: 0x800bb3a8
+    data: '88a506fd' #Orig: 88a50009
+
+  - name: FixVanillaMap12
+    type: patch
+    addr_pal: 0x800bb358
+    data: '88a506fd' #Orig: 88a50009
+
+  - name: FixVanillaMap13
+    type: patch
+    addr_pal: 0x800ce434
+    data: '98a306fd' #Orig: 98a30009
+
+  - name: FixVanillaMap14
+    type: patch
+    addr_pal: 0x800bb3f8
+    data: '880306fd' #Orig: 88030009
+
+#==========================================================#
+
+#====================make spike a shroom===================#
+
+  - name: makeSpikeAShroom
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80a2c0e8
+    target_func: 'spikeAShroom'
+
+#==========================================================#
+
+#=====================up down selection====================#
+
+  - name: addUpDownSelect1
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b101c
+    target_func: 'is_it_right'
+
+  - name: addUpDownSelect2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b1270
+    target_func: 'is_it_right2'
+
+  - name: addUpDownSelect3
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b08e8
+    target_func: 'selectNewActionsForButtons'
+
+  - name: addInfiniteRightScroll
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b0938
+    target_func: 'goBackTo0'
+
+  - name: addInfiniteLeftScroll
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807b08fc
+    target_func: 'goForthToD'
+
+#==========================================================#
+
+
+
+#  - name: FixVanillaWM_ITEM1
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x808d4ca0
+#    target_func: 'WMItemHack1'
+
+#  - name: FixVanillaWM_ITEM2
+#    type: branch_insn
+#    branch_type: bl
+#    src_addr_pal: 0x808d4ccc
+#    target_func: 'WMItemHack2'
+
 
 #  - name: FixVanillaMap7
 #    type: patch
@@ -51,7 +156,61 @@ hooks:
 #    data: '2c1b000E' #Orig: 2c1b0007
 
 
+#############################################
+  # - name: removeSIFromWM1
+  #   type: nop_insn
+  #   area_pal: 0x80926fdc
 
+  # - name: removeSIFromWM2
+  #   type: nop_insn
+  #   area_pal: 0x80926ff4
+
+  # - name: removeSIFromWM3
+  #   type: nop_insn
+  #   area_pal: 0x809270d0
+
+  # - name: removeSIFromWM4
+  #   type: nop_insn
+  #   area_pal: 0x809270d4
+
+  # - name: removeSIFromWM5
+  #   type: nop_insn
+  #   area_pal: 0x80927124
+
+  # - name: removeSIFromWM6
+  #   type: nop_insn
+  #   area_pal: 0x80927128
+
+  # - name: removeSIFromWM7
+  #   type: nop_insn
+  #   area_pal: 0x8092712c
+
+  # - name: removeSIFromWM8
+  #   type: nop_insn
+  #   area_pal: 0x80927130
+
+  # - name: removeSIFromWM9
+  #   type: nop_insn
+  #   area_pal: 0x80927134
+
+  # - name: removeSIFromWM10
+  #   type: nop_insn
+  #   area_pal: 0x80927138
+
+  - name: anotherSIpatch
+    type: patch
+    addr_pal: 0x809272d0
+    data: 2c19000E #orig: 2c190007
+
+  # - name: anotherSIpatch1
+  #   type: patch
+  #   addr_pal: 0x80926fd0
+  #   data: 386002de #orig: 386002b7
+
+#  - name: anotherSIpatch2
+#    type: nop_insn
+#    area_pal: 0x80926ff4
+#############################################
 
   #! -> done for jam
   #? -> started for jam
@@ -265,7 +424,7 @@ hooks:
   - name: LoadThisShittyCount
     type: patch
     addr_pal: 0x8091EC6C
-    data: '38c00035' #original: 38c00023            #Done!
+    data: '38c00031' #original: 38c00023            #Done!
     
   - name: ChangeHammerBrres
     type: add_func_pointer
@@ -282,7 +441,7 @@ hooks:
     src_addr_pal: 0x80AF0FB0
     target_func: 'I_hammerResFile'                  #Done!
     
-  - name: ChangeBobombBrres
+  - name: ChangeWandBrres
     type: add_func_pointer
     src_addr_pal: 0x80AF0FB4
     target_func: 'I_hammerResFile'                  #Done!
@@ -292,7 +451,7 @@ hooks:
     src_addr_pal: 0x80AF0FB8
     target_func: 'I_hammerResFile'                  #Done!
     
-  - name: ChangeThunderBrres
+  - name: ChangeGoldBrres
     type: add_func_pointer
     src_addr_pal: 0x80AF0FBC
     target_func: 'I_hammerResFile'                  #Done!
@@ -317,20 +476,20 @@ hooks:
     src_addr_pal: 0x80AF0ED4
     target_func: 'I_spikeArcFilename'               #Done!
     
-  - name: ChangeBobombArc
+  - name: ChangeWandArc
     type: add_func_pointer
     src_addr_pal: 0x80AF0ED8
-    target_func: 'I_bobombArcFilename'              #Done!
+    target_func: 'I_wandArcFilename'              #Done!
     
   - name: ChangeFrogArc
     type: add_func_pointer
     src_addr_pal: 0x80AF0EDC
     target_func: 'I_frogArcFilename'                #Done!
     
-  - name: ChangeThunderArc
+  - name: ChangeGoldArc
     type: add_func_pointer
     src_addr_pal: 0x80AF0EE0
-    target_func: 'I_thunderArcFilename'             #Done!
+    target_func: 'I_goldArcFilename'             #Done!
     
   - name: ChangeCloudArc
     type: add_func_pointer
@@ -358,7 +517,7 @@ hooks:
     src_addr_pal: 0x80AF1008
     target_func: 'I_hammerModelName'                #Done!
     
-  - name: ChangeBobombModel
+  - name: ChangeWandModel
     type: add_func_pointer
     src_addr_pal: 0x80AF100C
     target_func: 'I_hammerModelName'                #Done!
@@ -368,7 +527,7 @@ hooks:
     src_addr_pal: 0x80AF1010
     target_func: 'I_hammerModelName'                #Done!
     
-  - name: ChangeThunderModel
+  - name: ChangeGoldModel
     type: add_func_pointer
     src_addr_pal: 0x80AF1014
     target_func: 'I_hammerModelName'                #Done!
@@ -415,20 +574,20 @@ hooks:
     src_addr_pal: 0x80AF11A4
     target_func: 'SetSpikeToEnItemDCA'              #Done!
     
-  - name: SetBobombToEnItemDCA
+  - name: SetWandToEnItemDCA
     type: add_func_pointer
     src_addr_pal: 0x80AF11AC
-    target_func: 'SetBobombToEnItemDCA'             #Done!
+    target_func: 'SetWandToEnItemDCA'             #Done!
     
   - name: SetFrogToEnItemDCA
     type: add_func_pointer
     src_addr_pal: 0x80AF11B0
     target_func: 'SetFrogToEnItemDCA'               #Done!
     
-  - name: SetThunderToEnItemDCA
+  - name: SetGoldToEnItemDCA
     type: add_func_pointer
     src_addr_pal: 0x80AF11B4
-    target_func: 'SetThunderToEnItemDCA'            #Done!
+    target_func: 'SetGoldToEnItemDCA'            #Done!
     
   - name: SetCloudToEnItemDCA
     type: add_func_pointer
@@ -963,29 +1122,29 @@ hooks:
     type: add_func_pointer
     target_func: 'I_hammerArcFilename'               #Not Needed
     src_addr_pal: 0x80951A48
-  - name: AddHSToBattleItem_AddBoomerangArcName
+  - name: AddHSToBattleItem_AddGoldArcName
     type: add_func_pointer
-    target_func: 'I_boomerangArcFilename'            #Done:
+    target_func: 'I_goldArcFilename'              #Done!
     src_addr_pal: 0x80951A4C
   - name: AddHSToBattleItem_AddSpikeArcName
     type: add_func_pointer
     target_func: 'I_spikeArcFilename'                #Done!
     src_addr_pal: 0x80951A50
-  - name: AddHSToBattleItem_AddBobombArcName
+  - name: AddHSToBattleItem_AddBoomerangArcName
     type: add_func_pointer
-    target_func: 'I_bobombArcFilename'               #Done!
+    target_func: 'I_boomerangArcFilename'            #Done:
     src_addr_pal: 0x80951A54
   - name: AddHSToBattleItem_AddFrogArcName
     type: add_func_pointer
     target_func: 'I_frogArcFilename'                 #Done!
     src_addr_pal: 0x80951A58
-  - name: AddHSToBattleItem_AddThunderArcName
-    type: add_func_pointer
-    target_func: 'I_thunderArcFilename'              #Done!
-    src_addr_pal: 0x80951A5C
   - name: AddHSToBattleItem_AddCloudArcName
     type: add_func_pointer
     target_func: 'I_cloudArcFilename'                #Done!
+    src_addr_pal: 0x80951A5C
+  - name: AddHSToBattleItem_AddWandArcName
+    type: add_func_pointer
+    target_func: 'I_wandArcFilename'               #Done!
     src_addr_pal: 0x80951A60
 
   - name: ReplaceLostFireflower
@@ -1130,24 +1289,24 @@ hooks:
 # - 0x1E : On Hammer
 # - 0x1F : Hit Hammer
 # - 0x20 : Off Hammer
-# - 0x21 : On Boomerang
-# - 0x22 : Hit Boomerang
-# - 0x23 : Off Boomerang
+# - 0x21 : On Gold
+# - 0x22 : Hit Gold
+# - 0x23 : Off Gold
 # - 0x24 : On Spike
 # - 0x25 : Hit Spike
 # - 0x26 : Off Spike
-# - 0x27 : On Bob-Omb
-# - 0x28 : Hit Bob-Omb
-# - 0x29 : Off Bob-Omb
+# - 0x27 : On Boomerang
+# - 0x28 : Hit Boomerang
+# - 0x29 : Off Boomerang
 # - 0x2A : On Frog
 # - 0x2B : Hit Frog
 # - 0x2C : Off Frog
-# - 0x2D : On Thunder
-# - 0x2E : Hit Thunder
-# - 0x2F : Off Thunder
-# - 0x30 : On Cloud
-# - 0x31 : Hit Cloud
-# - 0x32 : Off Cloud
+# - 0x2D : On Cloud
+# - 0x2E : Hit Cloud
+# - 0x2F : Off Cloud
+# - 0x30 : On Wand
+# - 0x31 : Hit Wand
+# - 0x32 : Off Wand
 #
 # todo:
 # update loadlayout method
@@ -1322,24 +1481,24 @@ hooks:
 # - 0x29C: Hammer value textbox
 # - 0x2A0: Hammer X textbox
 # - 0x2A4: Hammer shadow
-# - 0x2A8: Boomerang value textbox
-# - 0x2AC: Boomerang X textbox
-# - 0x2B0: Boomerang shadow
+# - 0x2A8: Gold value textbox
+# - 0x2AC: Gold X textbox
+# - 0x2B0: Gold shadow
 # - 0x2B4: Spike value textbox
 # - 0x2B8: Spike X textbox
 # - 0x2BC: Spike shadow
-# - 0x2C0: Bob-Omb value textbox
-# - 0x2C4: Bob-Omb X textbox
-# - 0x2C8: Bob-Omb shadow
+# - 0x2C0: Boomerang value textbox
+# - 0x2C4: Boomerang X textbox
+# - 0x2C8: Boomerang shadow
 # - 0x2CC: Frog value textbox
 # - 0x2D0: Frog X textbox
 # - 0x2D4: Frog shadow
-# - 0x2D8: Thunder value textbox
-# - 0x2DC: Thunder X textbox
-# - 0x2E0: Thunder shadow
-# - 0x2E4: Cloud value textbox
-# - 0x2E8: Cloud X textbox
-# - 0x2EC: Cloud shadow
+# - 0x2D8: Cloud value textbox
+# - 0x2DC: Cloud X textbox
+# - 0x2E0: Cloud shadow
+# - 0x2E4: Wand value textbox
+# - 0x2E8: Wand X textbox
+# - 0x2EC: Wand shadow
   - name: ExpandStockItemShadowStruct
     type: patch
     addr_pal: 0x807B2038
@@ -1377,30 +1536,30 @@ hooks:
     type: add_func_pointer
     src_addr_pal: 0x809833D4
     target_func: 'SI_hammer'                         #Not Needed
-  - name: AddPtrToSIBoomerang
+  - name: AddPtrToSIGold
     type: add_func_pointer
     src_addr_pal: 0x809833D8
-    target_func: 'SI_boomerang'                      #Done:
+    target_func: 'SI_gold'                        #Done!
   - name: AddPtrToSISpike
     type: add_func_pointer
     src_addr_pal: 0x809833DC
     target_func: 'SI_spike'                          #Done!
-  - name: AddPtrToSIBobomb
+  - name: AddPtrToSIBoomerang
     type: add_func_pointer
     src_addr_pal: 0x809833E0
-    target_func: 'SI_bobomb'                         #Done!
+    target_func: 'SI_boomerang'                      #Done:
   - name: AddPtrToSIFrog
     type: add_func_pointer
     src_addr_pal: 0x809833E4
     target_func: 'SI_frog'                           #Done!
-  - name: AddPtrToSIThunder
-    type: add_func_pointer
-    src_addr_pal: 0x809833E8
-    target_func: 'SI_thunder'                        #Done!
   - name: AddPtrToSICloud
     type: add_func_pointer
-    src_addr_pal: 0x809833EC
+    src_addr_pal: 0x809833E8
     target_func: 'SI_cloud'                          #Done!
+  - name: AddPtrToSIWand
+    type: add_func_pointer
+    src_addr_pal: 0x809833EC
+    target_func: 'SI_wand'                         #Done!
     
   - name: InsertLostG3D
     type: branch_insn

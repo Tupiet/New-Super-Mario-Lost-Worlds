@@ -1,0 +1,8 @@
+---
+source_files: [../src/waterlift.cpp, ../src/waterlift.S]
+hooks:
+  - name: selectLiftFromSettings
+    type: branch_insn
+    branch_type: bl
+    src_addr_pal: 0x808bf040
+    target_func: 'selectLiftFromSettings'
