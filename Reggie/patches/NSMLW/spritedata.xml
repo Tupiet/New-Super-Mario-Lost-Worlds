@@ -3297,6 +3297,30 @@
 
   <sprite id="529" name="Tiki Tong Crown" asmhacks="True" notes="Don't use this sprite! Only place the Tiki Tong sprite, it will spawn it's body parts on it's own." >
   </sprite> <!-- #529: Tiki Tong Crown -->
+	
+  <sprite id="530" name="Stats Menu" asmhacks="True" notes="Don't use this sprite!" >
+  </sprite> <!-- #530: Stats Menu -->
+	
+  <sprite id="531" name="Green Ring" asmhacks="True" notes="This ring will look forward 5 green coins placed in the level. Once collected the 5 green coins, it will reward a powerup." >
+	<list nybble="5" title="Reward" comment="This will set the item rewarded when all coins are collected." comment2="If the player has already a powerup, a 1-UP will be spawned.">
+		<entry value="0">Fire suit</entry>
+		<entry value="1">Ice suit</entry>
+		<entry value="2">Propeller</entry>
+		<entry value="3">Penguin suit</entry>
+		<entry value="4">Hammer suit</entry>
+		<entry value="5">Star</entry>
+	  </list>
+  </sprite> <!-- #531: Green Ring -->
+	
+  <sprite id="532" name="Green Coin" asmhacks="True" notes="A group of green coins. They are connected with the Green Ring." >
+	<list nybble="5" title="Coin ID" comment="Select the coin ID for this coin. The coin ID determines what coin appear first.">
+		<entry value="0">1</entry>
+		<entry value="1">2</entry>
+		<entry value="2">3</entry>
+		<entry value="3">4</entry>
+		<entry value="4">5</entry>
+	  </list>
+  </sprite> <!-- #532: Green Coin -->
   
 </sprites>
 <!-- Thank you so much for a-playing my game! -->
