@@ -453,6 +453,7 @@ void dWMShop_c::show(int shopNumber) {
 	state.setState(&StateID_ShowWait);
 }
 
+bool shopOpen = false;
 
 // Hidden
 void dWMShop_c::beginState_Hidden() { }
@@ -464,6 +465,7 @@ void dWMShop_c::executeState_Hidden() {
 		FUN_801017c0(PtrToWM_CS_SEQ_MNG, 0x35, 0, 0, 0x80);
 		dActor_c* csMng = (dActor_c*)fBase_c::search(COURSE_SELECT_MANAGER);
 		*(u8*)((int)(csMng) + 0x53C) = 0;
+		shopOpen = true;
 	}
 }
 void dWMShop_c::endState_Hidden() { }
